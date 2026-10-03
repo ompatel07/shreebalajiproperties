@@ -116,18 +116,56 @@ export function Header() {
             <NavLink href="/sell" dark={overHero} onHover={() => openPanel(null)}>
               Sell
             </NavLink>
-            <NavLink href="/about" dark={overHero} onHover={() => openPanel(null)}>
-              About
+            {/* The builder audience is real but secondary — one clear link,
+                set apart from the buyer items by a hairline. */}
+            <span className="mx-2 h-4 w-px bg-current opacity-20" aria-hidden />
+            <NavLink href="/for-builders" dark={overHero} onHover={() => openPanel(null)}>
+              For Builders
             </NavLink>
           </nav>
 
           {/* ── Actions ───────────────────────────────────────────────── */}
           <div className="flex items-center gap-1 sm:gap-2">
+            {/* A visible search field, not an icon. The brief was that the
+                site must be easy to search, and an icon hides the single most
+                used action behind a guess. Collapses to an icon only where
+                there is genuinely no room. */}
+            <form
+              action="/properties"
+              method="get"
+              className={cn(
+                "hidden items-center gap-2 border px-3 py-2 transition-colors duration-300 md:flex",
+                overHero
+                  ? "border-bone/30 focus-within:border-bone"
+                  : "border-rule-strong focus-within:border-brass",
+              )}
+            >
+              <Search
+                className={cn("size-4 shrink-0", overHero ? "text-bone/70" : "text-ink-faint")}
+                strokeWidth={1.8}
+                aria-hidden
+              />
+              <input
+                type="search"
+                name="q"
+                placeholder="Search area or project"
+                aria-label="Search properties"
+                enterKeyHint="search"
+                maxLength={120}
+                className={cn(
+                  "w-36 bg-transparent text-[0.8125rem] focus:outline-none lg:w-44",
+                  overHero
+                    ? "text-bone placeholder:text-bone/50"
+                    : "text-ink placeholder:text-ink-faint",
+                )}
+              />
+            </form>
+
             <Link
               href="/properties"
               aria-label="Search properties"
               className={cn(
-                "grid size-10 place-items-center rounded-[2px] transition-colors duration-300",
+                "grid size-10 place-items-center rounded-[2px] transition-colors duration-300 md:hidden",
                 overHero ? "text-bone hover:bg-bone/15" : "text-ink hover:bg-sand",
               )}
             >
@@ -482,11 +520,14 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
 
           <div className="mt-6 space-y-1 border-t border-rule pt-6">
             {[
+              { href: "/properties", label: "All Properties" },
+              { href: "/map", label: "Search on Map" },
               { href: "/projects", label: "Projects" },
               { href: "/sell", label: "Sell / Rent Out" },
-              { href: "/guides", label: "Guides" },
+              { href: "/guides", label: "Buying Guides" },
               { href: "/about", label: "About Us" },
               { href: "/contact", label: "Contact" },
+              { href: "/for-builders", label: "For Builders" },
             ].map((l) => (
               <Link key={l.href} href={l.href} className="block py-3 font-display text-h4 text-ink">
                 {l.label}

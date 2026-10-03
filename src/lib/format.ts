@@ -182,6 +182,11 @@ export function formatDate(iso: string | null | undefined): string {
 
 /** Strip trailing `.00` / `.50` → `.5` so prices read naturally. */
 function trimZeros(s: string): string {
+  // The guard is the whole point. Without it the regex eats trailing zeros out
+  // of *integers* too, so "50" became "5" and "100" became "1" — every round
+  // price on the site rendered an order of magnitude low (a ₹50 Lakh flat
+  // priced at ₹5 Lakh). Only a fractional part has zeros worth trimming.
+  if (!s.includes(".")) return s;
   return s.replace(/\.?0+$/, "");
 }
 

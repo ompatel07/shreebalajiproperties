@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Map as MapIcon, Search } from "lucide-react";
 
+import { ActiveFilters } from "@/components/property/ActiveFilters";
 import { FilterRail, SortBar } from "@/components/property/FilterRail";
 import { Pagination } from "@/components/property/Pagination";
 import { PropertyCard } from "@/components/property/PropertyCard";
@@ -68,13 +69,13 @@ export default async function PropertiesPage({ searchParams }: Props) {
                     <em className="display-wonk text-brass">“{query.q}”</em>
                   </>
                 ) : (
-                  "Every home on our books"
+                  "Search properties"
                 )}
               </h1>
               <p className="mt-4 max-w-2xl text-lead text-ink-muted">
                 {total > 0
-                  ? `${total} listing${total === 1 ? "" : "s"} across Ahmedabad and Gandhinagar — every one checked before it reached this page.`
-                  : "Nothing matches that combination right now. Try widening the budget or the locality."}
+                  ? `${total} ${total === 1 ? "property" : "properties"} in Ahmedabad and Gandhinagar. Use the filters to narrow it down, or just type what you want.`
+                  : "Nothing matches that yet. Try a bigger budget range, or a different area."}
               </p>
             </div>
 
@@ -102,7 +103,7 @@ export default async function PropertiesPage({ searchParams }: Props) {
                 type="search"
                 name="q"
                 defaultValue={query.q ?? ""}
-                placeholder="Locality, project name, or “3 BHK Shela”"
+                placeholder="Try “3 BHK in Shela” or a project name"
                 aria-label="Search listings"
                 enterKeyHint="search"
                 maxLength={120}
@@ -124,17 +125,11 @@ export default async function PropertiesPage({ searchParams }: Props) {
         <FilterRail total={total} />
 
         <div className="min-w-0">
-          <div className="mb-7 flex flex-wrap items-center justify-between gap-4 border-b border-rule pb-5">
-            <p className="font-mono text-micro tracking-[0.1em] text-ink-muted uppercase">
-              Page{" "}
-              <span className="text-ink" data-numeric>
-                {page}
-              </span>{" "}
-              of{" "}
-              <span className="text-ink" data-numeric>
-                {pageCount}
-              </span>
-            </p>
+          {/* The count and the active filters lead; sort is secondary. The
+              page number moved to the paginator, where it belongs — it was
+              answering a question nobody asks on arrival. */}
+          <div className="mb-7 flex flex-wrap items-start justify-between gap-x-6 gap-y-4 border-b border-rule pb-5">
+            <ActiveFilters total={total} />
             <SortBar total={total} />
           </div>
 
@@ -163,7 +158,7 @@ export default async function PropertiesPage({ searchParams }: Props) {
       <section className="border-t border-rule bg-sand py-16" aria-labelledby="browse">
         <div className="shell">
           <h2 id="browse" className="eyebrow mb-8 border-b border-rule-strong/50 pb-4">
-            Or start from a landing page
+            Or browse by
           </h2>
 
           <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -174,7 +169,7 @@ export default async function PropertiesPage({ searchParams }: Props) {
                 .map((t) => ({ href: `/ahmedabad/${t.slug}`, label: t.name }))}
             />
             <QuickColumn
-              title="Configuration"
+              title="Bedrooms"
               links={[1, 2, 3, 4, 5].map((n) => ({
                 href: `/ahmedabad/${n}-bhk-flats`,
                 label: `${n} BHK Flats`,
@@ -188,7 +183,7 @@ export default async function PropertiesPage({ searchParams }: Props) {
               }))}
             />
             <QuickColumn
-              title="Localities"
+              title="Popular areas"
               links={localities
                 .filter((l) => l.featured)
                 .map((l) => ({ href: `/${l.city}/${l.slug}`, label: l.name }))}
@@ -207,12 +202,12 @@ function EmptySearch() {
       <div className="relative">
         <p className="eyebrow">No matches</p>
         <h2 className="mx-auto mt-4 max-w-md font-display text-h3">
-          Nothing fits that combination.
+          Nothing matches all of those.
         </h2>
         <p className="mx-auto mt-4 max-w-md leading-relaxed text-ink-muted">
-          Try removing a filter or two — or tell us the requirement and we will
-          hunt for it off-market, which is where most of the good stock is
-          anyway.
+          Remove a filter using the chips above, or tell us what you are looking
+          for and we will check what is available — including properties not
+          listed on the site yet.
         </p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           <ButtonLink href="/properties" variant="outline" size="lg">

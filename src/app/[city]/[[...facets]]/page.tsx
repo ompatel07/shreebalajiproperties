@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowUpRight, TrendingUp } from "lucide-react";
 
 import { Reveal } from "@/components/motion/Reveal";
+import { ActiveFilters } from "@/components/property/ActiveFilters";
 import { FilterRail, SortBar } from "@/components/property/FilterRail";
 import { Pagination } from "@/components/property/Pagination";
 import { PropertyCard } from "@/components/property/PropertyCard";
@@ -226,17 +227,21 @@ export default async function FacetPage({ params, searchParams }: Props) {
           />
 
           <div className="min-w-0">
-            <div className="mb-7 flex flex-wrap items-center justify-between gap-4 border-b border-rule pb-5">
-              <p className="font-mono text-micro tracking-[0.1em] text-ink-muted uppercase">
-                Showing{" "}
-                <span className="text-ink" data-numeric>
-                  {items.length}
-                </span>{" "}
-                of{" "}
-                <span className="text-ink" data-numeric>
-                  {total}
-                </span>
-              </p>
+            {/* Chips for anything the visitor added on top of this route.
+                Whatever the path itself fixes is suppressed — removing "3 BHK"
+                on /ahmedabad/shela/3-bhk-flats would mean rewriting the path,
+                and the breadcrumb above already offers that way back. */}
+            <div className="mb-7 flex flex-wrap items-start justify-between gap-x-6 gap-y-4 border-b border-rule pb-5">
+              <ActiveFilters
+                total={total}
+                lockedKeys={[
+                  ...(resolved.locality ? ["locality"] : []),
+                  ...(resolved.propertyType ? ["type", "category"] : []),
+                  ...(resolved.budget ? ["min", "max"] : []),
+                  ...(resolved.possession ? ["possession"] : []),
+                  ...(resolved.bhk ? ["bhk"] : []),
+                ]}
+              />
               <SortBar total={total} />
             </div>
 

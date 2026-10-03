@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
 
 import { BuilderMarquee } from "@/components/home/BuilderMarquee";
+import { BuyerSteps } from "@/components/home/BuyerSteps";
 import { CtaBand } from "@/components/home/CtaBand";
 import { FeaturedListings } from "@/components/home/FeaturedListings";
+import { ForBuildersBand } from "@/components/home/ForBuildersBand";
 import { Hero } from "@/components/home/Hero";
 import { LocalityShowcase } from "@/components/home/LocalityShowcase";
-import { Portfolio } from "@/components/home/Portfolio";
-import { Process } from "@/components/home/Process";
-import { Services } from "@/components/home/Services";
+import { QuickBrowse } from "@/components/home/QuickBrowse";
 import { Testimonials } from "@/components/home/Testimonials";
-import { TheGap } from "@/components/home/TheGap";
 import { ToolsStrip } from "@/components/home/ToolsStrip";
-import { TrustRail } from "@/components/home/TrustRail";
-import { site } from "@/config/site";
+import { localityCount, site } from "@/config/site";
 import {
   getBudgetBandCounts,
   getBuilders,
@@ -24,36 +22,35 @@ import { pageMeta } from "@/lib/seo";
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════
- * HOMEPAGE
+ * HOMEPAGE — buyer-first
  * ═══════════════════════════════════════════════════════════════════════════
  *
- * Ordered as an argument to a **builder**, following the client's own deck:
+ * The site's main job is helping a home buyer find a property and enquire.
+ * An earlier version led with the client's builder pitch, which buried that
+ * behind four sections of B2B argument. The pitch is still here in full — it
+ * moved to /for-builders, with one compact band pointing at it.
  *
- *   Hero       — the claim: a project needs momentum, not more advertising
- *   TheGap     — the diagnosis: where projects actually leak
- *   Services   — the six functions, and why an agency is not the same thing
- *   Process    — the six-stage engagement, position through finance support
- *   Portfolio  — the developments marketed, and why execution matters
- *   Localities — market coverage, as evidence of micro-market knowledge
- *   Listings   — the projects being marketed right now
- *   Tools      — buyer-facing calculators, which are a demand-generation asset
- *   Proof      — testimonials and developer names
- *   CTA        — talk to us
+ * Order follows what a buyer needs, in sequence:
  *
- * The buyer-facing listing and calculator surfaces are deliberately kept:
- * "lead generation" and "enquiry management" are two of the six services, and
- * neither can be delivered without somewhere for a buyer to land.
+ *   Hero         headline + the search box, above the fold
+ *   QuickBrowse  one-tap routes in: budget, bedrooms, area, type
+ *   Featured     actual properties, as early as possible
+ *   Areas        where we cover, with live counts
+ *   BuyerSteps   what happens after you enquire, in plain words
+ *   Tools        EMI, affordability, stamp duty — free, no sign-up
+ *   Proof        testimonials and developer names
+ *   Builders     the one band for the other audience
+ *   CTA          call, WhatsApp, or send a brief
  *
- * ISR at 10 minutes. The page reads five tables but changes rarely, so edge
- * caching is faster and cheaper on the Supabase free tier, where egress
- * rather than compute is the binding constraint. `revalidatePath("/")` in the
- * admin publish action busts it the moment inventory actually changes.
+ * ISR at 10 minutes: five tables read, but the page changes rarely, so edge
+ * caching is faster and cheaper on the Supabase free tier where egress is the
+ * binding constraint. The admin publish action revalidates it on change.
  */
 export const revalidate = 600;
 
 export const metadata: Metadata = pageMeta({
-  title: `${site.name} — ${site.discipline} in Ahmedabad`,
-  description: site.description,
+  title: `${site.name} — Property for Sale in Ahmedabad & Gandhinagar`,
+  description: `Find flats, villas, offices and plots across ${localityCount} areas in Ahmedabad and Gandhinagar. Search by budget, bedrooms or area — every listing checked, and no charge to buyers.`,
   path: "/",
 });
 
@@ -72,16 +69,14 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
-      <TrustRail />
-      <TheGap />
-      <Services />
-      <Process />
-      <Portfolio />
-      <LocalityShowcase counts={localityCounts} />
+      <QuickBrowse />
       <FeaturedListings listings={featured} bandCounts={bandCounts} />
+      <LocalityShowcase counts={localityCounts} />
+      <BuyerSteps />
       <ToolsStrip />
       <Testimonials testimonials={testimonials} />
       <BuilderMarquee builders={builders} />
+      <ForBuildersBand />
       <CtaBand />
     </>
   );

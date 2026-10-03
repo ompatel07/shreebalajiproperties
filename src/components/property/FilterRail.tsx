@@ -105,11 +105,11 @@ export function FilterRail({
     <div className={cn("space-y-7", pending && "opacity-60 transition-opacity")}>
       {/* ── Active summary ───────────────────────────────────────────── */}
       <div className="flex items-baseline justify-between gap-3 border-b border-rule pb-4">
-        <p className="font-mono text-micro tracking-[0.12em] text-ink-muted uppercase">
-          <span data-numeric className="text-ink">
-            {total}
-          </span>{" "}
-          {total === 1 ? "home" : "homes"}
+        {/* The result count used to live here. It now leads the results
+            column as a removable-chip bar, so repeating it in the rail only
+            invited a double-take about which number was authoritative. */}
+        <p className="font-mono text-[0.5625rem] tracking-[0.16em] text-ink-muted uppercase">
+          Narrow it down
         </p>
 
         {activeCount > 0 && (
@@ -118,14 +118,14 @@ export function FilterRail({
             onClick={clearAll}
             className="font-mono text-[0.5625rem] tracking-[0.12em] text-brass uppercase hover:underline"
           >
-            Clear {activeCount}
+            Clear all
           </button>
         )}
       </div>
 
       {/* ── Budget ───────────────────────────────────────────────────── */}
       {!facetLocked.budget && (
-        <FilterGroup label="Budget">
+        <FilterGroup label="Your budget">
           <div className="space-y-1.5">
             {budgetBands.map((band) => {
               const active =
@@ -171,7 +171,7 @@ export function FilterRail({
 
       {/* ── Configuration ────────────────────────────────────────────── */}
       {!facetLocked.bhk && (
-        <FilterGroup label="Bedrooms (min)">
+        <FilterGroup label="Bedrooms">
           <div className="flex flex-wrap gap-1.5">
             {[1, 2, 3, 4, 5].map((n) => {
               const active = searchParams.get("bhk") === String(n);
@@ -182,13 +182,13 @@ export function FilterRail({
                   onClick={() => setParam("bhk", active ? null : String(n))}
                   aria-pressed={active}
                   className={cn(
-                    "min-w-11 rounded-[2px] border px-3 py-2 font-mono text-micro tracking-[0.08em] transition-colors",
+                    "rounded-[2px] border px-3 py-2.5 text-[0.8125rem] transition-colors",
                     active
                       ? "border-ink bg-ink text-bone"
                       : "border-rule-strong text-ink-soft hover:border-ink",
                   )}
                 >
-                  {n}+
+                  {n}+ BHK
                 </button>
               );
             })}
@@ -198,7 +198,7 @@ export function FilterRail({
 
       {/* ── Property type ────────────────────────────────────────────── */}
       {!facetLocked.propertyType && (
-        <FilterGroup label="Property type">
+        <FilterGroup label="Kind of property">
           <div className="space-y-1">
             {propertyTypes.map((type) => {
               const active = searchParams.get("type") === type.slug;
@@ -226,7 +226,7 @@ export function FilterRail({
 
       {/* ── Possession ───────────────────────────────────────────────── */}
       {!facetLocked.possession && (
-        <FilterGroup label="Possession">
+        <FilterGroup label="When you can move in">
           <div className="space-y-1">
             {possessionStatuses.map((p) => {
               const active = searchParams.get("possession") === p.slug;
@@ -254,7 +254,7 @@ export function FilterRail({
 
       {/* ── Locality ─────────────────────────────────────────────────── */}
       {!facetLocked.locality && (
-        <FilterGroup label="Locality" collapsible defaultOpen={false}>
+        <FilterGroup label="Area" collapsible defaultOpen={false}>
           <div className="max-h-64 space-y-1 overflow-y-auto pr-1">
             {localities.map((l) => (
               <label
@@ -279,9 +279,9 @@ export function FilterRail({
       <FilterGroup label="Furnishing">
         <div className="flex flex-wrap gap-1.5">
           {[
-            { v: "unfurnished", l: "Bare" },
+            { v: "unfurnished", l: "Unfurnished" },
             { v: "semi-furnished", l: "Semi" },
-            { v: "furnished", l: "Full" },
+            { v: "furnished", l: "Furnished" },
           ].map((f) => {
             const active = searchParams.get("furnishing") === f.v;
             return (
@@ -291,7 +291,7 @@ export function FilterRail({
                 onClick={() => setParam("furnishing", active ? null : f.v)}
                 aria-pressed={active}
                 className={cn(
-                  "rounded-[2px] border px-3 py-2 font-mono text-micro tracking-[0.08em] uppercase transition-colors",
+                  "rounded-[2px] border px-3 py-2 text-[0.8125rem] transition-colors",
                   active
                     ? "border-ink bg-ink text-bone"
                     : "border-rule-strong text-ink-soft hover:border-ink",
