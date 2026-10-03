@@ -20,17 +20,16 @@ export const revalidate = 900;
 export const metadata: Metadata = pageMeta({
   title: `New Projects in Ahmedabad & Gandhinagar | ${site.name}`,
   description:
-    "Under-construction and newly launched residential and commercial projects across Ahmedabad and Gandhinagar — with the ones we have co-invested in clearly marked.",
+    "Residential and commercial developments we market across Ahmedabad and Gandhinagar. Current enquiries, floor plans, pricing and site visits.",
   path: "/projects",
 });
 
 /**
  * Projects index.
  *
- * Co-invested projects lead, and are visually separated from ordinary
- * channel-partner inventory. That separation is the point of the page: a
- * visitor should be able to tell at a glance where our money is and where it
- * is not, without reading the fine print.
+ * Projects under a full marketing mandate lead, separated from inventory we
+ * list more loosely. A builder browsing this page should be able to tell at
+ * a glance which engagements are end-to-end.
  */
 export default async function ProjectsPage() {
   // Demo fallback. This page queries Supabase directly rather than going
@@ -81,20 +80,19 @@ function ProjectsPageView({ projects }: { projects: Project[] }) {
             <Breadcrumbs trail={trail} />
 
             <h1 className="display-tight mt-6 max-w-4xl font-display text-h2 text-ink">
-              Projects we represent — and the ones we{" "}
-              <em className="display-wonk text-brass">put our own money into.</em>
+              Developments we are{" "}
+              <em className="display-wonk text-brass">actively marketing.</em>
             </h1>
 
             <p className="mt-6 max-w-2xl text-lead text-ink-muted">
-              We are a channel partner for developments across Ahmedabad and
-              Gandhinagar. In a few of them we are also a co-investor, which
-              changes the incentive entirely — and is stated plainly on each
-              project page rather than buried in a disclosure.
+              Each of these is a live engagement: positioning, promotion,
+              enquiry management, site-visit coordination and finance support,
+              run by our in-house team on the builder&rsquo;s behalf.
             </p>
           </div>
         </header>
 
-        {/* ══ Co-invested ═══════════════════════════════════════════════ */}
+        {/* ══ Full mandate ═══════════════════════════════════════════════ */}
         {partnered.length > 0 && (
           <section className="py-16 lg:py-20" aria-labelledby="partnered">
             <div className="shell">
@@ -102,7 +100,7 @@ function ProjectsPageView({ projects }: { projects: Project[] }) {
                 <div className="mb-10 flex flex-wrap items-baseline justify-between gap-4 border-b border-rule pb-4">
                   <h2 id="partnered" className="eyebrow flex items-center gap-2.5">
                     <Handshake className="size-3.5 text-brass" strokeWidth={2} aria-hidden />
-                    Where our capital is at risk
+                    Full marketing mandate
                   </h2>
                   <span className="font-mono text-[0.5625rem] tracking-[0.1em] text-ink-faint uppercase">
                     {partnered.length} {partnered.length === 1 ? "project" : "projects"}
@@ -129,7 +127,7 @@ function ProjectsPageView({ projects }: { projects: Project[] }) {
               <Reveal>
                 <div className="mb-10 flex flex-wrap items-baseline justify-between gap-4 border-b border-rule-strong/50 pb-4">
                   <h2 id="represented" className="eyebrow">
-                    Also on our books
+                    Also marketed by us
                   </h2>
                   <span className="font-mono text-[0.5625rem] tracking-[0.1em] text-ink-faint uppercase">
                     {others.length} {others.length === 1 ? "project" : "projects"}
@@ -208,7 +206,7 @@ function ProjectCard({
           <div className="absolute inset-x-3 top-3 flex items-start justify-between gap-2">
             {project.is_partnered ? (
               <Badge tone="brass" icon={<Handshake className="size-3" strokeWidth={2} aria-hidden />}>
-                Co-invested
+                Full mandate
               </Badge>
             ) : (
               <Badge tone="outline">Channel partner</Badge>

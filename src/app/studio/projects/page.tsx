@@ -54,16 +54,16 @@ function ProjectsView({ projects, error }: { projects: Project[]; error: string 
         <h1 className="mt-2 font-display text-h3 text-ink">
           Projects
           <span className="ml-3 font-mono text-micro tracking-[0.12em] text-ink-muted uppercase">
-            {projects.length} total · {partnered} co-invested
+            {projects.length} total · {partnered} full mandate
           </span>
         </h1>
         <p className="mt-3 max-w-2xl text-caption leading-relaxed text-ink-muted">
           Projects are created in the Supabase table editor — the record carries
           galleries, floor plans and a brochure, and you will add a handful a
           year rather than a handful a week. Ticking{" "}
-          <code className="font-mono">is_partnered</code> puts a project into
-          the &ldquo;skin in the game&rdquo; section on the homepage, so only
-          tick it where capital is genuinely at risk.
+          <code className="font-mono">is_partnered</code> marks a full
+          marketing mandate, which gives the project top billing on the public
+          projects page.
         </p>
       </header>
 
@@ -115,7 +115,7 @@ function ProjectsView({ projects, error }: { projects: Project[]; error: string 
                       tone="brass"
                       icon={<Handshake className="size-3" strokeWidth={2} aria-hidden />}
                     >
-                      Co-invested
+                      Full mandate
                     </Badge>
                   )}
                 </div>

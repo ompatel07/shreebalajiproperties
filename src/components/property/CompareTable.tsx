@@ -258,7 +258,7 @@ export function CompareTable() {
               items={items}
               render={(p) => {
                 const l = localityBySlug.get(p.locality_slug);
-                if (!l) return "—";
+                if (!l?.pricePerSqft) return <span className="text-ink-faint">On request</span>;
                 return (
                   <span className="text-caption" data-numeric>
                     ₹{(l.pricePerSqft[0] / 1000).toFixed(1)}–

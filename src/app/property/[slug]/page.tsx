@@ -205,7 +205,7 @@ export default async function PropertyPage({ params }: Props) {
                 {property.is_exclusive && <Badge tone="ink">Sole mandate</Badge>}
                 {property.status === "under_offer" && <Badge tone="alert">Under offer</Badge>}
                 {property.project?.is_partnered && (
-                  <Badge tone="brass">We co-invest here</Badge>
+                  <Badge tone="brass">Marketed by us</Badge>
                 )}
               </div>
 

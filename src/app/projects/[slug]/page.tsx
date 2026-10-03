@@ -62,9 +62,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 /**
  * Project detail.
  *
- * The co-investment disclosure is the first thing on the page when it
- * applies, not a footnote — a buyer is entitled to know whose side the
- * recommendation is coming from before they read the sales copy.
+ * Where we hold the full marketing mandate, that is stated up front rather
+ * than as a footnote — a buyer is entitled to know who they are actually
+ * dealing with before they read the sales copy.
  */
 export default async function ProjectPage({ params }: Props) {
   const { slug } = await params;
@@ -118,7 +118,7 @@ export default async function ProjectPage({ params }: Props) {
               <div className="flex flex-wrap items-center gap-2">
                 {project.is_partnered && (
                   <Badge tone="brass" icon={<Handshake className="size-3" strokeWidth={2} aria-hidden />}>
-                    We co-invest here
+                    Marketed by us
                   </Badge>
                 )}
                 {project.rera_id ? (
@@ -173,18 +173,18 @@ export default async function ProjectPage({ params }: Props) {
                 <aside className="rounded-[2px] border border-brass/30 bg-brass-pale/40 p-6 lg:p-7">
                   <p className="flex items-center gap-2.5 font-mono text-micro tracking-[0.14em] text-brass-deep uppercase">
                     <Handshake className="size-3.5" strokeWidth={2} aria-hidden />
-                    Disclosure
+                    Who you are dealing with
                   </p>
                   <h2 className="mt-3 font-display text-h4 leading-snug text-ink">
-                    {site.name} holds an investment interest in this project.
+                    {site.name} handles marketing and enquiries for this
+                    project.
                   </h2>
                   <p className="mt-3 max-w-prose leading-relaxed text-ink-soft">
-                    We are not only the channel partner here — our own capital is
-                    committed alongside the developer&rsquo;s. We tell you that
-                    up front because it cuts both ways: it means a delayed
-                    possession costs us too, and it means you should weigh our
-                    enthusiasm accordingly. Ask us directly what we paid and
-                    when we expect to exit — we will tell you.
+                    We are the developer&rsquo;s marketing partner here, which
+                    means the person who answers your enquiry, arranges your
+                    site visit and helps coordinate your home loan is the same
+                    team throughout. We are paid by the developer, and that
+                    does not change the price you are quoted.
                   </p>
                 </aside>
               </Reveal>

@@ -239,9 +239,11 @@ export function facetDescription(f: ResolvedFacets, count: number): string {
 
   if (f.budget) bits.push(`Priced ${f.budget.label.toLowerCase()}.`);
   if (f.possession) bits.push(`${f.possession.label} inventory.`);
-  if (f.locality) {
+  // Only quote a rate where we actually hold one. Covered-tier areas get a
+  // real page without an invented number.
+  if (f.locality?.pricePerSqft) {
     const [lo, hi] = f.locality.pricePerSqft;
-    bits.push(`Current rate ₹${lo.toLocaleString("en-IN")}–${hi.toLocaleString("en-IN")}/sq.ft.`);
+    bits.push(`Indicative rate ₹${lo.toLocaleString("en-IN")}–${hi.toLocaleString("en-IN")}/sq.ft.`);
   }
   bits.push(`Photos, floor plans and honest advice from ${site.name}.`);
 
@@ -254,15 +256,26 @@ export function facetDescription(f: ResolvedFacets, count: number): string {
  */
 export function facetIntro(f: ResolvedFacets, count: number): string {
   if (f.locality) {
-    const [lo, hi] = f.locality.pricePerSqft;
     const what = subject(f).toLowerCase();
     const have =
       count > 0
-        ? `We currently hold ${count} ${count === 1 ? "listing" : "listings"} matching ${what} here`
+        ? `We currently market ${count} ${count === 1 ? "listing" : "listings"} matching ${what} here`
         : `We do not have ${what} listed here this week`;
-    return `${f.locality.blurb} ${have}, against an indicative rate of ₹${lo.toLocaleString(
-      "en-IN",
-    )}–${hi.toLocaleString("en-IN")} per sq.ft on carpet.`;
+
+    // Core tier: real editorial plus an indicative band.
+    if (f.locality.blurb && f.locality.pricePerSqft) {
+      const [lo, hi] = f.locality.pricePerSqft;
+      return `${f.locality.blurb} ${have}, against an indicative rate of ₹${lo.toLocaleString(
+        "en-IN",
+      )}–${hi.toLocaleString("en-IN")} per sq.ft on carpet.`;
+    }
+
+    // Covered tier: say something true rather than inventing a number.
+    return `${f.locality.name} is one of the ${localityCountFor(
+      f,
+    )} areas we cover across ${f.city.name}. ${have}. We do not publish an indicative rate for ${
+      f.locality.name
+    } because we would rather quote you the actual comparables for a specific building than a city-wide average — ask us and we will send them.`;
   }
 
   const where = f.city.name;

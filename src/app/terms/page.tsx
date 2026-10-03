@@ -40,14 +40,12 @@ export default function TermsPage() {
         <div className="space-y-10">
           <Clause title="What this site is">
             <p>
-              This website is published by {site.legalName}, a real-estate agent
-              registered with the Gujarat Real Estate Regulatory Authority under{" "}
-              <span className="font-mono text-[0.8125rem] break-words">
-                {site.compliance.reraAgentId}
-              </span>
-              . We act as a channel partner and agent. We are not the promoter
-              or developer of the projects listed here unless a page explicitly
-              says we hold an investment interest in it.
+              This website is published by {site.legalName}, which provides
+              project marketing services to builders and developers in
+              Ahmedabad and Gandhinagar. We are not the promoter or developer
+              of any project described here — we are engaged by the project
+              owner to market it, manage enquiries and coordinate site visits
+              on their behalf.
             </p>
           </Clause>
 
@@ -97,17 +95,15 @@ export default function TermsPage() {
 
           <Clause title="How we are paid">
             <p>
-              On a new-launch or under-construction transaction our commission
-              is paid by the developer, at a rate agreed in writing before we
-              begin, and it does not increase the price you pay. On a resale
-              transaction, brokerage is agreed with you in writing before we
-              market or show the property.
+              We are engaged and paid by the builder or project owner, on
+              terms agreed in writing before work begins. A customer pays us
+              nothing, and our engagement does not increase the price a
+              customer is quoted for a unit.
             </p>
             <p>
-              Where we hold an investment interest in a project, that is
-              disclosed on the project&rsquo;s own page. You should weigh our
-              recommendation accordingly, and you are welcome to ask us directly
-              what we paid and when we expect to exit.
+              Where we hold the full marketing mandate for a project, that is
+              stated on the project&rsquo;s own page, so you always know who
+              you are dealing with when you enquire.
             </p>
           </Clause>
 

@@ -47,19 +47,18 @@ export function FeaturedListings({
         <Reveal>
           <div className="grid gap-6 border-b border-rule pb-8 lg:grid-cols-12 lg:items-end lg:gap-10">
             <div className="lg:col-span-7">
-              <p className="eyebrow mb-4">02 — Current inventory</p>
+              <p className="eyebrow mb-4">06 — Live right now</p>
               <h2 className="display-tight font-display text-h2">
-                Homes we are{" "}
-                <em className="display-wonk text-brass">personally standing behind</em>{" "}
-                this month.
+                The projects we are{" "}
+                <em className="display-wonk text-brass">marketing this month.</em>
               </h2>
             </div>
 
             <div className="lg:col-span-5 lg:pl-10">
               <p className="max-w-md text-ink-muted">
-                Not a feed. Each of these has been walked, the title checked and
-                the builder&rsquo;s delivery record pulled before it earned a
-                place here.
+                Every enquiry on these pages is answered, logged and followed
+                up by our team — this is what lead generation and enquiry
+                management actually look like in practice.
               </p>
               <Link
                 href="/properties"

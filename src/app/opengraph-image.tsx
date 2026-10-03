@@ -80,7 +80,7 @@ export default function OpengraphImage() {
                 marginTop: 4,
               }}
             >
-              Ahmedabad · Gandhinagar
+              Marketing Services for Builders
             </div>
           </div>
         </div>
@@ -97,16 +97,16 @@ export default function OpengraphImage() {
               flexDirection: "column",
             }}
           >
-            <span>We only sell what</span>
+            <span>Your project deserves</span>
             <span>
-              we would{" "}
-              <span style={{ color: "#a3762c", fontStyle: "italic" }}>buy ourselves.</span>
+              more than{" "}
+              <span style={{ color: "#a3762c", fontStyle: "italic" }}>marketing.</span>
             </span>
           </div>
 
           <div style={{ fontSize: 24, color: "#3d3a31", marginTop: 24, lineHeight: 1.45 }}>
-            RERA-verified property from a channel partner that co-invests in
-            the projects it recommends.
+            Project marketing for builders — demand, enquiries, site visits
+            and finance coordination, run by one in-house team.
           </div>
         </div>
 

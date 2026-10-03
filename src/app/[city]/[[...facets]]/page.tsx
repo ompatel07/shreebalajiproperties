@@ -173,14 +173,22 @@ export default async function FacetPage({ params, searchParams }: Props) {
                 useful rather than a wrapper around a grid. */}
             {resolved.locality && (
               <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-rule-strong/50 pt-6">
+                {/* A rate is shown only where we hold one, and it is labelled
+                    an estimate. Covered-tier areas say so instead. */}
                 <div>
                   <dt className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-faint uppercase">
-                    Indicative rate
+                    {resolved.locality.pricePerSqft ? "Indicative rate" : "Rate"}
                   </dt>
                   <dd className="mt-1 font-display text-h4 text-ink" data-numeric>
-                    ₹{resolved.locality.pricePerSqft[0].toLocaleString("en-IN")} –{" "}
-                    {resolved.locality.pricePerSqft[1].toLocaleString("en-IN")}
-                    <span className="ml-1 font-mono text-micro text-ink-muted">/sq.ft</span>
+                    {resolved.locality.pricePerSqft ? (
+                      <>
+                        ₹{resolved.locality.pricePerSqft[0].toLocaleString("en-IN")} –{" "}
+                        {resolved.locality.pricePerSqft[1].toLocaleString("en-IN")}
+                        <span className="ml-1 font-mono text-micro text-ink-muted">/sq.ft</span>
+                      </>
+                    ) : (
+                      <span className="text-ink-muted">On request</span>
+                    )}
                   </dd>
                 </div>
                 <div>
@@ -356,7 +364,7 @@ function RelatedFacets({
             links={neighbours.map((l) => ({
               href: `/${l.city}/${l.slug}`,
               label: l.name,
-              meta: `₹${(l.pricePerSqft[0] / 1000).toFixed(1)}K+/sqft`,
+              meta: l.pricePerSqft ? `₹${(l.pricePerSqft[0] / 1000).toFixed(1)}K+/sqft` : undefined,
             }))}
           />
 
@@ -451,7 +459,7 @@ function buildFaqs(
     ? `${resolved.bhk} BHK ${resolved.propertyType?.name.toLowerCase() ?? "homes"}`
     : (resolved.propertyType?.name.toLowerCase() ?? "property");
 
-  if (locality) {
+  if (locality?.pricePerSqft) {
     const [lo, hi] = locality.pricePerSqft;
     const mid = Math.round((lo + hi) / 2);
 
@@ -466,7 +474,7 @@ function buildFaqs(
 
     faqs.push({
       q: `Is ${locality.name} a good area to buy in?`,
-      a: `${locality.blurb} For a buyer, the practical questions are commute, schools and how much new supply is still coming — more supply means more negotiating room now, and slower appreciation later. We will give you a straight read on all three for your specific budget.`,
+      a: `${locality.blurb ?? ""} For a buyer, the practical questions are commute, schools and how much new supply is still coming — more supply means more negotiating room now, and slower appreciation later. We will give you a straight read on all three for your specific budget.`,
     });
 
     if (resolved.bhk) {

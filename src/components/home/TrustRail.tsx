@@ -52,9 +52,7 @@ export function TrustRail() {
                 {stat.label}
               </dt>
               <dd className="display-tight mt-3 font-display text-[clamp(2.25rem,5.5vw,3.5rem)] leading-none text-ink">
-                {"prefix" in stat && stat.prefix ? (
-                  <span className="text-brass">{stat.prefix}</span>
-                ) : null}
+                {stat.prefix ? <span className="text-brass">{stat.prefix}</span> : null}
                 <Counter value={stat.value} suffix={stat.suffix} />
               </dd>
             </div>

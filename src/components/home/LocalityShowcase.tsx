@@ -6,7 +6,13 @@ import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 
 import { Reveal } from "@/components/motion/Reveal";
-import { featuredLocalities, localities, zoneLabels, type Zone } from "@/config/site";
+import {
+  featuredLocalities,
+  localities,
+  localityCount,
+  zoneLabels,
+  type Zone,
+} from "@/config/site";
 import { EXTERIORS, blurPlaceholder, unsplash } from "@/lib/imagery";
 import { cn, hashString } from "@/lib/utils";
 
@@ -52,14 +58,15 @@ export function LocalityShowcase({ counts }: { counts: Record<string, number> })
             </span>
 
             <div className="min-w-0 flex-1">
-              <p className="eyebrow mb-4">Where we work</p>
+              <p className="eyebrow mb-4">05 — Where we work</p>
               <h2 className="display-tight max-w-3xl font-display text-h2">
-                Fifty-three micro-markets.{" "}
+                {localityCount} micro-markets.{" "}
                 <em className="display-wonk text-brass">One honest read</em> of each.
               </h2>
               <p className="mt-5 max-w-xl text-lead text-ink-muted">
-                Ahmedabad is not one market — it is a dozen, each with its own
-                rate, its own buyer and its own risk.
+                Ahmedabad is not one market — it is dozens, each with its own
+                rate, its own buyer and its own absorption rate. Knowing which
+                one a project sits in decides how it should be marketed.
               </p>
             </div>
 
@@ -67,7 +74,7 @@ export function LocalityShowcase({ counts }: { counts: Record<string, number> })
               href="/localities"
               className="group mt-2 hidden shrink-0 items-center gap-2 font-mono text-micro tracking-[0.14em] text-ink-muted uppercase transition-colors hover:text-brass lg:flex"
             >
-              <span className="link-draw">All 53</span>
+              <span className="link-draw">All {localityCount}</span>
               <ArrowUpRight
                 className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 strokeWidth={2}
@@ -81,7 +88,9 @@ export function LocalityShowcase({ counts }: { counts: Record<string, number> })
         <div className="mt-14 hidden gap-14 lg:grid lg:grid-cols-[1fr_22rem] xl:grid-cols-[1fr_28rem]">
           <ul className="swap-host" onMouseLeave={() => setActive(0)}>
             {rows.map((locality, i) => {
-              const [lo, hi] = locality.pricePerSqft;
+              // Featured rows are core tier and carry a band, but the type is
+              // optional for the whole set — handle it rather than assert.
+              const band = locality.pricePerSqft;
               const n = counts[locality.slug] ?? 0;
 
               return (
@@ -110,10 +119,10 @@ export function LocalityShowcase({ counts }: { counts: Record<string, number> })
 
                     <span className="shrink-0 text-right">
                       <span className="block font-mono text-caption text-ink-soft tabular-nums" data-numeric>
-                        ₹{(lo / 1000).toFixed(1)}–{(hi / 1000).toFixed(1)}K
+                        {band ? `₹${(band[0] / 1000).toFixed(1)}–${(band[1] / 1000).toFixed(1)}K` : "On request"}
                       </span>
                       <span className="mt-1 block font-mono text-[0.5rem] tracking-[0.12em] text-ink-faint uppercase">
-                        {n > 0 ? `${n} live` : "advisory"}
+                        {n > 0 ? `${n} live` : "we cover this"}
                       </span>
                     </span>
 
@@ -156,7 +165,7 @@ export function LocalityShowcase({ counts }: { counts: Record<string, number> })
                   {rows[active]?.name}
                 </p>
                 <p className="mt-2.5 text-caption leading-relaxed text-bone/80">
-                  {rows[active]?.blurb.split(". ").slice(0, 2).join(". ")}.
+                  {(rows[active]?.blurb ?? "").split(". ").slice(0, 2).join(". ")}
                 </p>
               </div>
             </div>
@@ -166,7 +175,7 @@ export function LocalityShowcase({ counts }: { counts: Record<string, number> })
         {/* ══ Mobile: compact cards (no hover to rely on) ════════════════ */}
         <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:hidden">
           {rows.map((locality) => {
-            const [lo] = locality.pricePerSqft;
+            const lo = locality.pricePerSqft?.[0];
             const n = counts[locality.slug] ?? 0;
 
             return (
@@ -192,7 +201,8 @@ export function LocalityShowcase({ counts }: { counts: Record<string, number> })
                     {locality.name}
                   </p>
                   <p className="mt-1 font-mono text-[0.5rem] tracking-[0.12em] text-bone/60 uppercase" data-numeric>
-                    ₹{(lo / 1000).toFixed(1)}K+ · {n > 0 ? `${n} live` : "advisory"}
+                    {lo ? `₹${(lo / 1000).toFixed(1)}K+ · ` : ""}
+                    {n > 0 ? `${n} live` : "We cover this area"}
                   </p>
                 </div>
               </Link>

@@ -57,7 +57,15 @@ export function AffordabilityCalculator() {
   // Localities where the mid-rate × a 1,250 sq.ft 3 BHK fits the budget.
   const reachable = useMemo(() => {
     const assumedCarpet = 1250;
+
+    // Only areas where we actually hold a rate band can be matched against a
+    // budget. The rest are reachable too — we just will not pretend to know
+    // the number, so they are not listed here.
     return localities
+      .filter(
+        (l): l is typeof l & { pricePerSqft: [number, number] } =>
+          Boolean(l.pricePerSqft),
+      )
       .filter((l) => {
         const mid = (l.pricePerSqft[0] + l.pricePerSqft[1]) / 2;
         return mid * assumedCarpet <= workingBudget;

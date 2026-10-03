@@ -15,14 +15,15 @@ import { telLink } from "@/lib/utils";
 /**
  * The footer does three jobs at once:
  *
- *   1. Internal linking. Every locality and facet page is reachable from the
+ *   1. Internal linking. Every area and facet page is reachable from the
  *      bottom of every page, which is how a crawler discovers and keeps
  *      re-crawling several hundred landing pages.
- *   2. Compliance. The RERA agent registration and GSTIN sit here in plain
- *      sight — Indian buyers look for exactly this before they enquire, and
- *      a site that hides it loses them.
- *   3. The honest-broker note. A channel partner earns commission from the
- *      developer; saying so out loud is a trust signal, not a liability.
+ *   2. Compliance. Registration identifiers sit here in plain sight — Indian
+ *      buyers look for exactly this before they enquire, and a site that
+ *      hides it loses them. The block self-hides while the numbers are
+ *      still outstanding rather than printing empty labels.
+ *   3. The honest note. We are paid by the builder, not the buyer; saying so
+ *      out loud is a trust signal, not a liability.
  */
 export function Footer() {
   const year = new Date().getFullYear();
@@ -139,35 +140,43 @@ export function Footer() {
         </div>
       </div>
 
-      {/* ── Compliance strip ───────────────────────────────────────────── */}
-      <div className="border-t border-rule-strong/60">
-        <div className="shell flex flex-col gap-4 py-6 lg:flex-row lg:items-center lg:justify-between">
-          <dl className="flex flex-wrap gap-x-8 gap-y-2 font-mono text-micro tracking-[0.1em] uppercase">
-            <div className="flex gap-2">
-              <dt className="text-ink-faint">RERA Agent</dt>
-              <dd className="text-ink-muted">{site.compliance.reraAgentId}</dd>
-            </div>
-            <div className="flex gap-2">
-              <dt className="text-ink-faint">GSTIN</dt>
-              <dd className="text-ink-muted">{site.compliance.gstin}</dd>
-            </div>
-          </dl>
+      {/* ── Compliance strip. Rendered only when the identifiers exist —
+             an empty "RERA Agent:" label is worse than none, and these are
+             still awaiting the client. ─────────────────────────────────── */}
+      {(site.compliance.reraAgentId || site.compliance.gstin) && (
+        <div className="border-t border-rule-strong/60">
+          <div className="shell flex flex-col gap-4 py-6 lg:flex-row lg:items-center lg:justify-between">
+            <dl className="flex flex-wrap gap-x-8 gap-y-2 font-mono text-micro tracking-[0.1em] uppercase">
+              {site.compliance.reraAgentId && (
+                <div className="flex gap-2">
+                  <dt className="text-ink-faint">RERA Agent</dt>
+                  <dd className="text-ink-muted">{site.compliance.reraAgentId}</dd>
+                </div>
+              )}
+              {site.compliance.gstin && (
+                <div className="flex gap-2">
+                  <dt className="text-ink-faint">GSTIN</dt>
+                  <dd className="text-ink-muted">{site.compliance.gstin}</dd>
+                </div>
+              )}
+            </dl>
 
-          <a
-            href={site.compliance.reraPortalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-1.5 font-mono text-micro tracking-[0.12em] text-brass uppercase"
-          >
-            Verify on GujRERA
-            <ArrowUpRight
-              className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              strokeWidth={2}
-              aria-hidden
-            />
-          </a>
+            <a
+              href={site.compliance.reraPortalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-1.5 font-mono text-micro tracking-[0.12em] text-brass uppercase"
+            >
+              Verify on GujRERA
+              <ArrowUpRight
+                className="size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                strokeWidth={2}
+                aria-hidden
+              />
+            </a>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ── Legal ──────────────────────────────────────────────────────── */}
       <div className="border-t border-rule-strong/60">
@@ -175,10 +184,10 @@ export function Footer() {
           <p className="max-w-3xl text-caption leading-relaxed text-ink-faint">
             © {year} {site.legalName}. All rights reserved.{" "}
             <span className="text-ink-muted">
-              {site.name} acts as a registered channel partner and real-estate agent.
-              We are remunerated by the developer on a successful sale, and we
-              disclose any project in which we hold an investment interest on that
-              project&rsquo;s own page.
+              {site.name} provides project marketing services to builders and
+              developers. We are engaged and remunerated by the project owner,
+              not by the customer, and that does not change the price a
+              customer is quoted.
             </span>{" "}
             Prices, availability, carpet areas and possession dates are indicative,
             provided by the developer or owner, and subject to change without notice.

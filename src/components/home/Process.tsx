@@ -35,49 +35,49 @@ const steps = [
   {
     n: "01",
     icon: Search,
-    title: "We start with your constraints, not our inventory",
+    title: "Position",
     body:
-      "Budget, commute, school, the in-laws' proximity, loan eligibility. We would rather tell you your budget does not reach Thaltej than walk you through six flats you cannot finance.",
+      "Define how the project should be presented. Who it is for, what it is worth, and which three things about it are worth repeating. A project marketed without a position competes on price alone.",
     image: "1486406146926-c627a92ad1ab",
   },
   {
     n: "02",
     icon: FileSearch,
-    title: "Shortlist, with the builder's record attached",
+    title: "Promote",
     body:
-      "Every option arrives with the developer's last three deliveries — promised date against actual date. A beautiful brochure from a builder who has slipped twice is not a shortlist, it is a risk.",
+      "Build digital and local visibility around the project rather than around a generic campaign. The objective is reach among people who can actually finance the ticket size.",
     image: "1497366216548-37526070297c",
   },
   {
     n: "03",
-    icon: Scale,
-    title: "Legal diligence before you fall in love",
+    icon: Landmark,
+    title: "Generate",
     body:
-      "RERA registration, title chain, encumbrance certificate, approved plan versus what is being built, and the share of common area you are paying for. We do this before the site visit, not after the booking.",
+      "Create customer enquiries. Volume matters far less than fit — an enquiry from someone who cannot clear the loan costs the sales team the same hour as one who can.",
     image: "1551038247-3d9af20df552",
   },
   {
     n: "04",
-    icon: Landmark,
-    title: "Financing arranged in parallel",
+    icon: Scale,
+    title: "Engage",
     body:
-      "We put your profile in front of multiple lenders at once so you negotiate from a sanction letter rather than hope. No fee from you for this, and no preference for whichever bank pays us most — because none of them do.",
+      "Manage enquiries and follow-ups. Most prospects are lost in the gap between the first call and the second, so every enquiry is logged, scored and worked rather than left to memory.",
     image: "1554469384-e58fac16e23a",
   },
   {
     n: "05",
     icon: Handshake,
-    title: "Negotiation, with the real comparables",
+    title: "Visit",
     body:
-      "We know what the last four units in that tower actually transacted at, not the asking price. That is the entire negotiation, and it is the part a portal cannot do for you.",
+      "Coordinate site visits and customer interactions, including the confirmation call before anyone travels. A visit that does not happen is the most expensive kind of lead.",
     image: "1600585154340-be6161a56a0c",
   },
   {
     n: "06",
     icon: KeyRound,
-    title: "Registration, possession, and after",
+    title: "Support",
     body:
-      "Stamp duty, registration, society transfer, snag list at handover. We stay on the file until the keys turn, and we are still reachable the year after — most of our work now comes from people we did this for in 2019.",
+      "Assist sales and eligible customers with financing coordination — bank relationships, documentation guidance and loan-process follow-through, so a willing buyer is not lost to paperwork.",
     image: "1600607687939-ce8a6c25118c",
   },
 ];
@@ -114,15 +114,15 @@ export function Process() {
       <div className="shell">
         <Reveal>
           <div className="max-w-3xl border-b border-rule-strong/50 pb-8">
-            <p className="eyebrow mb-4">05 — How we work</p>
+            <p className="eyebrow mb-4">03 — The engagement</p>
             <h2 className="display-tight font-display text-h2">
-              Six stages. The{" "}
-              <em className="display-wonk text-brass">boring ones matter most.</em>
+              From project launch to{" "}
+              <em className="display-wonk text-brass">customer conversion support.</em>
             </h2>
             <p className="mt-5 text-lead text-ink-muted">
-              Anyone can show you a flat. The value is in what happens between
-              the site visit and the registration — so here is exactly what we
-              do.
+              Six stages, run by one team. The handover points between
+              marketing and sales are where projects normally leak — so there
+              are none.
             </p>
           </div>
         </Reveal>
@@ -236,11 +236,11 @@ export function Process() {
         <Reveal className="mt-14">
           <blockquote className="border-l-2 border-brass pl-6 lg:pl-8">
             <p className="max-w-2xl font-display text-h3 leading-snug text-ink">
-              If we would not put our own family in it, it does not go on the
-              shortlist.
+              Every marketing activity should contribute to moving the
+              customer one step closer to a decision.
             </p>
             <footer className="mt-4 font-mono text-[0.5625rem] tracking-[0.16em] text-ink-muted uppercase">
-              Our standing rule
+              How we judge the work
             </footer>
           </blockquote>
         </Reveal>
