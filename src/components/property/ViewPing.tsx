@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 
+import { isDemoMode } from "@/lib/demo-data";
 import { createClient } from "@/lib/supabase/client";
 
 /**
@@ -19,6 +20,11 @@ import { createClient } from "@/lib/supabase/client";
  */
 export function ViewPing({ slug }: { slug: string }) {
   useEffect(() => {
+    // No database to count against, and `createBrowserClient` throws on an
+    // undefined URL — so skip entirely rather than error in the console on
+    // every listing view.
+    if (isDemoMode()) return;
+
     const key = `sbp:viewed:${slug}`;
 
     try {

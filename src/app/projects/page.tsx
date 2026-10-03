@@ -10,6 +10,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { localityBySlug, site } from "@/config/site";
 import { formatPossession, formatPriceRange } from "@/lib/format";
 import { blurPlaceholder, heroImageFor } from "@/lib/imagery";
+import { demoProjectDetail, demoProjects, isDemoMode } from "@/lib/demo-data";
 import { createPublicClient } from "@/lib/supabase/server";
 import { breadcrumbSchema, pageMeta } from "@/lib/seo";
 import type { Project } from "@/types/db";
@@ -32,6 +33,17 @@ export const metadata: Metadata = pageMeta({
  * is not, without reading the fine print.
  */
 export default async function ProjectsPage() {
+  // Demo fallback. This page queries Supabase directly rather than going
+  // through `queries.ts`, so it needs its own guard — the omission is what
+  // failed the first Vercel build.
+  if (isDemoMode()) {
+    const rows = demoProjects
+      .map((p) => demoProjectDetail(p.slug))
+      .filter(Boolean) as unknown as Project[];
+
+    return <ProjectsPageView projects={rows.map((p) => ({ ...p, is_partnered: true }))} />;
+  }
+
   const supabase = createPublicClient();
 
   const { data } = await supabase
@@ -43,7 +55,11 @@ export default async function ProjectsPage() {
     .order("name", { ascending: true })
     .limit(60);
 
-  const projects = (data ?? []) as Project[];
+  return <ProjectsPageView projects={(data ?? []) as Project[]} />;
+}
+
+/** Shared presentation, fed from Postgres or from fixtures. */
+function ProjectsPageView({ projects }: { projects: Project[] }) {
   const partnered = projects.filter((p) => p.is_partnered);
   const others = projects.filter((p) => !p.is_partnered);
 
