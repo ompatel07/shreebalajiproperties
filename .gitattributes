@@ -1,0 +1,20 @@
+# Normalise line endings in the repository to LF.
+#
+# Development here is on Windows (CRLF) while Vercel builds on Linux (LF).
+# Without this, every file would show as modified after a checkout on the
+# other platform and diffs would be unreadable.
+* text=auto eol=lf
+
+# Binary assets must never be touched.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary
+*.avif  binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.pdf   binary
+
+# Keep generated lockfile diffs out of review noise.
+package-lock.json -diff linguist-generated
