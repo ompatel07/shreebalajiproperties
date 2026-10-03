@@ -11,7 +11,7 @@ import { NextResponse, type NextRequest } from "next/server";
  *   3. Gates `/studio`, the admin panel, behind both a valid session AND an
  *      ADMIN_EMAILS allow-list.
  */
-export async function middleware(request: NextRequest) {
+async function handle(request: NextRequest) {
   // 128 bits of entropy, base64. Fresh on every request.
   const nonce = Buffer.from(crypto.randomUUID() + crypto.randomUUID()).toString("base64");
 
@@ -75,7 +75,12 @@ export async function middleware(request: NextRequest) {
       `https://*.tile.openstreetmap.org`,
       `https://*.basemaps.cartocdn.com`,
     ].join(" "),
-    `connect-src 'self' ${supabaseUrl} ${supabaseUrl.replace(/^https/, "wss")}`.trim(),
+    // Only widen connect-src when a Supabase origin actually exists —
+    // interpolating an empty string leaves a malformed directive.
+    [
+      `connect-src 'self'`,
+      ...(supabaseUrl ? [supabaseUrl, supabaseUrl.replace(/^https/, "wss")] : []),
+    ].join(" "),
     `media-src 'self' https://*.supabase.co`,
     // No third-party embeds are used; keep the frame sinks shut.
     `frame-src 'none'`,
@@ -100,36 +105,54 @@ export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request: { headers: requestHeaders } });
 
   // ── Session refresh ────────────────────────────────────────────────────
-  const supabase = createServerClient(
-    supabaseUrl,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet: { name: string; value: string; options?: CookieOptions }[]) {
-          for (const { name, value } of cookiesToSet) {
-            request.cookies.set(name, value);
-          }
-          response = NextResponse.next({ request: { headers: requestHeaders } });
-          for (const { name, value, options } of cookiesToSet) {
-            response.cookies.set(name, value, options);
-          }
+  //
+  // The client is constructed ONLY when Supabase is configured. This is not
+  // an optimisation — `createServerClient("")` throws on an invalid URL, and
+  // because middleware runs on every request that crash took the entire site
+  // down with MIDDLEWARE_INVOCATION_FAILED on the first Vercel deploy, where
+  // no environment variables were set yet.
+  //
+  // In demo mode there is no session to refresh and no auth to enforce, so
+  // the whole block is skipped.
+  let user: { email?: string | null } | null = null;
+
+  if (!demoMode) {
+    const supabase = createServerClient(
+      supabaseUrl,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll();
+          },
+          setAll(cookiesToSet: { name: string; value: string; options?: CookieOptions }[]) {
+            for (const { name, value } of cookiesToSet) {
+              request.cookies.set(name, value);
+            }
+            response = NextResponse.next({ request: { headers: requestHeaders } });
+            for (const { name, value, options } of cookiesToSet) {
+              response.cookies.set(name, value, options);
+            }
+          },
         },
       },
-    },
-  );
+    );
 
-  // getUser() revalidates the JWT against Supabase. getSession() only decodes
-  // the cookie, which a client could have tampered with — never use it to
-  // make an authorisation decision.
-  //
-  // Skipped in demo mode: there is no Supabase to ask, and the request would
-  // just wait out a DNS failure on every single page load.
-  const user = demoMode
-    ? null
-    : (await supabase.auth.getUser()).data.user;
+    // getUser() revalidates the JWT against Supabase. getSession() only
+    // decodes the cookie, which a client could have tampered with — never
+    // use it to make an authorisation decision.
+    //
+    // Wrapped: a Supabase outage must not 500 the whole site. Failing to
+    // resolve a user simply means "not signed in", which the admin gate
+    // below already treats as a redirect to login.
+    try {
+      const { data } = await supabase.auth.getUser();
+      user = data.user;
+    } catch (error) {
+      console.error("[middleware] auth.getUser failed", error);
+      user = null;
+    }
+  }
 
   // ── Admin gate ─────────────────────────────────────────────────────────
   const { pathname } = request.nextUrl;
@@ -172,6 +195,30 @@ export async function middleware(request: NextRequest) {
   if (isAdminSurface) response.headers.set("x-nonce", nonce);
 
   return response;
+}
+
+/**
+ * Safety net.
+ *
+ * Middleware runs on every request, so an uncaught throw here takes the
+ * entire site down — which is exactly what happened on the first Vercel
+ * deploy (MIDDLEWARE_INVOCATION_FAILED on every route). Security headers
+ * and the admin gate are important, but not important enough to be a single
+ * point of failure for the whole site.
+ *
+ * On an unexpected error the request is allowed through with the static
+ * security headers from next.config.ts still applied by the CDN, and the
+ * failure is logged. The admin panel remains protected regardless, because
+ * RLS and the `profiles` role check enforce authorisation at the database
+ * level independently of this file.
+ */
+export async function middleware(request: NextRequest) {
+  try {
+    return await handle(request);
+  } catch (error) {
+    console.error("[middleware] unhandled error — passing request through", error);
+    return NextResponse.next();
+  }
 }
 
 export const config = {
