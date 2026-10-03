@@ -44,7 +44,7 @@ export default function Error({
           <button
             type="button"
             onClick={reset}
-            className="inline-flex h-13 items-center justify-center gap-2.5 rounded-[2px] bg-ink px-7 py-4 font-mono text-micro tracking-[0.14em] text-bone uppercase transition-colors hover:bg-brass-deep"
+            className="inline-flex h-13 items-center justify-center gap-2.5 rounded-[2px] bg-ink px-7 py-4 font-semibold text-micro tracking-[0.14em] text-bone uppercase transition-colors hover:bg-brass-deep"
           >
             <RotateCcw className="size-3.5" strokeWidth={2} aria-hidden />
             Try again
@@ -52,14 +52,14 @@ export default function Error({
 
           <a
             href={telLink(site.contact.phoneE164)}
-            className="inline-flex h-13 items-center justify-center gap-2.5 rounded-[2px] border border-ink/25 px-7 py-4 font-mono text-micro tracking-[0.14em] text-ink uppercase transition-colors hover:border-ink hover:bg-ink hover:text-bone"
+            className="inline-flex h-13 items-center justify-center gap-2.5 rounded-[2px] border border-ink/25 px-7 py-4 font-semibold text-micro tracking-[0.14em] text-ink uppercase transition-colors hover:border-ink hover:bg-ink hover:text-bone"
           >
             {site.contact.phoneDisplay}
           </a>
         </div>
 
         {error.digest && (
-          <p className="mt-10 font-mono text-[0.5625rem] tracking-[0.1em] text-ink-faint uppercase">
+          <p className="mt-10 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase">
             Reference {error.digest}
           </p>
         )}

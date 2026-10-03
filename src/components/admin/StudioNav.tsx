@@ -34,7 +34,7 @@ export function StudioNav({
                 href={item.href}
                 aria-current={isActive(item.href) ? "page" : undefined}
                 className={cn(
-                  "inline-block rounded-[2px] px-3.5 py-2 font-mono text-[0.625rem] tracking-[0.12em] uppercase transition-colors",
+                  "inline-block rounded-[2px] px-3.5 py-2 font-semibold text-[0.6875rem] tracking-[0.12em] uppercase transition-colors",
                   isActive(item.href)
                     ? "bg-ink text-bone"
                     : "text-ink-muted hover:bg-bone hover:text-ink",
@@ -58,7 +58,7 @@ export function StudioNav({
               href={item.href}
               aria-current={isActive(item.href) ? "page" : undefined}
               className={cn(
-                "block rounded-[2px] px-3.5 py-2.5 font-mono text-[0.625rem] tracking-[0.12em] uppercase transition-colors",
+                "block rounded-[2px] px-3.5 py-2.5 font-semibold text-[0.6875rem] tracking-[0.12em] uppercase transition-colors",
                 isActive(item.href)
                   ? "bg-ink text-bone"
                   : "text-ink-muted hover:bg-bone hover:text-ink",

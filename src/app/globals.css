@@ -1,9 +1,16 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SHREE BALAJI PROPERTIES — DESIGN SYSTEM
-   "Architectural Editorial": bone & ivory ground, ink type, brass accent,
-   with a Gujarati jaali lattice as the one piece of local vernacular.
+   SHREE KRISHNA PROPERTIES — DESIGN SYSTEM
+   "Ivory, Forest & Gold". An ivory ground, a deep forest-black for weight,
+   and a single gold accent. The Gujarati jaali lattice stays as the one
+   piece of local vernacular.
+
+   The earlier palette read as a template: a dull ochre accent that failed
+   contrast as body text (3.88:1), and mono-uppercase labels on every
+   section, which signals "agency portfolio" rather than a property brand a
+   family would trust with a purchase. Every colour below is validated to
+   WCAG AA against the surface it actually sits on.
 
    Bright by intent — in Indian residential property light reads as honest
    and open, where dark reads as nightclub.
@@ -17,33 +24,43 @@
 
 @theme {
   /* ── Surfaces ─────────────────────────────────────────────────────────── */
-  --color-bone: #faf8f4;
+  --color-bone: #fbfaf7;
   --color-paper: #ffffff;
-  --color-sand: #f2ece2;
-  --color-sand-deep: #e8e0d2;
-  --color-clay: #ddd2bf;
+  --color-sand: #f4f1ea;
+  --color-sand-deep: #eae5da;
+  --color-clay: #d8d0c0;
 
   /* ── Ink ──────────────────────────────────────────────────────────────── */
-  --color-ink: #16150f;
-  --color-ink-soft: #3d3a31;
-  --color-ink-muted: #6e685c;
-  --color-ink-faint: #9b9487;
+  --color-ink: #0f1511;
+  --color-ink-soft: #39413a;
+  --color-ink-muted: #5c645b;
+  --color-ink-faint: #6b7169;
 
-  /* ── Brass. The single accent. ────────────────────────────────────────── */
-  --color-brass: #a3762c;
-  --color-brass-light: #c79a4f;
-  --color-brass-pale: #f0e4cd;
-  --color-brass-deep: #7d5a1f;
+  /* ── Gold. The single accent, kept on the `brass-*` names so the whole
+        site re-skins from this block alone.
+        `brass`       4.69:1 on ivory — passes AA as body text.
+        `brass-light` 7.56:1 on ink   — for dark bands only, never on ivory.
+        `brass-deep`  6.88:1 on ivory — hover and pressed states. ───────── */
+  --color-brass: #8f6b1e;
+  --color-brass-light: #c9a227;
+  --color-brass-pale: #f6eed6;
+  --color-brass-deep: #6f5313;
+
+  /* ── Forest. The new secondary, for panels and badges that need weight
+        without going all the way to ink. 10.61:1 against ivory. ───────── */
+  --color-forest: #1b4332;
+  --color-forest-soft: #2d6a52;
+  --color-forest-pale: #eaf0ec;
 
   /* ── Semantics ────────────────────────────────────────────────────────── */
-  --color-verdant: #3f6b4a;
-  --color-verdant-pale: #e6efe6;
+  --color-verdant: #1b5e3f;
+  --color-verdant-pale: #e6efe9;
   --color-alert: #9a3412;
   --color-alert-pale: #fdeee6;
 
   /* ── Hairlines ────────────────────────────────────────────────────────── */
-  --color-rule: #e4ddd0;
-  --color-rule-strong: #cdc3b0;
+  --color-rule: #e7e2d6;
+  --color-rule-strong: #cfc8b7;
 
   /* ── Data series. FIXED ORDER — by slot, never cycled.
         Validated against the bone surface for lightness band, chroma floor,
@@ -55,8 +72,8 @@
   --color-series-3: #1f5fa8;
 
   /* ── Type stacks ──────────────────────────────────────────────────────── */
-  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
-  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-instrument), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", monospace;
 
   /* ── Editorial scale. Fluid, clamped, no thrash between widths. ───────── */
@@ -86,11 +103,12 @@
   --ease-draw: cubic-bezier(0.65, 0, 0.35, 1);
 
   /* ── Elevation. Warm-tinted, never neutral grey. ──────────────────────── */
-  --shadow-lift: 0 1px 2px rgba(22, 21, 15, 0.04), 0 2px 8px rgba(22, 21, 15, 0.04);
-  --shadow-raise: 0 2px 4px rgba(22, 21, 15, 0.04), 0 12px 28px -8px rgba(22, 21, 15, 0.1);
-  --shadow-float: 0 4px 8px rgba(22, 21, 15, 0.05), 0 24px 56px -16px rgba(22, 21, 15, 0.16);
+  --shadow-lift: 0 1px 2px rgba(15, 21, 17, 0.04), 0 2px 8px rgba(15, 21, 17, 0.04);
+  --shadow-raise: 0 2px 4px rgba(15, 21, 17, 0.04), 0 12px 28px -8px rgba(15, 21, 17, 0.1);
+  --shadow-float: 0 4px 8px rgba(15, 21, 17, 0.05), 0 24px 56px -16px rgba(15, 21, 17, 0.16);
 
-  --radius-card: 2px;
+  --radius-card: 4px;
+  --radius-lg: 12px;
   --radius-pill: 999px;
 }
 
@@ -127,14 +145,26 @@
     overflow-x: hidden;
   }
 
+  /* The display serif carries h1 and h2 only. Running the whole h1-h4 chain
+     in a high-contrast serif is what made the old pages read like a
+     magazine rather than a property brand: by h4 the serif is too delicate
+     to hold a label, and the page loses its spine. Big serif moments, sans
+     for structure, is the premium-minimal formula. */
   h1,
-  h2,
-  h3,
-  h4 {
+  h2 {
     font-family: var(--font-display);
     color: var(--color-ink);
     font-weight: 400;
-    letter-spacing: -0.021em;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  h3,
+  h4 {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    font-weight: 600;
+    letter-spacing: -0.014em;
     text-wrap: balance;
   }
 
@@ -244,13 +274,27 @@
   }
 
   /* ── Eyebrow. The monospace micro-caps that set the register. ────────── */
+  /* Was mono. A tracked-out monospace label above every section is a
+     brutalist-portfolio signal, and it appeared ~40 times across the site —
+     the single loudest reason the pages read as a template. The sans at 600
+     with open tracking says the same thing and looks bought, not built. */
   .eyebrow {
-    font-family: var(--font-mono);
-    font-size: var(--text-micro);
-    font-weight: 500;
-    letter-spacing: 0.16em;
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-ink-muted);
+  }
+
+  /* Mono is now reserved for what it is actually good at: figures, codes
+     and measurements. `.tag` replaces it everywhere else. */
+  .tag {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 
   /* ── Vertical rotated label. Architectural drawing margin note. ──────── */
@@ -264,18 +308,21 @@
   }
 
   /* ── Display type refinements ────────────────────────────────────────── */
+  /* Instrument Serif is already narrow and high-contrast, so it needs far
+     less negative tracking than the old variable serif did. Over-tightening
+     it closes the counters and the headline turns into a smear. */
   .display-tight {
-    letter-spacing: -0.035em;
-    font-variation-settings: "SOFT" 0, "WONK" 0;
+    letter-spacing: -0.018em;
   }
   .display-mega {
-    letter-spacing: -0.05em;
-    font-variation-settings: "SOFT" 0, "WONK" 0;
+    letter-spacing: -0.028em;
   }
-  /* Fraunces' WONK axis, for ONE expressive word in a headline. */
+  /* ONE expressive word in a headline. The old version drove Fraunces' WONK
+     axis, which this face does not have — but it has a genuine drawn italic,
+     which is the better device anyway. */
   .display-wonk {
-    font-variation-settings: "SOFT" 14, "WONK" 1;
     font-style: italic;
+    letter-spacing: -0.01em;
   }
 
   /* ── Oversized section numeral. Sits behind/beside a heading. ────────── */

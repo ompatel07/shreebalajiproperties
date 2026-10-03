@@ -55,7 +55,7 @@ export function StickyActionBar() {
         className="flex flex-col items-center gap-1 py-3 text-ink active:bg-sand"
       >
         <Phone className="size-[1.15rem]" strokeWidth={1.7} aria-hidden />
-        <span className="font-mono text-[0.5625rem] tracking-[0.14em] uppercase">Call</span>
+        <span className="font-semibold text-[0.6875rem] tracking-[0.14em] uppercase">Call</span>
       </a>
 
       <a
@@ -65,7 +65,7 @@ export function StickyActionBar() {
         className="flex flex-col items-center gap-1 border-x border-rule py-3 text-verdant active:bg-sand"
       >
         <MessageCircle className="size-[1.15rem]" strokeWidth={1.7} aria-hidden />
-        <span className="font-mono text-[0.5625rem] tracking-[0.14em] uppercase">WhatsApp</span>
+        <span className="font-semibold text-[0.6875rem] tracking-[0.14em] uppercase">WhatsApp</span>
       </a>
 
       <Link
@@ -80,7 +80,7 @@ export function StickyActionBar() {
             </span>
           )}
         </span>
-        <span className="font-mono text-[0.5625rem] tracking-[0.14em] uppercase">Saved</span>
+        <span className="font-semibold text-[0.6875rem] tracking-[0.14em] uppercase">Saved</span>
       </Link>
     </div>
   );

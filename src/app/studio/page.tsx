@@ -147,7 +147,7 @@ function DashboardView({
         </div>
       ) : (
         <div className="mt-8 rounded-[2px] border border-alert/30 bg-alert-pale p-6">
-          <p className="font-mono text-micro tracking-[0.12em] text-alert uppercase">
+          <p className="font-semibold text-micro tracking-[0.12em] text-alert uppercase">
             Could not load counters
           </p>
           <p className="mt-2 text-caption leading-relaxed text-ink-soft">
@@ -170,7 +170,7 @@ function DashboardView({
             </h2>
             <Link
               href="/studio/leads"
-              className="group inline-flex items-center gap-1.5 font-mono text-[0.5625rem] tracking-[0.12em] text-brass uppercase"
+              className="group inline-flex items-center gap-1.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-brass uppercase"
             >
               <span className="link-draw">All leads</span>
               <ArrowUpRight className="size-2.5" strokeWidth={2.2} aria-hidden />
@@ -189,7 +189,7 @@ function DashboardView({
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
-                        <p className="font-display text-[1.0625rem] text-ink">{lead.name}</p>
+                        <p className="text-[1.0625rem] font-semibold text-ink">{lead.name}</p>
                         <ScoreChip score={lead.score} />
                         <Badge tone="neutral">{lead.source.replace(/_/g, " ")}</Badge>
                       </div>
@@ -210,10 +210,10 @@ function DashboardView({
                     </div>
 
                     <div className="shrink-0 text-right">
-                      <p className="font-mono text-[0.5625rem] tracking-[0.1em] text-ink-faint uppercase">
+                      <p className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase">
                         {formatRelative(lead.created_at)}
                       </p>
-                      <p className="mt-1 font-mono text-[0.5625rem] tracking-[0.1em] text-ink-muted uppercase">
+                      <p className="mt-1 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
                         {lead.status.replace(/_/g, " ")}
                       </p>
                     </div>
@@ -234,7 +234,7 @@ function DashboardView({
               </h2>
               <Link
                 href="/studio/visits"
-                className="font-mono text-[0.5625rem] tracking-[0.12em] text-brass uppercase"
+                className="font-semibold text-[0.6875rem] tracking-[0.12em] text-brass uppercase"
               >
                 All
               </Link>
@@ -247,7 +247,7 @@ function DashboardView({
                 {visits.map((visit) => (
                   <li key={visit.id} className="flex items-center justify-between gap-3 py-3.5">
                     <div className="min-w-0">
-                      <p className="truncate font-display text-[0.9375rem] text-ink">
+                      <p className="truncate text-[0.9375rem] font-semibold text-ink">
                         {visit.visitor_name}
                       </p>
                       <a
@@ -284,7 +284,7 @@ function DashboardView({
               </h2>
               <Link
                 href="/studio/listings"
-                className="font-mono text-[0.5625rem] tracking-[0.12em] text-brass uppercase"
+                className="font-semibold text-[0.6875rem] tracking-[0.12em] text-brass uppercase"
               >
                 All
               </Link>
@@ -299,10 +299,10 @@ function DashboardView({
                     <Link href={`/studio/listings/${p.id}`} className="group block">
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
-                          <p className="truncate font-display text-[0.9375rem] text-ink group-hover:text-brass">
+                          <p className="truncate text-[0.9375rem] font-semibold text-ink group-hover:text-brass">
                             {p.title}
                           </p>
-                          <p className="font-mono text-[0.5625rem] tracking-[0.1em] text-ink-muted uppercase">
+                          <p className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
                             {localityBySlug.get(p.locality_slug)?.name ?? p.locality_slug}
                             {p.price ? ` · ${formatPrice(p.price)}` : ""}
                           </p>
@@ -344,7 +344,7 @@ function Stat({
         tone === "brass" ? "bg-brass-pale/60" : "bg-paper"
       } ${href ? "hover:bg-sand" : ""}`}
     >
-      <p className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-muted uppercase">
+      <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
         {label}
       </p>
       <p className="mt-2 font-display text-h3 leading-none text-ink" data-numeric>
@@ -374,7 +374,7 @@ function EmptyPanel({ title, body }: { title: string; body: string }) {
     <div className="relative overflow-hidden rounded-[2px] border border-rule bg-paper px-5 py-10 text-center">
       <div className="jaali absolute inset-0" aria-hidden />
       <div className="relative">
-        <p className="flex items-center justify-center gap-2 font-display text-[1.0625rem] text-ink">
+        <p className="flex items-center justify-center gap-2 text-[1.0625rem] font-semibold text-ink">
           <Eye className="size-4 text-ink-faint" strokeWidth={1.7} aria-hidden />
           {title}
         </p>

@@ -76,7 +76,7 @@ export function Logo({
         {showTagline && (
           <span
             className={cn(
-              "mt-1 font-mono text-[0.5625rem] tracking-[0.2em] uppercase",
+              "mt-1 font-semibold text-[0.6875rem] tracking-[0.2em] uppercase",
               isInverse ? "text-bone/55" : "text-ink-muted",
             )}
           >

@@ -29,7 +29,7 @@ export function TrustRail() {
               <span className="h-px w-8 bg-brass" aria-hidden />
               Since {site.foundedYear}, in numbers
             </p>
-            <p className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-faint uppercase">
+            <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
               Verifiable on request
             </p>
           </div>
@@ -48,7 +48,7 @@ export function TrustRail() {
                 i > 1 ? "border-t border-ink/10 lg:border-t-0" : "",
               ].join(" ")}
             >
-              <dt className="font-mono text-[0.5625rem] leading-relaxed tracking-[0.14em] text-ink-muted uppercase">
+              <dt className="font-semibold text-[0.6875rem] leading-relaxed tracking-[0.14em] text-ink-muted uppercase">
                 {stat.label}
               </dt>
               <dd className="display-tight mt-3 font-display text-[clamp(2.25rem,5.5vw,3.5rem)] leading-none text-ink">

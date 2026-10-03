@@ -31,7 +31,7 @@ export default async function MapPage() {
         <div className="shell py-5">
           <h1 className="font-display text-h4 text-ink">
             Property map
-            <span className="ml-3 font-mono text-micro tracking-[0.12em] text-ink-muted uppercase">
+            <span className="ml-3 font-semibold text-micro tracking-[0.12em] text-ink-muted uppercase">
               Ahmedabad · Gandhinagar
             </span>
           </h1>

@@ -52,7 +52,7 @@ export function ForBuildersBand() {
 
               <Link
                 href="/for-builders"
-                className="group mt-7 inline-flex h-13 items-center gap-2.5 bg-brass px-7 font-mono text-[0.75rem] tracking-[0.14em] text-paper uppercase transition-colors duration-300 hover:bg-bone hover:text-ink"
+                className="group mt-7 inline-flex h-13 items-center gap-2.5 bg-brass px-7 font-semibold text-[0.75rem] tracking-[0.14em] text-paper uppercase transition-colors duration-300 hover:bg-bone hover:text-ink"
               >
                 See what we do for builders
                 <ArrowRight
@@ -82,7 +82,7 @@ export function ForBuildersBand() {
                 ))}
               </ul>
 
-              <p className="mt-6 border-t border-bone/15 pt-4 font-mono text-[0.5rem] leading-relaxed tracking-[0.12em] text-bone/45 uppercase">
+              <p className="mt-6 border-t border-bone/15 pt-4 font-semibold text-[0.6875rem] leading-relaxed tracking-[0.12em] text-bone/45 uppercase">
                 Marketed · {portfolio.map((p) => p.name).join(" · ")}
               </p>
             </div>

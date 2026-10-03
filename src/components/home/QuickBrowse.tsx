@@ -36,18 +36,28 @@ export function QuickBrowse() {
   ];
 
   return (
-    <section className="border-t border-rule bg-bone py-16 lg:py-20">
+    <section className="relative border-t border-rule bg-sand py-16 lg:py-20">
       <div className="shell">
         {/* ── Popular searches: the fastest path in ───────────────────── */}
         <Reveal>
-          <div className="flex flex-wrap items-baseline justify-between gap-4">
-            <p className="eyebrow flex items-center gap-2.5">
-              <Sparkles className="size-3.5 text-brass" strokeWidth={2} aria-hidden />
-              Popular right now
+          <div className="mb-10 max-w-2xl">
+            <p className="eyebrow mb-4 flex items-center gap-2.5 text-brass">
+              <Sparkles className="size-3.5" strokeWidth={2} aria-hidden />
+              Start here
             </p>
+            <h2 className="display-tight font-display text-h2">
+              Four ways in.{" "}
+              <em className="display-wonk text-brass">No form to fill.</em>
+            </h2>
+          </div>
+        </Reveal>
+
+        <Reveal>
+          <div className="flex flex-wrap items-baseline justify-between gap-4">
+            <p className="eyebrow">Popular right now</p>
             <Link
               href="/properties"
-              className="group inline-flex items-center gap-1.5 font-mono text-[0.5625rem] tracking-[0.12em] text-brass uppercase"
+              className="group inline-flex items-center gap-1.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-brass uppercase"
             >
               <span className="link-draw">See everything</span>
               <ArrowUpRight className="size-2.5" strokeWidth={2.2} aria-hidden />
@@ -60,7 +70,7 @@ export function QuickBrowse() {
             <Link
               key={item.href}
               href={item.href}
-              className="border border-rule-strong bg-paper px-4 py-2.5 text-[0.875rem] text-ink transition-all duration-300 hover:border-ink hover:bg-ink hover:text-bone"
+              className="rounded-full border border-rule-strong bg-paper px-4 py-2.5 text-[0.875rem] font-medium text-ink shadow-[var(--shadow-lift)] transition-all duration-300 hover:-translate-y-0.5 hover:border-ink hover:bg-ink hover:text-bone"
             >
               {item.label}
             </Link>
@@ -68,7 +78,7 @@ export function QuickBrowse() {
         </RevealGroup>
 
         {/* ── Four ways in, matching how buyers actually think ─────────── */}
-        <div className="mt-14 grid gap-px bg-rule md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <Column
             icon={Banknote}
             title="By budget"
@@ -129,27 +139,30 @@ function Column({
   extra?: { label: string; href: string };
 }) {
   return (
-    <div className="bg-bone p-6 lg:p-7">
-      <div className="flex items-center gap-2.5 border-b border-rule pb-3">
-        <Icon className="size-4 shrink-0 text-brass" strokeWidth={1.7} aria-hidden />
-        <div>
-          <p className="font-display text-[1.0625rem] leading-none text-ink">{title}</p>
-          <p className="mt-1 font-mono text-[0.5rem] tracking-[0.12em] text-ink-faint uppercase">
-            {hint}
-          </p>
+    /* A card on paper with a lift on hover, rather than a cell in a hairline
+       table. The table version read as a spreadsheet — correct information,
+       no invitation to touch it. */
+    <div className="group/card flex flex-col rounded-[var(--radius-lg)] border border-rule bg-paper p-6 shadow-[var(--shadow-lift)] transition-all duration-400 hover:-translate-y-1 hover:border-rule-strong hover:shadow-[var(--shadow-raise)] lg:p-7">
+      <div className="flex items-start gap-3 border-b border-rule pb-4">
+        <span className="grid size-9 shrink-0 place-items-center rounded-full bg-brass-pale text-brass transition-colors duration-400 group-hover/card:bg-brass group-hover/card:text-paper">
+          <Icon className="size-[1.05rem]" strokeWidth={1.9} aria-hidden />
+        </span>
+        <div className="min-w-0">
+          <p className="text-[1.0625rem] font-semibold leading-tight text-ink">{title}</p>
+          <p className="mt-0.5 text-[0.8125rem] text-ink-faint">{hint}</p>
         </div>
       </div>
 
-      <ul className="mt-4 space-y-2">
+      <ul className="mt-5 space-y-2.5">
         {links.map((link) => (
           <li key={link.href}>
             <Link
               href={link.href}
-              className="group flex items-center justify-between gap-2 py-0.5 text-[0.9375rem] text-ink-soft transition-colors duration-250 hover:text-brass"
+              className="group/link flex items-center justify-between gap-2 py-0.5 text-[0.9375rem] text-ink-soft transition-colors duration-250 hover:text-brass"
             >
               <span className="link-draw">{link.label}</span>
               <ArrowUpRight
-                className="size-3 shrink-0 opacity-0 transition-opacity group-hover:opacity-100"
+                className="size-3.5 shrink-0 -translate-x-1 opacity-0 transition-all duration-300 group-hover/link:translate-x-0 group-hover/link:opacity-100"
                 strokeWidth={2}
                 aria-hidden
               />
@@ -158,10 +171,10 @@ function Column({
         ))}
 
         {extra && (
-          <li className="pt-1">
+          <li className="pt-2">
             <Link
               href={extra.href}
-              className="font-mono text-[0.5625rem] tracking-[0.12em] text-brass uppercase hover:underline"
+              className="font-semibold text-[0.6875rem] tracking-[0.12em] text-brass uppercase hover:underline"
             >
               {extra.label} →
             </Link>

@@ -233,7 +233,7 @@ export default async function PropertyPage({ params }: Props) {
                   </p>
 
                   {property.price && !property.price_on_request && (
-                    <p className="mt-2.5 font-mono text-micro tracking-[0.08em] text-ink-muted uppercase">
+                    <p className="mt-2.5 font-semibold text-micro tracking-[0.08em] text-ink-muted uppercase">
                       {formatRupeesExact(property.price)}
                       {area ? ` · ${pricePerSqft(property.price, area)}` : ""}
                       {property.is_negotiable ? " · Negotiable" : ""}
@@ -409,7 +409,7 @@ export default async function PropertyPage({ params }: Props) {
                           </div>
                         )}
                         <figcaption className="flex items-baseline justify-between gap-3 border-t border-rule px-4 py-3">
-                          <span className="font-display text-[1.0625rem] text-ink">
+                          <span className="text-[1.0625rem] font-semibold text-ink">
                             {plan.label}
                           </span>
                           <span className="font-mono text-[0.625rem] text-ink-muted" data-numeric>
@@ -448,7 +448,7 @@ export default async function PropertyPage({ params }: Props) {
                 ) : (
                   <div className="relative overflow-hidden rounded-[2px] border border-rule bg-sand p-12 text-center">
                     <div className="jaali absolute inset-0" aria-hidden />
-                    <p className="relative font-mono text-micro tracking-[0.14em] text-ink-muted uppercase">
+                    <p className="relative font-semibold text-micro tracking-[0.14em] text-ink-muted uppercase">
                       Exact location shared on enquiry
                     </p>
                   </div>
@@ -460,7 +460,7 @@ export default async function PropertyPage({ params }: Props) {
                       <div key={place.name} className="flex items-baseline justify-between gap-3 bg-paper px-4 py-3.5">
                         <div className="min-w-0">
                           <dt className="truncate text-[0.9375rem] text-ink">{place.name}</dt>
-                          <p className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-faint uppercase">
+                          <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
                             {place.type}
                           </p>
                         </div>
@@ -480,7 +480,7 @@ export default async function PropertyPage({ params }: Props) {
                     </p>
                     <Link
                       href={`/${locality.city}/${locality.slug}`}
-                      className="group mt-5 inline-flex items-center gap-2 font-mono text-micro tracking-[0.14em] text-brass uppercase"
+                      className="group mt-5 inline-flex items-center gap-2 font-semibold text-micro tracking-[0.14em] text-brass uppercase"
                     >
                       <span className="link-draw">
                         Everything we have in {locality.name}
@@ -503,7 +503,7 @@ export default async function PropertyPage({ params }: Props) {
 
             {/* ── Provenance ───────────────────────────────────────────── */}
             <div className="mt-14 border-t border-rule pt-6">
-              <dl className="flex flex-wrap gap-x-8 gap-y-2 font-mono text-micro tracking-[0.1em] text-ink-faint uppercase">
+              <dl className="flex flex-wrap gap-x-8 gap-y-2 font-semibold text-micro tracking-[0.1em] text-ink-faint uppercase">
                 <div className="flex gap-2">
                   <dt>Listed</dt>
                   <dd className="text-ink-muted">
@@ -590,14 +590,14 @@ function Spec({
 }) {
   return (
     <div className="bg-paper px-4 py-4">
-      <dt className="flex items-center gap-2 font-mono text-[0.5625rem] tracking-[0.14em] text-ink-faint uppercase">
+      <dt className="flex items-center gap-2 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
         <Icon className="size-3" strokeWidth={1.8} />
         {label}
       </dt>
       <dd className={`mt-1.5 font-display text-[1.125rem] text-ink ${className ?? ""}`}>
         {value}
         {note && (
-          <span className="ml-1.5 font-mono text-[0.5625rem] tracking-[0.1em] text-brass uppercase">
+          <span className="ml-1.5 font-semibold text-[0.6875rem] tracking-[0.1em] text-brass uppercase">
             {note}
           </span>
         )}
@@ -619,25 +619,25 @@ function AreaExplainer({ carpet }: { carpet: number }) {
 
   return (
     <div className="mt-5 rounded-[2px] border border-brass/25 bg-brass-pale/40 p-5">
-      <p className="font-mono text-[0.5625rem] tracking-[0.14em] text-brass-deep uppercase">
+      <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-brass-deep uppercase">
         What the same flat would be advertised as
       </p>
       <dl className="mt-3 flex flex-wrap gap-x-8 gap-y-2">
         <div>
           <dt className="text-caption text-ink-muted">Carpet (RERA)</dt>
-          <dd className="font-display text-[1.0625rem] text-ink" data-numeric>
+          <dd className="text-[1.0625rem] font-semibold text-ink" data-numeric>
             {formatArea(a.carpet)}
           </dd>
         </div>
         <div>
           <dt className="text-caption text-ink-muted">Built-up ≈</dt>
-          <dd className="font-display text-[1.0625rem] text-ink-muted" data-numeric>
+          <dd className="text-[1.0625rem] font-semibold text-ink-muted" data-numeric>
             {formatArea(a.builtup)}
           </dd>
         </div>
         <div>
           <dt className="text-caption text-ink-muted">Super built-up ≈</dt>
-          <dd className="font-display text-[1.0625rem] text-ink-muted" data-numeric>
+          <dd className="text-[1.0625rem] font-semibold text-ink-muted" data-numeric>
             {formatArea(a.superBuiltup)}
           </dd>
         </div>

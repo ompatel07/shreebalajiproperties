@@ -106,7 +106,7 @@ export function BuyerSteps() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link
               href="/properties"
-              className="group inline-flex h-13 items-center justify-center gap-2.5 bg-ink px-7 font-mono text-[0.75rem] tracking-[0.14em] text-bone uppercase transition-colors duration-300 hover:bg-brass-deep"
+              className="group inline-flex h-13 items-center justify-center gap-2.5 bg-ink px-7 font-semibold text-[0.75rem] tracking-[0.14em] text-bone uppercase transition-colors duration-300 hover:bg-brass-deep"
             >
               Start searching
               <ArrowRight
@@ -120,7 +120,7 @@ export function BuyerSteps() {
               href={whatsappLink(site.contact.whatsapp, message)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-13 items-center justify-center gap-2.5 border border-verdant/40 px-7 font-mono text-[0.75rem] tracking-[0.14em] text-verdant uppercase transition-colors duration-300 hover:bg-verdant hover:text-paper"
+              className="inline-flex h-13 items-center justify-center gap-2.5 border border-verdant/40 px-7 font-semibold text-[0.75rem] tracking-[0.14em] text-verdant uppercase transition-colors duration-300 hover:bg-verdant hover:text-paper"
             >
               <MessageCircle className="size-4" strokeWidth={1.9} aria-hidden />
               Just WhatsApp us

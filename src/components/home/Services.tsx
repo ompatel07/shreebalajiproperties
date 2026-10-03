@@ -95,13 +95,13 @@ export function Services() {
                   <tr className="border-b border-rule-strong text-left">
                     <th
                       scope="col"
-                      className="w-1/2 pb-3 font-mono text-[0.5625rem] tracking-[0.14em] font-normal text-ink-faint uppercase"
+                      className="w-1/2 pb-3 text-[0.6875rem] tracking-[0.14em] font-normal text-ink-faint uppercase"
                     >
                       Conventional approach
                     </th>
                     <th
                       scope="col"
-                      className="w-1/2 pb-3 pl-6 font-mono text-[0.5625rem] tracking-[0.14em] font-normal text-brass uppercase"
+                      className="w-1/2 pb-3 pl-6 text-[0.6875rem] tracking-[0.14em] font-normal text-brass uppercase"
                     >
                       With us
                     </th>
@@ -114,7 +114,7 @@ export function Services() {
                       <td className="py-4 pr-6 align-top text-[0.9375rem] text-ink-faint line-through decoration-rule-strong">
                         {row.conventional}
                       </td>
-                      <td className="border-l border-rule py-4 pl-6 align-top font-display text-[1.0625rem] text-ink">
+                      <td className="border-l border-rule py-4 pl-6 align-top text-[1.0625rem] font-semibold text-ink">
                         {row.ours}
                       </td>
                     </tr>
@@ -166,7 +166,7 @@ export function Services() {
                     <span
                       className={
                         i === all.length - 1
-                          ? "font-display text-[1.0625rem] text-brass-deep"
+                          ? "text-[1.0625rem] font-semibold text-brass-deep"
                           : "text-[0.9375rem] text-ink-soft"
                       }
                     >
@@ -187,7 +187,7 @@ export function Services() {
         <Reveal className="mt-12">
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2 font-mono text-micro tracking-[0.14em] text-brass uppercase"
+            className="group inline-flex items-center gap-2 font-semibold text-micro tracking-[0.14em] text-brass uppercase"
           >
             <span className="link-draw">Talk to us about your project</span>
             <ArrowUpRight

@@ -71,7 +71,7 @@ export function VisitActions({
             onClick={() => set(n.value)}
             disabled={pending}
             className={cn(
-              "rounded-[2px] border px-2.5 py-2 font-mono text-[0.5625rem] tracking-[0.1em] uppercase transition-colors disabled:opacity-50",
+              "rounded-[2px] border px-2.5 py-2 font-semibold text-[0.6875rem] tracking-[0.1em] uppercase transition-colors disabled:opacity-50",
               n.tone,
             )}
           >

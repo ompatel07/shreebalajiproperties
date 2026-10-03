@@ -103,13 +103,13 @@ export function HeroSearch() {
     <form
       onSubmit={submit}
       className={cn(
-        "rounded-[2px] border bg-bone/95 shadow-[var(--shadow-float)] backdrop-blur-xl transition-colors duration-400",
-        focused ? "border-brass" : "border-bone/25",
+        "overflow-hidden rounded-[var(--radius-lg)] border bg-paper shadow-[var(--shadow-raise)] transition-colors duration-400",
+        focused ? "border-brass" : "border-rule-strong",
       )}
     >
       {/* ── Free-text row ────────────────────────────────────────────── */}
-      <div className="flex items-center gap-3 border-b border-rule px-4 py-3.5 lg:px-5">
-        <Search className="size-[1.1rem] shrink-0 text-ink-faint" strokeWidth={1.7} aria-hidden />
+      <div className="flex items-center gap-3 border-b border-rule px-4 py-4 lg:px-5">
+        <Search className="size-[1.1rem] shrink-0 text-brass" strokeWidth={2} aria-hidden />
         <input
           ref={inputRef}
           type="search"
@@ -120,12 +120,12 @@ export function HeroSearch() {
           placeholder="Try “3 BHK in Shela” or a project name"
           aria-label="Search properties, localities or projects"
           enterKeyHint="search"
-          className="min-w-0 flex-1 bg-transparent text-[0.9375rem] text-ink placeholder:text-ink-faint focus:outline-none"
+          className="min-w-0 flex-1 bg-transparent text-[1rem] text-ink placeholder:text-ink-faint focus:outline-none"
         />
       </div>
 
       {/* ── Facet row ────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-2 gap-px bg-rule lg:grid-cols-[1.2fr_1fr_1fr_0.8fr_auto]">
+      <div className="grid min-w-0 grid-cols-2 gap-px bg-rule lg:grid-cols-[1.2fr_1fr_1fr_0.8fr_auto]">
         <SelectCell label="Locality" value={locality} onChange={setLocality}>
           <option value="">Anywhere</option>
           {localities.map((l) => (
@@ -180,11 +180,11 @@ export function HeroSearch() {
 
         <button
           type="submit"
-          className="group col-span-2 flex items-center justify-center gap-2.5 bg-ink px-7 py-3.5 font-mono text-micro tracking-[0.14em] text-bone uppercase transition-colors duration-300 hover:bg-brass-deep lg:col-span-1 lg:py-4"
+          className="group col-span-2 flex items-center justify-center gap-2.5 bg-ink px-8 py-4 text-[0.9375rem] font-semibold text-bone transition-colors duration-300 hover:bg-brass-deep lg:col-span-1"
         >
           Search
           <ArrowRight
-            className="size-3.5 transition-transform duration-300 group-hover:translate-x-1"
+            className="size-4 transition-transform duration-300 group-hover:translate-x-1"
             strokeWidth={2}
             aria-hidden
           />
@@ -210,8 +210,8 @@ function SelectCell({
   children: React.ReactNode;
 }) {
   return (
-    <label className="group flex cursor-pointer flex-col gap-0.5 bg-bone px-3 py-2.5 transition-colors duration-300 hover:bg-sand sm:gap-1 sm:px-4 sm:py-3 lg:px-5">
-      <span className="truncate font-mono text-[0.5rem] tracking-[0.14em] text-ink-faint uppercase sm:text-[0.5625rem] sm:tracking-[0.16em]">
+    <label className="group flex min-w-0 cursor-pointer flex-col gap-0.5 bg-paper px-3 py-2.5 transition-colors duration-300 hover:bg-sand sm:gap-1 sm:px-4 sm:py-3 lg:px-5">
+      <span className="truncate text-[0.625rem] font-semibold tracking-[0.12em] text-ink-faint uppercase">
         {label}
       </span>
       <select

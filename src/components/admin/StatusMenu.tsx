@@ -71,7 +71,7 @@ export function StatusMenu({
         disabled={pending}
         aria-label="Listing status"
         className={cn(
-          "cursor-pointer rounded-[2px] border px-2.5 py-1.5 font-mono text-[0.5625rem] tracking-[0.1em] uppercase transition-opacity focus:border-brass focus:outline-none",
+          "cursor-pointer rounded-[2px] border px-2.5 py-1.5 font-semibold text-[0.6875rem] tracking-[0.1em] uppercase transition-opacity focus:border-brass focus:outline-none",
           TONE[current],
           pending && "opacity-60",
         )}

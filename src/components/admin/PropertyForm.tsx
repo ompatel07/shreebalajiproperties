@@ -258,7 +258,7 @@ export function PropertyForm({
                     aria-selected={tab === t.key}
                     onClick={() => setTab(t.key)}
                     className={cn(
-                      "relative shrink-0 px-4 py-3 font-mono text-[0.625rem] tracking-[0.12em] uppercase transition-colors",
+                      "relative shrink-0 px-4 py-3 font-semibold text-[0.6875rem] tracking-[0.12em] uppercase transition-colors",
                       tab === t.key
                         ? "text-ink"
                         : "text-ink-faint hover:text-ink-muted",
@@ -653,7 +653,7 @@ export function PropertyForm({
             {/* Amenities */}
             <div className="mt-8">
               <div className="flex items-baseline justify-between gap-4 border-b border-rule pb-3">
-                <p className="font-mono text-[0.5625rem] tracking-[0.16em] text-ink-muted uppercase">
+                <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
                   Amenities
                 </p>
                 <div className="flex items-center gap-3">
@@ -662,7 +662,7 @@ export function PropertyForm({
                   </span>
                   {d.amenities.length > 0 && (
                     <button type="button" onClick={() => set("amenities", [])}
-                      className="font-mono text-[0.5625rem] tracking-[0.1em] text-brass uppercase hover:underline">
+                      className="font-semibold text-[0.6875rem] tracking-[0.1em] text-brass uppercase hover:underline">
                       Clear
                     </button>
                   )}
@@ -764,13 +764,13 @@ export function PropertyForm({
         <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-3.5 lg:px-10">
           <div className="flex items-center gap-3">
             <label className="flex items-center gap-2">
-              <span className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-muted uppercase">
+              <span className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
                 Status
               </span>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as typeof status)}
-                className="border border-rule-strong bg-paper px-2.5 py-1.5 font-mono text-[0.625rem] tracking-[0.1em] uppercase focus:border-brass focus:outline-none"
+                className="border border-rule-strong bg-paper px-2.5 py-1.5 font-semibold text-[0.6875rem] tracking-[0.1em] uppercase focus:border-brass focus:outline-none"
               >
                 <option value="draft">Draft</option>
                 <option value="published" disabled={blockers > 0}>
@@ -784,7 +784,7 @@ export function PropertyForm({
             </label>
 
             {blockers > 0 && (
-              <span className="hidden items-center gap-1.5 font-mono text-[0.5625rem] tracking-[0.1em] text-alert uppercase sm:flex">
+              <span className="hidden items-center gap-1.5 font-semibold text-[0.6875rem] tracking-[0.1em] text-alert uppercase sm:flex">
                 <AlertTriangle className="size-3" strokeWidth={2.2} aria-hidden />
                 {blockers} blocker{blockers === 1 ? "" : "s"}
               </span>
@@ -792,7 +792,7 @@ export function PropertyForm({
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="hidden font-mono text-[0.5625rem] tracking-[0.1em] text-ink-faint uppercase md:inline">
+            <span className="hidden font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase md:inline">
               ⌘S to save
             </span>
             <Button type="button" variant="ghost" onClick={() => router.push("/studio/listings")}>
@@ -833,7 +833,7 @@ function LivePreview({ draft }: { draft: ListingDraft }) {
 
   return (
     <div className="border border-rule bg-paper">
-      <p className="flex items-center gap-2 border-b border-rule px-4 py-2.5 font-mono text-[0.5625rem] tracking-[0.14em] text-ink-muted uppercase">
+      <p className="flex items-center gap-2 border-b border-rule px-4 py-2.5 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
         <Eye className="size-3" strokeWidth={2} aria-hidden />
         How the card will look
       </p>
@@ -854,11 +854,11 @@ function LivePreview({ draft }: { draft: ListingDraft }) {
           />
           <div className="absolute inset-x-2 top-2 flex gap-1.5">
             {draft.reraVerified ? (
-              <span className="bg-verdant px-1.5 py-0.5 font-mono text-[0.5rem] tracking-[0.1em] text-paper uppercase">
+              <span className="bg-verdant px-1.5 py-0.5 font-semibold text-[0.6875rem] tracking-[0.1em] text-paper uppercase">
                 RERA ✓
               </span>
             ) : (
-              <span className="bg-bone/85 px-1.5 py-0.5 font-mono text-[0.5rem] tracking-[0.1em] text-ink-muted uppercase">
+              <span className="bg-bone/85 px-1.5 py-0.5 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
                 Resale
               </span>
             )}
@@ -866,10 +866,10 @@ function LivePreview({ draft }: { draft: ListingDraft }) {
         </div>
 
         <div className="mt-3 border-t border-rule pt-3">
-          <p className="font-mono text-[0.5rem] tracking-[0.14em] text-ink-muted uppercase">
+          <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
             {locality?.name ?? "No locality"}
           </p>
-          <p className="mt-1.5 line-clamp-2 font-display text-[1.0625rem] leading-snug text-ink">
+          <p className="mt-1.5 line-clamp-2 text-[1.0625rem] font-semibold leading-snug text-ink">
             {draft.title || "Untitled listing"}
           </p>
           <div className="mt-2.5 flex flex-wrap items-baseline gap-x-2.5">
@@ -907,7 +907,7 @@ function ReadinessPanel({
   if (items.length === 0) {
     return (
       <div className="border border-verdant/30 bg-verdant-pale p-5">
-        <p className="flex items-center gap-2 font-display text-[1.0625rem] text-ink">
+        <p className="flex items-center gap-2 text-[1.0625rem] font-semibold text-ink">
           <Check className="size-4 text-verdant" strokeWidth={2.6} aria-hidden />
           Ready to publish
         </p>
@@ -924,7 +924,7 @@ function ReadinessPanel({
   return (
     <div className={cn("border", tone)}>
       <div className="border-b border-ink/10 px-5 py-3.5">
-        <p className="font-mono text-[0.5625rem] tracking-[0.14em] uppercase">
+        <p className="font-semibold text-[0.6875rem] tracking-[0.14em] uppercase">
           {blockers > 0 ? (
             <span className="text-alert">
               {blockers} blocker{blockers === 1 ? "" : "s"} before publishing
@@ -1020,7 +1020,7 @@ function Field({
 }) {
   return (
     <div className={cn("flex flex-col", span2 && "sm:col-span-2")}>
-      <label className="mb-1.5 font-mono text-[0.5625rem] tracking-[0.16em] text-ink-muted uppercase">
+      <label className="mb-1.5 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
         {label}
         {required && <span className="ml-1 text-brass" aria-hidden>*</span>}
       </label>

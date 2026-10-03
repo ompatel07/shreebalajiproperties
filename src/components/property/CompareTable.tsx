@@ -78,7 +78,7 @@ export function CompareTable() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between gap-4">
-        <p className="font-mono text-micro tracking-[0.1em] text-ink-muted uppercase">
+        <p className="font-semibold text-micro tracking-[0.1em] text-ink-muted uppercase">
           Comparing{" "}
           <span className="text-ink" data-numeric>
             {items.length}
@@ -87,7 +87,7 @@ export function CompareTable() {
         <button
           type="button"
           onClick={clear}
-          className="font-mono text-micro tracking-[0.12em] text-brass uppercase hover:underline"
+          className="font-semibold text-micro tracking-[0.12em] text-brass uppercase hover:underline"
         >
           Clear all
         </button>
@@ -139,10 +139,10 @@ export function CompareTable() {
                         </div>
 
                         <div className="p-3.5 text-left">
-                          <p className="font-mono text-[0.5rem] tracking-[0.12em] text-ink-muted uppercase">
+                          <p className="font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase">
                             {locality?.name ?? p.locality_slug}
                           </p>
-                          <p className="mt-1 line-clamp-2 font-display text-[0.9375rem] leading-snug text-ink">
+                          <p className="mt-1 line-clamp-2 text-[0.9375rem] font-semibold leading-snug text-ink">
                             {p.title}
                           </p>
                         </div>
@@ -159,7 +159,7 @@ export function CompareTable() {
               label="Price"
               items={items}
               render={(p) => (
-                <span className="font-display text-[1.0625rem] text-ink" data-numeric>
+                <span className="text-[1.0625rem] font-semibold text-ink" data-numeric>
                   {p.price_on_request ? "On request" : formatPrice(p.price)}
                 </span>
               )}
@@ -324,7 +324,7 @@ function Row({
     <tr>
       <th
         scope="row"
-        className="border-t border-rule bg-bone px-3 py-3.5 text-left align-top font-mono text-[0.5625rem] leading-snug tracking-[0.12em] font-normal text-ink-muted uppercase"
+        className="border-t border-rule bg-bone px-3 py-3.5 text-left align-top text-[0.6875rem] leading-snug tracking-[0.12em] font-normal text-ink-muted uppercase"
       >
         {label}
       </th>
@@ -341,7 +341,7 @@ function Row({
             {render(p)}
             {isWinner(p.id) && winnerNote && (
               <span
-                className="mt-0.5 inline-flex shrink-0 items-center gap-1 rounded-[2px] bg-brass px-1.5 py-0.5 font-mono text-[0.5rem] tracking-[0.08em] text-paper uppercase"
+                className="mt-0.5 inline-flex shrink-0 items-center gap-1 rounded-[2px] bg-brass px-1.5 py-0.5 font-semibold text-[0.6875rem] tracking-[0.08em] text-paper uppercase"
                 title={winnerNote}
               >
                 <Trophy className="size-2.5" strokeWidth={2.2} aria-hidden />

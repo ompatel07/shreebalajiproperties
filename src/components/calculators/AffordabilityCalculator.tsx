@@ -168,7 +168,7 @@ export function AffordabilityCalculator() {
               : "border-verdant/25 bg-verdant-pale"
           }`}
         >
-          <p className="font-mono text-[0.5625rem] tracking-[0.14em] uppercase">
+          <p className="font-semibold text-[0.6875rem] tracking-[0.14em] uppercase">
             {cashConstrained ? "Your binding constraint: cash" : "Your binding constraint: income"}
           </p>
           <p className="mt-3 max-w-prose leading-relaxed text-ink-soft">
@@ -266,7 +266,7 @@ export function AffordabilityCalculator() {
           {matchedBand && (
             <Link
               href={`/ahmedabad/${matchedBand.slug}`}
-              className="group mt-7 inline-flex items-center gap-2 font-mono text-micro tracking-[0.14em] text-brass uppercase"
+              className="group mt-7 inline-flex items-center gap-2 font-semibold text-micro tracking-[0.14em] text-brass uppercase"
             >
               <span className="link-draw">
                 See everything in {matchedBand.label}

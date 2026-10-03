@@ -67,7 +67,7 @@ export default function AboutPage() {
               a sales desk and lost in between.
             </p>
 
-            <p className="mt-6 font-mono text-micro tracking-[0.14em] text-brass uppercase">
+            <p className="mt-6 font-semibold text-micro tracking-[0.14em] text-brass uppercase">
               {site.strapline}
             </p>
           </div>
@@ -87,7 +87,7 @@ export default function AboutPage() {
                     {stat.prefix ? <span className="text-brass">{stat.prefix}</span> : null}
                     <Counter value={stat.value} suffix={stat.suffix} />
                   </p>
-                  <p className="mt-3 font-mono text-micro tracking-[0.14em] text-ink-muted uppercase">
+                  <p className="mt-3 font-semibold text-micro tracking-[0.14em] text-ink-muted uppercase">
                     {stat.label}
                   </p>
                 </div>
@@ -129,7 +129,7 @@ export default function AboutPage() {
                   />
 
                   <figcaption className="absolute inset-x-0 bottom-0 p-7">
-                    <p className="font-mono text-micro tracking-[0.14em] text-brass-light uppercase">
+                    <p className="font-semibold text-micro tracking-[0.14em] text-brass-light uppercase">
                       Projects marketed
                     </p>
                     <ul className="mt-3 space-y-1">

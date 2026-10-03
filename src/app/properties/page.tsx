@@ -111,7 +111,7 @@ export default async function PropertiesPage({ searchParams }: Props) {
               />
               <button
                 type="submit"
-                className="shrink-0 rounded-[2px] bg-ink px-4 py-2 font-mono text-micro tracking-[0.12em] text-bone uppercase transition-colors hover:bg-brass-deep"
+                className="shrink-0 rounded-[2px] bg-ink px-4 py-2 font-semibold text-micro tracking-[0.12em] text-bone uppercase transition-colors hover:bg-brass-deep"
               >
                 Search
               </button>
@@ -231,7 +231,7 @@ function QuickColumn({
 }) {
   return (
     <div>
-      <p className="mb-4 font-mono text-micro tracking-[0.12em] text-brass uppercase">
+      <p className="mb-4 font-semibold text-micro tracking-[0.12em] text-brass uppercase">
         {title}
       </p>
       <ul className="space-y-2.5">

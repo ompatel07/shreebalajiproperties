@@ -35,7 +35,7 @@ export default function CalculatorsLayout({
               <li key={tool.href} className="shrink-0">
                 <Link
                   href={tool.href}
-                  className="inline-block rounded-[2px] px-4 py-2 font-mono text-micro tracking-[0.12em] text-ink-muted uppercase transition-colors hover:bg-bone hover:text-ink"
+                  className="inline-block rounded-[2px] px-4 py-2 font-semibold text-micro tracking-[0.12em] text-ink-muted uppercase transition-colors hover:bg-bone hover:text-ink"
                 >
                   {tool.label}
                 </Link>
@@ -76,7 +76,7 @@ export default function CalculatorsLayout({
             </ButtonLink>
           </div>
 
-          <p className="mt-8 font-mono text-micro tracking-[0.12em] text-bone/40 uppercase">
+          <p className="mt-8 font-semibold text-micro tracking-[0.12em] text-bone/40 uppercase">
             {site.office.hours}
           </p>
         </div>

@@ -84,7 +84,7 @@ export function ToolsStrip() {
 
               <Link
                 href="/contact"
-                className="group mt-7 inline-flex items-center gap-2 font-mono text-micro tracking-[0.14em] text-brass uppercase"
+                className="group mt-7 inline-flex items-center gap-2 font-semibold text-micro tracking-[0.14em] text-brass uppercase"
               >
                 <span className="link-draw">Prefer we ran them for you?</span>
                 <ArrowUpRight
@@ -120,7 +120,7 @@ export function ToolsStrip() {
                           {tool.label}
                         </span>
                         {tool.tag && (
-                          <span className="bg-brass-pale px-2 py-0.5 font-mono text-[0.5rem] tracking-[0.12em] text-brass-deep uppercase">
+                          <span className="bg-brass-pale px-2 py-0.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-brass-deep uppercase">
                             {tool.tag}
                           </span>
                         )}

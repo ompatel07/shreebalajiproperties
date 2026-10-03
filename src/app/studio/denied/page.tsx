@@ -37,7 +37,7 @@ export default function DeniedPage() {
           <SignOutButton />
           <Link
             href="/"
-            className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-muted uppercase hover:text-brass"
+            className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase hover:text-brass"
           >
             ← Back to site
           </Link>

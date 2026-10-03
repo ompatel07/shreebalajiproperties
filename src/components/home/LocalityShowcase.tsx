@@ -72,7 +72,7 @@ export function LocalityShowcase({ counts }: { counts: Record<string, number> })
 
             <Link
               href="/localities"
-              className="group mt-2 hidden shrink-0 items-center gap-2 font-mono text-micro tracking-[0.14em] text-ink-muted uppercase transition-colors hover:text-brass lg:flex"
+              className="group mt-2 hidden shrink-0 items-center gap-2 font-semibold text-micro tracking-[0.14em] text-ink-muted uppercase transition-colors hover:text-brass lg:flex"
             >
               <span className="link-draw">All {localityCount}</span>
               <ArrowUpRight
@@ -112,7 +112,7 @@ export function LocalityShowcase({ counts }: { counts: Record<string, number> })
                       <span className="block font-display text-[clamp(1.5rem,2.6vw,2.5rem)] leading-tight tracking-[-0.03em] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-2">
                         {locality.name}
                       </span>
-                      <span className="mt-1.5 block font-mono text-[0.5625rem] tracking-[0.14em] text-ink-faint uppercase">
+                      <span className="mt-1.5 block font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
                         {zoneLabels[locality.zone]}
                       </span>
                     </span>
@@ -121,7 +121,7 @@ export function LocalityShowcase({ counts }: { counts: Record<string, number> })
                       <span className="block font-mono text-caption text-ink-soft tabular-nums" data-numeric>
                         {band ? `₹${(band[0] / 1000).toFixed(1)}–${(band[1] / 1000).toFixed(1)}K` : "On request"}
                       </span>
-                      <span className="mt-1 block font-mono text-[0.5rem] tracking-[0.12em] text-ink-faint uppercase">
+                      <span className="mt-1 block font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-faint uppercase">
                         {n > 0 ? `${n} live` : "we cover this"}
                       </span>
                     </span>
@@ -161,7 +161,7 @@ export function LocalityShowcase({ counts }: { counts: Record<string, number> })
               <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/15 to-transparent" aria-hidden />
 
               <div className="absolute inset-x-0 bottom-0 p-6">
-                <p className="font-mono text-[0.5625rem] tracking-[0.14em] text-brass-light uppercase">
+                <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-brass-light uppercase">
                   {rows[active]?.name}
                 </p>
                 <p className="mt-2.5 text-caption leading-relaxed text-bone/80">
@@ -200,7 +200,7 @@ export function LocalityShowcase({ counts }: { counts: Record<string, number> })
                   <p className="font-display text-[1.125rem] leading-tight text-bone">
                     {locality.name}
                   </p>
-                  <p className="mt-1 font-mono text-[0.5rem] tracking-[0.12em] text-bone/60 uppercase" data-numeric>
+                  <p className="mt-1 font-semibold text-[0.6875rem] tracking-[0.12em] text-bone/60 uppercase" data-numeric>
                     {lo ? `₹${(lo / 1000).toFixed(1)}K+ · ` : ""}
                     {n > 0 ? `${n} live` : "We cover this area"}
                   </p>
@@ -222,7 +222,7 @@ export function LocalityShowcase({ counts }: { counts: Record<string, number> })
             {zones.map((zone, zi) => (
               <Reveal key={zone} delay={zi * 0.05}>
                 <div>
-                  <p className="mb-3.5 font-mono text-[0.5625rem] tracking-[0.14em] text-brass uppercase">
+                  <p className="mb-3.5 font-semibold text-[0.6875rem] tracking-[0.14em] text-brass uppercase">
                     {zoneLabels[zone]}
                   </p>
                   <ul className="space-y-1.5">

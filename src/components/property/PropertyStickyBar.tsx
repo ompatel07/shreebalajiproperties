@@ -63,18 +63,18 @@ export function PropertyStickyBar({
         {/* ── Identity. Hidden on the narrowest screens, where the three
                actions need the whole width. ──────────────────────────── */}
         <div className="hidden min-w-0 flex-1 sm:block">
-          <p className="truncate font-mono text-[0.5rem] tracking-[0.14em] text-ink-muted uppercase">
+          <p className="truncate font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
             {locality}
             {bhk ? ` · ${formatBhk(bhk)}` : ""}
           </p>
-          <p className="truncate font-display text-[1.0625rem] leading-tight text-ink" data-numeric>
+          <p className="truncate text-[1.0625rem] font-semibold leading-tight text-ink" data-numeric>
             {priceOnRequest ? "Price on request" : formatPrice(price)}
           </p>
         </div>
 
         {/* On a phone the price sits inline with the buttons instead. */}
         <p
-          className="shrink-0 font-display text-[1.0625rem] leading-none text-ink sm:hidden"
+          className="shrink-0 text-[1.0625rem] font-semibold leading-none text-ink sm:hidden"
           data-numeric
         >
           {priceOnRequest ? "On request" : formatPrice(price)}
@@ -87,7 +87,7 @@ export function PropertyStickyBar({
 
           <a
             href={telLink(site.contact.phoneE164)}
-            className="inline-flex flex-1 items-center justify-center gap-2 border border-ink/20 px-3.5 py-2.5 font-mono text-[0.625rem] tracking-[0.12em] text-ink uppercase transition-colors hover:border-ink hover:bg-ink hover:text-bone sm:flex-none sm:px-5"
+            className="inline-flex flex-1 items-center justify-center gap-2 border border-ink/20 px-3.5 py-2.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink uppercase transition-colors hover:border-ink hover:bg-ink hover:text-bone sm:flex-none sm:px-5"
           >
             <Phone className="size-3.5 shrink-0" strokeWidth={1.9} aria-hidden />
             Call
@@ -97,7 +97,7 @@ export function PropertyStickyBar({
             href={whatsappLink(site.contact.whatsapp, message)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex flex-1 items-center justify-center gap-2 bg-verdant px-3.5 py-2.5 font-mono text-[0.625rem] tracking-[0.12em] text-paper uppercase transition-colors hover:bg-ink sm:flex-none sm:px-5"
+            className="inline-flex flex-1 items-center justify-center gap-2 bg-verdant px-3.5 py-2.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-paper uppercase transition-colors hover:bg-ink sm:flex-none sm:px-5"
           >
             <MessageCircle className="size-3.5 shrink-0" strokeWidth={1.9} aria-hidden />
             WhatsApp
@@ -105,7 +105,7 @@ export function PropertyStickyBar({
 
           <a
             href="#enquire"
-            className="hidden items-center justify-center gap-2 bg-ink px-5 py-2.5 font-mono text-[0.625rem] tracking-[0.12em] text-bone uppercase transition-colors hover:bg-brass-deep lg:inline-flex"
+            className="hidden items-center justify-center gap-2 bg-ink px-5 py-2.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-bone uppercase transition-colors hover:bg-brass-deep lg:inline-flex"
           >
             Enquire
           </a>

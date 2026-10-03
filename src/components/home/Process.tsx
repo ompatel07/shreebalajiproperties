@@ -239,7 +239,7 @@ export function Process() {
               Every marketing activity should contribute to moving the
               customer one step closer to a decision.
             </p>
-            <footer className="mt-4 font-mono text-[0.5625rem] tracking-[0.16em] text-ink-muted uppercase">
+            <footer className="mt-4 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
               How we judge the work
             </footer>
           </blockquote>

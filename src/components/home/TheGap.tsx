@@ -52,7 +52,7 @@ export function TheGap() {
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <p className="font-mono text-[0.5625rem] tracking-[0.16em] text-ink-muted uppercase">
+                <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
                   {point.stage}
                 </p>
               </div>

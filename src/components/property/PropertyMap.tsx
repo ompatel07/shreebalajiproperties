@@ -215,7 +215,7 @@ function popupHtml(p: PropertyCard): string {
 
   return `
     <div style="font-family: var(--font-sans), sans-serif; padding: 0.9rem 1rem;">
-      <p style="margin:0;font-family:var(--font-mono),monospace;font-size:0.5625rem;letter-spacing:0.14em;text-transform:uppercase;color:#6e685c;">
+      <p style="margin:0;font-family:var(--font-semibold),monospace;font-size:0.5625rem;letter-spacing:0.14em;text-transform:uppercase;color:#6e685c;">
         ${escapeHtml(p.locality_slug.replace(/-/g, " "))}
       </p>
       <p style="margin:0.4rem 0 0;font-family:var(--font-display),serif;font-size:1rem;line-height:1.3;color:#16150f;">
@@ -226,7 +226,7 @@ function popupHtml(p: PropertyCard): string {
       </p>
       ${bits ? `<p style="margin:0.25rem 0 0;font-size:0.75rem;color:#6e685c;">${escapeHtml(bits)}</p>` : ""}
       <a href="/property/${encodeURIComponent(p.slug)}"
-         style="display:inline-block;margin-top:0.75rem;font-family:var(--font-mono),monospace;font-size:0.5625rem;letter-spacing:0.14em;text-transform:uppercase;color:#16150f;border-bottom:1px solid #a3762c;padding-bottom:1px;">
+         style="display:inline-block;margin-top:0.75rem;font-family:var(--font-semibold),monospace;font-size:0.5625rem;letter-spacing:0.14em;text-transform:uppercase;color:#16150f;border-bottom:1px solid #a3762c;padding-bottom:1px;">
         View details
       </a>
     </div>

@@ -121,7 +121,7 @@ export function ListingRowActions({
             disabled={pending}
             title="Edit price inline"
             className={cn(
-              "group inline-flex items-center gap-1.5 border border-transparent px-2 py-1 font-display text-[0.9375rem] text-ink transition-colors hover:border-rule-strong hover:bg-sand",
+              "group inline-flex items-center gap-1.5 border border-transparent px-2 py-1 text-[0.9375rem] font-semibold text-ink transition-colors hover:border-rule-strong hover:bg-sand",
               pending && "opacity-50",
             )}
             data-numeric
@@ -152,7 +152,7 @@ export function ListingRowActions({
         <span
           role="status"
           className={cn(
-            "font-mono text-[0.5625rem] tracking-[0.1em] uppercase",
+            "font-semibold text-[0.6875rem] tracking-[0.1em] uppercase",
             note.ok ? "text-verdant" : "text-alert",
           )}
         >

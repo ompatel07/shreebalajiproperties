@@ -86,7 +86,7 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
                 <div className="min-w-0">
                   <p className="font-display text-[1.125rem] text-ink">{active.author}</p>
                   {active.role && (
-                    <p className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-muted uppercase">
+                    <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
                       {active.role}
                     </p>
                   )}
@@ -157,7 +157,7 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
                         <span className="min-w-0">
                           <span className="block truncate text-[0.9375rem]">{t.author}</span>
                           {t.locality && (
-                            <span className="block font-mono text-[0.5rem] tracking-[0.12em] uppercase opacity-70">
+                            <span className="block font-semibold text-[0.6875rem] tracking-[0.12em] uppercase opacity-70">
                               {t.locality}
                             </span>
                           )}

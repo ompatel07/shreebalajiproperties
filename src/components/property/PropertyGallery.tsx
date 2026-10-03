@@ -60,7 +60,7 @@ export function PropertyGallery({
     return (
       <div className="relative aspect-[16/10] overflow-hidden rounded-[2px] border border-rule bg-sand">
         <div className="jaali absolute inset-0" aria-hidden />
-        <p className="absolute inset-0 grid place-items-center font-mono text-micro tracking-[0.14em] text-ink-faint uppercase">
+        <p className="absolute inset-0 grid place-items-center font-semibold text-micro tracking-[0.14em] text-ink-faint uppercase">
           Photographs on request
         </p>
       </div>
@@ -93,7 +93,7 @@ export function PropertyGallery({
               className="photo-warm object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
             />
 
-            <span className="absolute right-4 bottom-4 inline-flex items-center gap-2 rounded-[2px] bg-ink/70 px-3.5 py-2 font-mono text-micro tracking-[0.12em] text-bone uppercase backdrop-blur-md transition-colors duration-300 group-hover:bg-ink">
+            <span className="absolute right-4 bottom-4 inline-flex items-center gap-2 rounded-[2px] bg-ink/70 px-3.5 py-2 font-semibold text-micro tracking-[0.12em] text-bone uppercase backdrop-blur-md transition-colors duration-300 group-hover:bg-ink">
               <Expand className="size-3.5" strokeWidth={1.8} aria-hidden />
               {count} photos
             </span>

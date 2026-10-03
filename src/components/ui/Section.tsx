@@ -66,7 +66,7 @@ export function SectionHeading({
             <Link
               href={link.href}
               className={cn(
-                "group inline-flex items-center gap-2 font-mono text-micro tracking-[0.14em] uppercase transition-colors duration-300",
+                "group inline-flex items-center gap-2 font-semibold text-micro tracking-[0.14em] uppercase transition-colors duration-300",
                 inverse ? "text-bone/70 hover:text-bone" : "text-ink-muted hover:text-brass",
               )}
             >

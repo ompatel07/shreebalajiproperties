@@ -141,7 +141,7 @@ function ListingsView({
           <h1 className="mt-2 font-display text-h3 text-ink">
             Listings
             {count !== null && (
-              <span className="ml-3 font-mono text-micro tracking-[0.12em] text-ink-muted uppercase">
+              <span className="ml-3 font-semibold text-micro tracking-[0.12em] text-ink-muted uppercase">
                 {count} total
               </span>
             )}
@@ -170,7 +170,7 @@ function ListingsView({
                       : `/studio/listings?status=${tab.value}`
                   }
                   aria-current={activeStatus === tab.value ? "page" : undefined}
-                  className={`inline-block rounded-[2px] px-3.5 py-2 font-mono text-[0.625rem] tracking-[0.1em] uppercase transition-colors ${
+                  className={`inline-block rounded-[2px] px-3.5 py-2 font-semibold text-[0.6875rem] tracking-[0.1em] uppercase transition-colors ${
                     activeStatus === tab.value
                       ? "bg-ink text-bone"
                       : "border border-rule-strong text-ink-muted hover:border-ink hover:text-ink"
@@ -201,7 +201,7 @@ function ListingsView({
       {/* ── Table ────────────────────────────────────────────────────────── */}
       {error ? (
         <div className="mt-8 rounded-[2px] border border-alert/30 bg-alert-pale p-6">
-          <p className="font-mono text-micro tracking-[0.12em] text-alert uppercase">
+          <p className="font-semibold text-micro tracking-[0.12em] text-alert uppercase">
             Could not load listings
           </p>
           <p className="mt-2 text-caption text-ink-soft">
@@ -234,7 +234,7 @@ function ListingsView({
                   <th
                     key={h || i}
                     scope="col"
-                    className="pb-3 font-mono text-[0.5625rem] tracking-[0.12em] font-normal text-ink-muted uppercase"
+                    className="pb-3 text-[0.6875rem] tracking-[0.12em] font-normal text-ink-muted uppercase"
                   >
                     {h}
                   </th>
@@ -263,11 +263,11 @@ function ListingsView({
                       <div className="min-w-0">
                         <Link
                           href={`/studio/listings/${p.id}`}
-                          className="line-clamp-1 font-display text-[0.9375rem] text-ink group-hover:text-brass"
+                          className="line-clamp-1 text-[0.9375rem] font-semibold text-ink group-hover:text-brass"
                         >
                           {p.title}
                         </Link>
-                        <p className="font-mono text-[0.5rem] tracking-[0.1em] text-ink-muted uppercase">
+                        <p className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
                           {localityBySlug.get(p.locality_slug)?.name ?? p.locality_slug} ·{" "}
                           {propertyTypes.find((t) => t.slug === p.property_type)?.singular ??
                             p.property_type}
@@ -310,7 +310,7 @@ function ListingsView({
                     <p className="font-mono text-[0.625rem] text-ink-soft tabular-nums" data-numeric>
                       {p.view_count} views · {p.enquiry_count} enq.
                     </p>
-                    <p className="font-mono text-[0.5rem] tracking-[0.1em] text-ink-faint uppercase">
+                    <p className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase">
                       {formatRelative(p.updated_at)}
                     </p>
                   </td>
@@ -331,7 +331,7 @@ function ListingsView({
                       )}
                       <Link
                         href={`/studio/listings/${p.id}`}
-                        className="rounded-[2px] border border-rule-strong px-3 py-1.5 font-mono text-[0.5625rem] tracking-[0.1em] text-ink uppercase hover:border-ink hover:bg-ink hover:text-bone"
+                        className="rounded-[2px] border border-rule-strong px-3 py-1.5 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink uppercase hover:border-ink hover:bg-ink hover:text-bone"
                       >
                         Edit
                       </Link>
@@ -346,7 +346,7 @@ function ListingsView({
 
       {/* RERA count — a compliance nudge rather than a vanity metric. */}
       {listings.length > 0 && (
-        <p className="mt-6 flex flex-wrap items-center gap-3 border-t border-rule pt-5 font-mono text-[0.5625rem] tracking-[0.12em] text-ink-muted uppercase">
+        <p className="mt-6 flex flex-wrap items-center gap-3 border-t border-rule pt-5 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase">
           <Badge tone={listings.every((p) => p.rera_verified) ? "verdant" : "neutral"}>
             {listings.filter((p) => p.rera_verified).length} of {listings.length} RERA-verified
           </Badge>
@@ -397,7 +397,7 @@ function HealthCell({
     <span className="flex items-center gap-2" title={items.map((i) => i.label).join(" · ")}>
       <span className={`size-1.5 shrink-0 rounded-full ${tone.dot}`} aria-hidden />
       <span className="flex flex-col leading-tight">
-        <span className={`font-mono text-[0.5625rem] tracking-[0.08em] uppercase ${tone.text}`}>
+        <span className={`font-semibold text-[0.6875rem] tracking-[0.08em] uppercase ${tone.text}`}>
           {tone.label}
         </span>
         <span className="font-mono text-[0.5rem] text-ink-faint tabular-nums" data-numeric>

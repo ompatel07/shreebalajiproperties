@@ -69,7 +69,7 @@ export function Footer() {
             </p>
           </div>
 
-          <p className="mt-6 font-mono text-micro tracking-[0.1em] text-ink-faint uppercase">
+          <p className="mt-6 font-semibold text-micro tracking-[0.1em] text-ink-faint uppercase">
             {site.office.hours}
           </p>
 
@@ -86,7 +86,7 @@ export function Footer() {
                   aria-label={`${site.name} on ${network}`}
                   className="grid size-10 place-items-center rounded-[2px] border border-rule-strong text-ink-muted transition-all duration-300 hover:border-ink hover:bg-ink hover:text-bone"
                 >
-                  <span className="font-mono text-[0.625rem] uppercase">
+                  <span className="font-semibold text-[0.6875rem] uppercase">
                     {network.slice(0, 2)}
                   </span>
                 </a>
@@ -146,7 +146,7 @@ export function Footer() {
       {(site.compliance.reraAgentId || site.compliance.gstin) && (
         <div className="border-t border-rule-strong/60">
           <div className="shell flex flex-col gap-4 py-6 lg:flex-row lg:items-center lg:justify-between">
-            <dl className="flex flex-wrap gap-x-8 gap-y-2 font-mono text-micro tracking-[0.1em] uppercase">
+            <dl className="flex flex-wrap gap-x-8 gap-y-2 font-semibold text-micro tracking-[0.1em] uppercase">
               {site.compliance.reraAgentId && (
                 <div className="flex gap-2">
                   <dt className="text-ink-faint">RERA Agent</dt>
@@ -165,7 +165,7 @@ export function Footer() {
               href={site.compliance.reraPortalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-1.5 font-mono text-micro tracking-[0.12em] text-brass uppercase"
+              className="group inline-flex items-center gap-1.5 font-semibold text-micro tracking-[0.12em] text-brass uppercase"
             >
               Verify on GujRERA
               <ArrowUpRight
@@ -196,7 +196,7 @@ export function Footer() {
             impressions.
           </p>
 
-          <nav aria-label="Legal" className="flex shrink-0 gap-6 font-mono text-micro tracking-[0.12em] uppercase">
+          <nav aria-label="Legal" className="flex shrink-0 gap-6 font-semibold text-micro tracking-[0.12em] uppercase">
             <Link href="/privacy" className="link-draw text-ink-muted">
               Privacy
             </Link>

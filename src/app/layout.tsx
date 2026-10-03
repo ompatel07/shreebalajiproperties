@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, IBM_Plex_Mono, Inter_Tight } from "next/font/google";
+import { IBM_Plex_Mono, Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
 
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { DemoBanner } from "@/components/layout/DemoBanner";
@@ -14,35 +14,39 @@ import "./globals.css";
 /**
  * ── Type system ───────────────────────────────────────────────────────────
  *
- * Three families, each doing one job. Self-hosted by next/font at build time,
- * which means no render-blocking request to Google and no external origin in
- * the CSP.
+ * Instrument Serif for display, Plus Jakarta Sans for everything structural,
+ * IBM Plex Mono for figures only. Self-hosted by next/font at build time, so
+ * there is no render-blocking request to Google and no external origin in the
+ * CSP.
  *
- * The reference site (ramarealty.in) ships a single geometric sans for
- * everything. A serif/sans/mono split is the main reason this reads as an
- * editorial property brand rather than a SaaS dashboard.
+ * The reference site (ramarealty.in) runs Plus Jakarta Sans for everything.
+ * Sharing its body face is deliberate — it is the register this client reads
+ * as professional — but the serif display line is ours, and it is what keeps
+ * the site from looking like the same purchased template.
  */
 
 /**
- * Display. Only the SOFT and WONK axes are requested: those are the two the
- * stylesheet actually varies (`.display-tight` / `.display-wonk`). Asking for
- * `opsz` as well would ship a larger variable font for an axis nothing uses.
+ * Display. One weight, high contrast, tight fit. Carries h1/h2 and the hero
+ * only; at label sizes it is too delicate, which is why h3/h4 moved to the
+ * sans. A single static weight also means a far smaller file than the old
+ * variable serif.
  */
-const fraunces = Fraunces({
+const instrument = Instrument_Serif({
   subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
   display: "swap",
-  variable: "--font-fraunces",
-  axes: ["SOFT", "WONK"],
+  variable: "--font-instrument",
 });
 
-/** Body. Tighter and more architectural than plain Inter. */
-const interTight = Inter_Tight({
+/** Everything structural: body, h3/h4, labels, UI. */
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter-tight",
+  variable: "--font-jakarta",
 });
 
-/** Data and eyebrow labels. The drafting-table register. */
+/** Figures only — prices, areas, counts. Not labels any more. */
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
@@ -103,7 +107,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en-IN"
-      className={`${fraunces.variable} ${interTight.variable} ${plexMono.variable}`}
+      className={`${instrument.variable} ${jakarta.variable} ${plexMono.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -132,7 +136,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* First tab stop on every page. */}
         <a
           href="#main"
-          className="sr-only-focusable fixed top-4 left-4 z-[100] bg-ink px-5 py-3 font-mono text-micro tracking-[0.16em] uppercase text-bone"
+          className="sr-only-focusable fixed top-4 left-4 z-[100] bg-ink px-5 py-3 font-semibold text-micro tracking-[0.14em] uppercase text-bone"
         >
           Skip to content
         </a>

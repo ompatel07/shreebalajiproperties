@@ -30,7 +30,7 @@ export default async function LoginPage({ searchParams }: Props) {
         <div className="mb-8 flex flex-col items-center text-center">
           <Monogram className="size-11 text-ink/70" />
           <h1 className="mt-5 font-display text-h3 text-ink">Studio</h1>
-          <p className="mt-2 font-mono text-micro tracking-[0.14em] text-ink-muted uppercase">
+          <p className="mt-2 font-semibold text-micro tracking-[0.14em] text-ink-muted uppercase">
             {site.name} · Staff only
           </p>
         </div>
@@ -47,7 +47,7 @@ export default async function LoginPage({ searchParams }: Props) {
         <p className="mt-6 text-center">
           <Link
             href="/"
-            className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-muted uppercase hover:text-brass"
+            className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase hover:text-brass"
           >
             ← Back to site
           </Link>

@@ -159,7 +159,7 @@ export default function SellPage() {
                   className="photo-warm object-cover"
                 />
                 <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/85 to-transparent p-6">
-                  <p className="font-mono text-micro tracking-[0.12em] text-brass-light uppercase">
+                  <p className="font-semibold text-micro tracking-[0.12em] text-brass-light uppercase">
                     Included, at no cost
                   </p>
                   <p className="mt-2 max-w-md text-caption leading-relaxed text-bone/80">

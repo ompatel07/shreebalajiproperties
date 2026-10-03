@@ -86,7 +86,7 @@ export default function ForBuildersPage() {
             <ol className="mt-12 grid grid-cols-2 gap-px border-t border-bone/15 pt-8 lg:grid-cols-4">
               {funnel.map((stage, i) => (
                 <li key={stage.label} className="pr-5">
-                  <p className="flex items-center gap-2.5 font-mono text-[0.5625rem] tracking-[0.16em] text-brass-light uppercase">
+                  <p className="flex items-center gap-2.5 font-semibold text-[0.6875rem] tracking-[0.14em] text-brass-light uppercase">
                     <span className="tabular-nums" data-numeric>
                       0{i + 1}
                     </span>

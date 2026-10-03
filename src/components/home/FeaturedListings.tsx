@@ -62,7 +62,7 @@ export function FeaturedListings({
               </p>
               <Link
                 href="/properties"
-                className="group mt-5 inline-flex items-center gap-2 font-mono text-micro tracking-[0.14em] text-brass uppercase"
+                className="group mt-5 inline-flex items-center gap-2 font-semibold text-micro tracking-[0.14em] text-brass uppercase"
               >
                 <span className="link-draw">Browse all listings</span>
                 <ArrowRight
@@ -118,7 +118,7 @@ export function FeaturedListings({
                 ))}
               </div>
 
-              <p className="mt-4 font-mono text-[0.5625rem] tracking-[0.14em] text-ink-faint uppercase">
+              <p className="mt-4 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
                 Swipe for more →
               </p>
             </div>
@@ -133,7 +133,7 @@ export function FeaturedListings({
             <p className="eyebrow">Start from your budget</p>
             <Link
               href="/properties"
-              className="group inline-flex items-center gap-1.5 font-mono text-[0.5625rem] tracking-[0.12em] text-ink-muted uppercase hover:text-brass"
+              className="group inline-flex items-center gap-1.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase hover:text-brass"
             >
               <span className="link-draw">Or filter everything</span>
               <ArrowUpRight className="size-2.5" strokeWidth={2.2} aria-hidden />

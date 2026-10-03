@@ -102,7 +102,7 @@ function ProjectsPageView({ projects }: { projects: Project[] }) {
                     <Handshake className="size-3.5 text-brass" strokeWidth={2} aria-hidden />
                     Full marketing mandate
                   </h2>
-                  <span className="font-mono text-[0.5625rem] tracking-[0.1em] text-ink-faint uppercase">
+                  <span className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase">
                     {partnered.length} {partnered.length === 1 ? "project" : "projects"}
                   </span>
                 </div>
@@ -129,7 +129,7 @@ function ProjectsPageView({ projects }: { projects: Project[] }) {
                   <h2 id="represented" className="eyebrow">
                     Also marketed by us
                   </h2>
-                  <span className="font-mono text-[0.5625rem] tracking-[0.1em] text-ink-faint uppercase">
+                  <span className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase">
                     {others.length} {others.length === 1 ? "project" : "projects"}
                   </span>
                 </div>
@@ -217,7 +217,7 @@ function ProjectCard({
         </div>
 
         <div className="flex flex-1 flex-col p-6">
-          <p className="font-mono text-micro tracking-[0.12em] text-ink-muted uppercase">
+          <p className="font-semibold text-micro tracking-[0.12em] text-ink-muted uppercase">
             {locality?.name ?? project.locality_slug} ·{" "}
             {project.city === "ahmedabad" ? "Ahmedabad" : "Gandhinagar"}
           </p>
@@ -234,25 +234,25 @@ function ProjectCard({
 
           <dl className="mt-auto grid grid-cols-2 gap-4 border-t border-rule pt-5">
             <div>
-              <dt className="font-mono text-[0.5rem] tracking-[0.14em] text-ink-faint uppercase">
+              <dt className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
                 Price
               </dt>
-              <dd className="mt-1 font-display text-[1.0625rem] text-ink" data-numeric>
+              <dd className="mt-1 text-[1.0625rem] font-semibold text-ink" data-numeric>
                 {formatPriceRange(project.price_min, project.price_max)}
               </dd>
             </div>
             <div>
-              <dt className="font-mono text-[0.5rem] tracking-[0.14em] text-ink-faint uppercase">
+              <dt className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
                 Possession
               </dt>
-              <dd className="mt-1 font-display text-[1.0625rem] text-ink">
+              <dd className="mt-1 text-[1.0625rem] font-semibold text-ink">
                 {formatPossession(project.possession, project.possession_date)}
               </dd>
             </div>
           </dl>
 
           <div className="mt-5 flex items-center justify-between gap-3">
-            <span className="font-mono text-[0.5rem] tracking-[0.1em] text-ink-faint uppercase">
+            <span className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase">
               {project.rera_id ? `RERA ${project.rera_id.slice(-8)}` : "Resale · RERA exempt"}
             </span>
             <span className="grid size-8 place-items-center rounded-full border border-rule-strong text-ink-muted transition-all duration-400 group-hover:border-brass group-hover:bg-brass group-hover:text-paper">

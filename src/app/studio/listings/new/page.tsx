@@ -28,7 +28,7 @@ export default async function NewListingPage() {
     <div className="p-5 lg:p-10">
       <Link
         href="/studio/listings"
-        className="inline-flex items-center gap-1.5 font-mono text-[0.5625rem] tracking-[0.12em] text-ink-muted uppercase hover:text-brass"
+        className="inline-flex items-center gap-1.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase hover:text-brass"
       >
         <ChevronLeft className="size-3" strokeWidth={2.2} aria-hidden />
         Listings

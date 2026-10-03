@@ -85,7 +85,7 @@ export default async function LocalitiesPage() {
 
             <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-rule-strong/50 pt-6">
               <div>
-                <dt className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-faint uppercase">
+                <dt className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
                   Areas covered
                 </dt>
                 <dd className="mt-1 font-display text-h4 text-ink" data-numeric>
@@ -94,7 +94,7 @@ export default async function LocalitiesPage() {
               </div>
               {cheapest && (
                 <div>
-                  <dt className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-faint uppercase">
+                  <dt className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
                     Entry point
                   </dt>
                   <dd className="mt-1 font-display text-h4 text-ink">
@@ -107,7 +107,7 @@ export default async function LocalitiesPage() {
               )}
               {dearest && (
                 <div>
-                  <dt className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-faint uppercase">
+                  <dt className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
                     Top of the market
                   </dt>
                   <dd className="mt-1 font-display text-h4 text-ink">
@@ -159,7 +159,7 @@ export default async function LocalitiesPage() {
                       <h2 id={`zone-${zone}`} className="font-display text-h3 text-ink">
                         {zoneLabels[zone]}
                       </h2>
-                      <span className="font-mono text-[0.5625rem] tracking-[0.1em] text-ink-faint uppercase">
+                      <span className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase">
                         {inZone.length} area{inZone.length === 1 ? "" : "s"}
                       </span>
                     </div>
@@ -173,13 +173,13 @@ export default async function LocalitiesPage() {
                           </caption>
                           <thead>
                             <tr className="border-b border-rule text-left">
-                              <th scope="col" className="pb-3 font-mono text-[0.5625rem] tracking-[0.12em] font-normal text-ink-muted uppercase">
+                              <th scope="col" className="pb-3 text-[0.6875rem] tracking-[0.12em] font-normal text-ink-muted uppercase">
                                 Area
                               </th>
-                              <th scope="col" className="pb-3 text-right font-mono text-[0.5625rem] tracking-[0.12em] font-normal text-ink-muted uppercase">
+                              <th scope="col" className="pb-3 text-right text-[0.6875rem] tracking-[0.12em] font-normal text-ink-muted uppercase">
                                 Indicative ₹/sq.ft
                               </th>
-                              <th scope="col" className="pb-3 text-right font-mono text-[0.5625rem] tracking-[0.12em] font-normal text-ink-muted uppercase">
+                              <th scope="col" className="pb-3 text-right text-[0.6875rem] tracking-[0.12em] font-normal text-ink-muted uppercase">
                                 Live
                               </th>
                               <th scope="col" className="pb-3">
@@ -196,7 +196,7 @@ export default async function LocalitiesPage() {
                                 <tr key={l.slug} className="group hover:bg-sand/60">
                                   <th scope="row" className="py-4 pr-4 text-left font-normal">
                                     <Link href={`/${l.city}/${l.slug}`} className="block">
-                                      <span className="font-display text-[1.0625rem] text-ink group-hover:text-brass">
+                                      <span className="text-[1.0625rem] font-semibold text-ink group-hover:text-brass">
                                         {l.name}
                                       </span>
                                       {l.blurb && (
@@ -208,7 +208,7 @@ export default async function LocalitiesPage() {
                                   </th>
 
                                   <td
-                                    className="py-4 pr-4 text-right align-top font-display text-[1.0625rem] whitespace-nowrap text-ink"
+                                    className="py-4 pr-4 text-right align-top text-[1.0625rem] font-semibold whitespace-nowrap text-ink"
                                     data-numeric
                                   >
                                     ₹{l.pricePerSqft[0].toLocaleString("en-IN")} –{" "}
@@ -242,7 +242,7 @@ export default async function LocalitiesPage() {
                     {/* ── Covered: linked, indexed, no invented rate ───── */}
                     {rest.length > 0 && (
                       <div className="mt-7">
-                        <p className="mb-3.5 font-mono text-[0.5625rem] tracking-[0.14em] text-ink-faint uppercase">
+                        <p className="mb-3.5 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
                           Also covered in this corridor
                         </p>
 

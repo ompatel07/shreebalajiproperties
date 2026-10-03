@@ -154,7 +154,7 @@ export function YieldCalculator() {
             beatsFd ? "border-verdant/25 bg-verdant-pale" : "border-alert/25 bg-alert-pale"
           }`}
         >
-          <p className="font-mono text-[0.5625rem] tracking-[0.14em] uppercase">
+          <p className="font-semibold text-[0.6875rem] tracking-[0.14em] uppercase">
             Against a fixed deposit at 7%
           </p>
           <p className="mt-3 max-w-prose leading-relaxed text-ink-soft">
@@ -264,7 +264,7 @@ function Row({
         {label}
         {note && <span className="block text-[0.6875rem] text-ink-faint">{note}</span>}
       </dt>
-      <dd className="shrink-0 font-display text-[1.0625rem] text-ink tabular-nums" data-numeric>
+      <dd className="shrink-0 text-[1.0625rem] font-semibold text-ink tabular-nums" data-numeric>
         {value}
       </dd>
     </div>

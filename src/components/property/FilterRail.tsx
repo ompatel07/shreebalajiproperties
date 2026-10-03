@@ -108,7 +108,7 @@ export function FilterRail({
         {/* The result count used to live here. It now leads the results
             column as a removable-chip bar, so repeating it in the rail only
             invited a double-take about which number was authoritative. */}
-        <p className="font-mono text-[0.5625rem] tracking-[0.16em] text-ink-muted uppercase">
+        <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
           Narrow it down
         </p>
 
@@ -116,7 +116,7 @@ export function FilterRail({
           <button
             type="button"
             onClick={clearAll}
-            className="font-mono text-[0.5625rem] tracking-[0.12em] text-brass uppercase hover:underline"
+            className="font-semibold text-[0.6875rem] tracking-[0.12em] text-brass uppercase hover:underline"
           >
             Clear all
           </button>
@@ -340,12 +340,12 @@ export function FilterRail({
       <button
         type="button"
         onClick={() => setMobileOpen(true)}
-        className="inline-flex items-center gap-2.5 rounded-[2px] border border-rule-strong bg-paper px-4 py-2.5 font-mono text-micro tracking-[0.12em] text-ink uppercase lg:hidden"
+        className="inline-flex items-center gap-2.5 rounded-[2px] border border-rule-strong bg-paper px-4 py-2.5 font-semibold text-micro tracking-[0.12em] text-ink uppercase lg:hidden"
       >
         <SlidersHorizontal className="size-3.5" strokeWidth={1.8} aria-hidden />
         Filters
         {activeCount > 0 && (
-          <span className="grid size-4 place-items-center rounded-full bg-brass font-mono text-[0.5rem] text-paper">
+          <span className="grid size-[1.125rem] place-items-center rounded-full bg-brass text-[0.625rem] font-semibold text-paper" data-numeric>
             {activeCount}
           </span>
         )}
@@ -413,7 +413,7 @@ function FilterGroup({
           type="button"
           onClick={() => setOpen(!open)}
           aria-expanded={open}
-          className="mb-3 flex w-full items-center justify-between font-mono text-[0.5625rem] tracking-[0.16em] text-ink-muted uppercase"
+          className="mb-3 flex w-full items-center justify-between font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase"
         >
           {label}
           <span className={cn("transition-transform duration-300", open && "rotate-45")} aria-hidden>
@@ -421,7 +421,7 @@ function FilterGroup({
           </span>
         </button>
       ) : (
-        <p className="mb-3 font-mono text-[0.5625rem] tracking-[0.16em] text-ink-muted uppercase">
+        <p className="mb-3 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
           {label}
         </p>
       )}
@@ -452,7 +452,7 @@ export function SortBar({ total }: { total: number }) {
     <div className="flex items-center gap-3">
       <label
         htmlFor="sort"
-        className="hidden font-mono text-[0.5625rem] tracking-[0.16em] text-ink-muted uppercase sm:block"
+        className="hidden font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase sm:block"
       >
         Sort
       </label>
@@ -460,7 +460,7 @@ export function SortBar({ total }: { total: number }) {
         id="sort"
         value={current}
         onChange={(e) => onChange(e.target.value)}
-        className="cursor-pointer rounded-[2px] border border-rule-strong bg-paper px-3.5 py-2.5 font-mono text-micro tracking-[0.08em] text-ink focus:border-brass focus:outline-none"
+        className="cursor-pointer rounded-full border border-rule-strong bg-paper px-4 py-2.5 text-[0.8125rem] font-medium text-ink focus:border-brass focus:outline-none"
       >
         <option value="relevance">Our pick</option>
         <option value="newest">Newest first</option>

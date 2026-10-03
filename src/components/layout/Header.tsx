@@ -46,7 +46,10 @@ export function Header() {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const isHome = pathname === "/";
-  const overHero = isHome && !scrolled && !panel;
+  /* Transparent only. The homepage hero is ivory from its first pixel, so the
+     bar never needs a light colourway — which also removes the contrast
+     failure it used to have over the sky in the old photo hero. */
+  const atTop = isHome && !scrolled && !panel;
   const hidden = pathname.startsWith("/studio");
 
   useEffect(() => {
@@ -96,36 +99,39 @@ export function Header() {
       <header
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500",
-          overHero
+          atTop
             ? "border-b border-transparent bg-transparent"
-            : "border-b border-rule bg-bone/92 backdrop-blur-xl",
+            : "border-b border-rule bg-bone/90 backdrop-blur-xl",
         )}
         onMouseLeave={scheduleClose}
       >
-        <div className="shell flex h-16 items-center justify-between gap-4 lg:h-[4.75rem]">
-          <Logo tone={overHero ? "bone" : "ink"} />
+        <div className="shell flex h-16 flex-nowrap items-center justify-between gap-3 lg:h-[4.75rem] xl:gap-6">
+          <Logo tone="ink" />
 
           {/* ── Desktop nav ───────────────────────────────────────────── */}
-          <nav aria-label="Primary" className="hidden items-center gap-0.5 lg:flex">
-            <NavTrigger label="Buy" active={panel === "buy"} dark={overHero} onOpen={() => openPanel("buy")} />
-            <NavTrigger label="Localities" active={panel === "localities"} dark={overHero} onOpen={() => openPanel("localities")} />
-            <NavLink href="/projects" dark={overHero} onHover={() => openPanel(null)}>
+          <nav
+            aria-label="Primary"
+            className="hidden min-w-0 flex-nowrap items-center gap-0.5 lg:flex"
+          >
+            <NavTrigger label="Buy" active={panel === "buy"} onOpen={() => openPanel("buy")} />
+            <NavTrigger label="Localities" active={panel === "localities"} onOpen={() => openPanel("localities")} />
+            <NavLink href="/projects" onHover={() => openPanel(null)}>
               Projects
             </NavLink>
-            <NavTrigger label="Tools" active={panel === "tools"} dark={overHero} onOpen={() => openPanel("tools")} />
-            <NavLink href="/sell" dark={overHero} onHover={() => openPanel(null)}>
+            <NavTrigger label="Tools" active={panel === "tools"} onOpen={() => openPanel("tools")} />
+            <NavLink href="/sell" onHover={() => openPanel(null)}>
               Sell
             </NavLink>
             {/* The builder audience is real but secondary — one clear link,
                 set apart from the buyer items by a hairline. */}
-            <span className="mx-2 h-4 w-px bg-current opacity-20" aria-hidden />
-            <NavLink href="/for-builders" dark={overHero} onHover={() => openPanel(null)}>
+            <span className="mx-2 h-3.5 w-px shrink-0 bg-current opacity-25" aria-hidden />
+            <NavLink href="/for-builders" onHover={() => openPanel(null)}>
               For Builders
             </NavLink>
           </nav>
 
           {/* ── Actions ───────────────────────────────────────────────── */}
-          <div className="flex items-center gap-1 sm:gap-2">
+          <div className="flex shrink-0 flex-nowrap items-center gap-1.5 sm:gap-2">
             {/* A visible search field, not an icon. The brief was that the
                 site must be easy to search, and an icon hides the single most
                 used action behind a guess. Collapses to an icon only where
@@ -133,16 +139,11 @@ export function Header() {
             <form
               action="/properties"
               method="get"
-              className={cn(
-                "hidden items-center gap-2 border px-3 py-2 transition-colors duration-300 md:flex",
-                overHero
-                  ? "border-bone/30 focus-within:border-bone"
-                  : "border-rule-strong focus-within:border-brass",
-              )}
+              className="hidden shrink-0 items-center gap-2 rounded-full border border-rule-strong bg-paper px-3.5 py-2 transition-colors duration-300 focus-within:border-brass xl:flex"
             >
               <Search
-                className={cn("size-4 shrink-0", overHero ? "text-bone/70" : "text-ink-faint")}
-                strokeWidth={1.8}
+                className="size-[0.9rem] shrink-0 text-ink-faint"
+                strokeWidth={2}
                 aria-hidden
               />
               <input
@@ -152,38 +153,29 @@ export function Header() {
                 aria-label="Search properties"
                 enterKeyHint="search"
                 maxLength={120}
-                className={cn(
-                  "w-36 bg-transparent text-[0.8125rem] focus:outline-none lg:w-44",
-                  overHero
-                    ? "text-bone placeholder:text-bone/50"
-                    : "text-ink placeholder:text-ink-faint",
-                )}
+                className="w-40 bg-transparent text-[0.8125rem] text-ink placeholder:text-ink-faint focus:outline-none"
               />
             </form>
 
             <Link
               href="/properties"
               aria-label="Search properties"
-              className={cn(
-                "grid size-10 place-items-center rounded-[2px] transition-colors duration-300 md:hidden",
-                overHero ? "text-bone hover:bg-bone/15" : "text-ink hover:bg-sand",
-              )}
+              className="grid size-10 shrink-0 place-items-center rounded-full text-ink transition-colors duration-300 hover:bg-sand xl:hidden"
             >
               <Search className="size-[1.05rem]" strokeWidth={1.6} aria-hidden />
             </Link>
 
             <a
               href={telLink(site.contact.phoneE164)}
-              className={cn(
-                "hidden items-center gap-2 rounded-[2px] border px-4 py-2.5 font-mono text-micro tracking-[0.14em] uppercase transition-all duration-300 md:inline-flex",
-                overHero
-                  ? "border-bone/35 text-bone hover:border-bone hover:bg-bone hover:text-ink"
-                  : "border-ink/20 text-ink hover:border-ink hover:bg-ink hover:text-bone",
-              )}
+              className="hidden shrink-0 items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-[0.8125rem] font-semibold whitespace-nowrap text-bone transition-colors duration-300 hover:bg-brass-deep sm:inline-flex"
             >
-              <Phone className="size-3.5" strokeWidth={1.8} aria-hidden />
-              <span className="hidden lg:inline">{site.contact.phoneDisplay}</span>
-              <span className="lg:hidden">Call</span>
+              <Phone className="size-3.5 shrink-0" strokeWidth={2} aria-hidden />
+              {/* The full number only once there is genuinely room for it.
+                  Showing it from lg was what pushed the bar into a wrap. */}
+              <span className="hidden 2xl:inline" data-numeric>
+                {site.contact.phoneDisplay}
+              </span>
+              <span className="2xl:hidden">Call</span>
             </a>
 
             <button
@@ -191,10 +183,7 @@ export function Header() {
               onClick={() => setMobileOpen(true)}
               aria-label="Open menu"
               aria-expanded={mobileOpen}
-              className={cn(
-                "grid size-10 place-items-center rounded-[2px] transition-colors duration-300 lg:hidden",
-                overHero ? "text-bone hover:bg-bone/15" : "text-ink hover:bg-sand",
-              )}
+              className="grid size-10 shrink-0 place-items-center rounded-full text-ink transition-colors duration-300 hover:bg-sand lg:hidden"
             >
               <Menu className="size-5" strokeWidth={1.6} aria-hidden />
             </button>
@@ -233,22 +222,17 @@ export function Header() {
 function NavLink({
   href,
   children,
-  dark,
   onHover,
 }: {
   href: string;
   children: React.ReactNode;
-  dark: boolean;
   onHover?: () => void;
 }) {
   return (
     <Link
       href={href}
       onMouseEnter={onHover}
-      className={cn(
-        "link-draw px-3 py-2 font-mono text-micro tracking-[0.14em] uppercase transition-colors duration-300",
-        dark ? "text-bone" : "text-ink",
-      )}
+      className="link-draw shrink-0 px-3 py-2 text-[0.875rem] font-medium whitespace-nowrap text-ink-soft transition-colors duration-300 hover:text-ink"
     >
       {children}
     </Link>
@@ -258,12 +242,10 @@ function NavLink({
 function NavTrigger({
   label,
   active,
-  dark,
   onOpen,
 }: {
   label: string;
   active: boolean;
-  dark: boolean;
   onOpen: () => void;
 }) {
   return (
@@ -273,10 +255,7 @@ function NavTrigger({
       onFocus={onOpen}
       onClick={onOpen}
       aria-expanded={active}
-      className={cn(
-        "relative px-3 py-2 font-mono text-micro tracking-[0.14em] uppercase transition-colors duration-300",
-        dark ? "text-bone" : "text-ink",
-      )}
+      className="relative shrink-0 px-3 py-2 text-[0.875rem] font-medium whitespace-nowrap text-ink transition-colors duration-300 hover:text-brass"
     >
       {label}
       <span
@@ -423,7 +402,7 @@ function ToolsPanel() {
         <p className="mb-5 font-display text-h4 leading-tight text-ink">
           Tell us the budget. We will tell you the honest options.
         </p>
-        <Link href="/contact" className="link-draw font-mono text-micro tracking-[0.14em] text-brass uppercase">
+        <Link href="/contact" className="link-draw font-semibold text-micro tracking-[0.14em] text-brass uppercase">
           Talk to an advisor →
         </Link>
       </div>
@@ -539,7 +518,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
         <div className="shrink-0 border-t border-rule p-5">
           <a
             href={telLink(site.contact.phoneE164)}
-            className="flex w-full items-center justify-center gap-2.5 rounded-[2px] bg-ink py-4 font-mono text-micro tracking-[0.14em] text-bone uppercase"
+            className="flex w-full items-center justify-center gap-2.5 rounded-[2px] bg-ink py-4 font-semibold text-micro tracking-[0.14em] text-bone uppercase"
           >
             <Phone className="size-3.5" strokeWidth={1.8} aria-hidden />
             {site.contact.phoneDisplay}

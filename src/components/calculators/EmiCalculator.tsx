@@ -204,19 +204,19 @@ export function EmiCalculator({ initialPrice }: { initialPrice?: number }) {
           <dl className="flex flex-wrap gap-x-10 gap-y-4">
             <div>
               <dt className="text-caption text-ink-muted">§80C — principal</dt>
-              <dd className="font-display text-[1.0625rem] text-ink" data-numeric>
+              <dd className="text-[1.0625rem] font-semibold text-ink" data-numeric>
                 {formatRupeesExact(Math.round(tax.section80C))}
               </dd>
             </div>
             <div>
               <dt className="text-caption text-ink-muted">§24(b) — interest</dt>
-              <dd className="font-display text-[1.0625rem] text-ink" data-numeric>
+              <dd className="text-[1.0625rem] font-semibold text-ink" data-numeric>
                 {formatRupeesExact(Math.round(tax.section24B))}
               </dd>
             </div>
             <div>
               <dt className="text-caption text-ink-muted">Tax saved at 30%</dt>
-              <dd className="font-display text-[1.0625rem] text-verdant" data-numeric>
+              <dd className="text-[1.0625rem] font-semibold text-verdant" data-numeric>
                 {formatRupeesExact(Math.round(tax.totalSaving))}
               </dd>
             </div>

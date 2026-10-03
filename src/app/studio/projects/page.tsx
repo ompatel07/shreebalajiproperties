@@ -53,7 +53,7 @@ function ProjectsView({ projects, error }: { projects: Project[]; error: string 
         <p className="eyebrow">Developments</p>
         <h1 className="mt-2 font-display text-h3 text-ink">
           Projects
-          <span className="ml-3 font-mono text-micro tracking-[0.12em] text-ink-muted uppercase">
+          <span className="ml-3 font-semibold text-micro tracking-[0.12em] text-ink-muted uppercase">
             {projects.length} total · {partnered} full mandate
           </span>
         </h1>
@@ -69,7 +69,7 @@ function ProjectsView({ projects, error }: { projects: Project[]; error: string 
 
       {error ? (
         <div className="mt-8 rounded-[2px] border border-alert/30 bg-alert-pale p-6">
-          <p className="font-mono text-micro tracking-[0.12em] text-alert uppercase">
+          <p className="font-semibold text-micro tracking-[0.12em] text-alert uppercase">
             Could not load projects
           </p>
         </div>
@@ -122,7 +122,7 @@ function ProjectsView({ projects, error }: { projects: Project[]; error: string 
               </div>
 
               <div className="p-5">
-                <p className="font-mono text-[0.5rem] tracking-[0.12em] text-ink-muted uppercase">
+                <p className="font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase">
                   {localityBySlug.get(project.locality_slug)?.name ?? project.locality_slug} ·{" "}
                   {project.category}
                 </p>
@@ -137,25 +137,25 @@ function ProjectsView({ projects, error }: { projects: Project[]; error: string 
 
                 <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-rule pt-4">
                   <div>
-                    <dt className="font-mono text-[0.5rem] tracking-[0.12em] text-ink-faint uppercase">
+                    <dt className="font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-faint uppercase">
                       Price
                     </dt>
-                    <dd className="mt-0.5 font-display text-[0.9375rem] text-ink" data-numeric>
+                    <dd className="mt-0.5 text-[0.9375rem] font-semibold text-ink" data-numeric>
                       {formatPriceRange(project.price_min, project.price_max)}
                     </dd>
                   </div>
                   <div>
-                    <dt className="font-mono text-[0.5rem] tracking-[0.12em] text-ink-faint uppercase">
+                    <dt className="font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-faint uppercase">
                       Possession
                     </dt>
-                    <dd className="mt-0.5 font-display text-[0.9375rem] text-ink">
+                    <dd className="mt-0.5 text-[0.9375rem] font-semibold text-ink">
                       {formatPossession(project.possession, project.possession_date)}
                     </dd>
                   </div>
                 </dl>
 
                 <div className="mt-4 flex items-center justify-between gap-3">
-                  <p className="font-mono text-[0.5rem] tracking-[0.1em] text-ink-faint uppercase">
+                  <p className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase">
                     {project.rera_id ? `RERA ${project.rera_id.slice(-8)}` : "No RERA on file"} ·{" "}
                     {formatRelative(project.updated_at)}
                   </p>

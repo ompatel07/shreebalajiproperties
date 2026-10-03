@@ -78,7 +78,7 @@ export function Portfolio() {
                   {project.name}
                 </h3>
 
-                <p className="mt-5 border-t border-bone/12 pt-4 font-mono text-[0.5rem] tracking-[0.14em] text-bone/40 uppercase">
+                <p className="mt-5 border-t border-bone/12 pt-4 font-semibold text-[0.6875rem] tracking-[0.14em] text-bone/40 uppercase">
                   Residential · Marketed
                 </p>
               </article>
@@ -101,7 +101,7 @@ export function Portfolio() {
           >
             {whyPillars.map((pillar) => (
               <div key={pillar.title} className="bg-ink p-6">
-                <p className="font-display text-[1.0625rem] leading-snug text-bone">
+                <p className="text-[1.0625rem] font-semibold leading-snug text-bone">
                   {pillar.title}
                 </p>
                 <p className="mt-2.5 text-caption leading-relaxed text-bone/60">
@@ -125,7 +125,7 @@ export function Portfolio() {
               <dl className="mt-8 grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
                 {teamPillars.map((pillar) => (
                   <div key={pillar.title} className="border-t border-bone/15 pt-4">
-                    <dt className="font-mono text-[0.5625rem] tracking-[0.14em] text-brass-light uppercase">
+                    <dt className="font-semibold text-[0.6875rem] tracking-[0.14em] text-brass-light uppercase">
                       {pillar.title}
                     </dt>
                     <dd className="mt-2.5 text-caption leading-relaxed text-bone/65">
@@ -135,7 +135,7 @@ export function Portfolio() {
                 ))}
               </dl>
 
-              <p className="mt-8 border-t border-bone/15 pt-5 font-display text-[1.0625rem] text-bone/80">
+              <p className="mt-8 border-t border-bone/15 pt-5 text-[1.0625rem] font-semibold text-bone/80">
                 Experience, execution and market understanding under one roof.
               </p>
             </div>
@@ -145,7 +145,7 @@ export function Portfolio() {
         <div className="shell mt-10">
           <Link
             href="/about"
-            className="group inline-flex items-center gap-2 font-mono text-micro tracking-[0.14em] text-brass-light uppercase"
+            className="group inline-flex items-center gap-2 font-semibold text-micro tracking-[0.14em] text-brass-light uppercase"
           >
             <span className="link-draw">How we work</span>
             <ArrowUpRight

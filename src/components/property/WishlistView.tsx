@@ -54,7 +54,7 @@ export function WishlistView() {
   return (
     <div>
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-rule pb-5">
-        <p className="font-mono text-micro tracking-[0.1em] text-ink-muted uppercase">
+        <p className="font-semibold text-micro tracking-[0.1em] text-ink-muted uppercase">
           <span className="text-ink" data-numeric>
             {items.length}
           </span>{" "}
@@ -74,7 +74,7 @@ export function WishlistView() {
           <button
             type="button"
             onClick={clear}
-            className="inline-flex items-center gap-2 rounded-[2px] border border-rule-strong px-4 py-2 font-mono text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase transition-colors hover:border-alert hover:text-alert"
+            className="inline-flex items-center gap-2 rounded-[2px] border border-rule-strong px-4 py-2 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase transition-colors hover:border-alert hover:text-alert"
           >
             <Trash2 className="size-3.5" strokeWidth={1.8} aria-hidden />
             Clear

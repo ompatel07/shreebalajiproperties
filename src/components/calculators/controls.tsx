@@ -44,11 +44,11 @@ export function MoneyField({
       <div className="flex items-baseline justify-between gap-3">
         <label
           htmlFor={id}
-          className="font-mono text-[0.5625rem] tracking-[0.16em] text-ink-muted uppercase"
+          className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase"
         >
           {label}
         </label>
-        <output className="font-display text-[1.0625rem] text-ink tabular-nums" data-numeric>
+        <output className="text-[1.0625rem] font-semibold text-ink tabular-nums" data-numeric>
           {formatPrice(value)}
         </output>
       </div>
@@ -137,11 +137,11 @@ export function SliderField({
       <div className="flex items-baseline justify-between gap-3">
         <label
           htmlFor={id}
-          className="font-mono text-[0.5625rem] tracking-[0.16em] text-ink-muted uppercase"
+          className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase"
         >
           {label}
         </label>
-        <output className="font-display text-[1.0625rem] text-ink tabular-nums" data-numeric>
+        <output className="text-[1.0625rem] font-semibold text-ink tabular-nums" data-numeric>
           {display}
         </output>
       </div>
@@ -183,7 +183,7 @@ export function ChoiceField<T extends string>({
 }) {
   return (
     <fieldset>
-      <legend className="font-mono text-[0.5625rem] tracking-[0.16em] text-ink-muted uppercase">
+      <legend className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
         {label}
       </legend>
 

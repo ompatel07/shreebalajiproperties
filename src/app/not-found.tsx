@@ -89,7 +89,7 @@ function Column({
 }) {
   return (
     <div>
-      <p className="mb-4 border-b border-rule pb-3 font-mono text-micro tracking-[0.12em] text-brass uppercase">
+      <p className="mb-4 border-b border-rule pb-3 font-semibold text-micro tracking-[0.12em] text-brass uppercase">
         {title}
       </p>
       <ul className="space-y-2.5">

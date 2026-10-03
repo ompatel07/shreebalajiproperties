@@ -97,14 +97,14 @@ export function PropertyCard({
         </div>
 
         {/* Possession, bottom-left on the image — scannable without reading. */}
-        <span className="absolute bottom-3 left-3 bg-bone/92 px-2.5 py-1 font-mono text-[0.5625rem] tracking-[0.12em] text-ink uppercase backdrop-blur-sm">
+        <span className="absolute bottom-3 left-3 bg-bone/92 px-2.5 py-1 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink uppercase backdrop-blur-sm">
           {formatPossession(property.possession, property.possession_date)}
         </span>
       </div>
 
       {/* ── Type, set on the page ground ───────────────────────────────── */}
       <div className="flex flex-1 flex-col border-t border-rule pt-4">
-        <p className="flex items-center gap-1.5 font-mono text-[0.5625rem] tracking-[0.14em] text-ink-muted uppercase">
+        <p className="flex items-center gap-1.5 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
           <MapPin className="size-2.5" strokeWidth={2} aria-hidden />
           {localityName}
           <span className="text-ink-faint">
@@ -178,7 +178,7 @@ function Chip({
   return (
     <span
       className={cn(
-        "px-2 py-0.5 font-mono text-[0.5rem] tracking-[0.12em] uppercase",
+        "px-2 py-0.5 font-semibold text-[0.6875rem] tracking-[0.12em] uppercase",
         tones[tone],
       )}
     >

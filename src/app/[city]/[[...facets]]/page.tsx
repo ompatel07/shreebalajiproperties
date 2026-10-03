@@ -177,7 +177,7 @@ export default async function FacetPage({ params, searchParams }: Props) {
                 {/* A rate is shown only where we hold one, and it is labelled
                     an estimate. Covered-tier areas say so instead. */}
                 <div>
-                  <dt className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-faint uppercase">
+                  <dt className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
                     {resolved.locality.pricePerSqft ? "Indicative rate" : "Rate"}
                   </dt>
                   <dd className="mt-1 font-display text-h4 text-ink" data-numeric>
@@ -193,7 +193,7 @@ export default async function FacetPage({ params, searchParams }: Props) {
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-faint uppercase">
+                  <dt className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
                     Corridor
                   </dt>
                   <dd className="mt-1 font-display text-h4 text-ink">
@@ -201,7 +201,7 @@ export default async function FacetPage({ params, searchParams }: Props) {
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-faint uppercase">
+                  <dt className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
                     Live listings
                   </dt>
                   <dd className="mt-1 font-display text-h4 text-ink" data-numeric>
@@ -417,7 +417,7 @@ function LinkColumn({
 }) {
   return (
     <div>
-      <p className="mb-4 font-mono text-micro tracking-[0.12em] text-brass uppercase">
+      <p className="mb-4 font-semibold text-micro tracking-[0.12em] text-brass uppercase">
         {title}
       </p>
       <ul className="space-y-2.5">

@@ -38,7 +38,7 @@ export default function PrivacyPage() {
           <h1 className="display-tight mt-6 font-display text-h2 text-ink">
             Privacy policy
           </h1>
-          <p className="mt-4 font-mono text-micro tracking-[0.12em] text-ink-muted uppercase">
+          <p className="mt-4 font-semibold text-micro tracking-[0.12em] text-ink-muted uppercase">
             Last updated 3 October 2026
           </p>
         </div>

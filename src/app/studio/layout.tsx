@@ -83,10 +83,10 @@ export default async function StudioLayout({
           <div className="flex items-center gap-3 border-b border-rule px-5 py-5">
             <Monogram className="size-8 text-ink/70" />
             <div>
-              <p className="font-display text-[1.0625rem] leading-none text-ink">
+              <p className="text-[1.0625rem] font-semibold leading-none text-ink">
                 Studio
               </p>
-              <p className="mt-1 font-mono text-[0.5rem] tracking-[0.18em] text-ink-muted uppercase">
+              <p className="mt-1 font-semibold text-[0.6875rem] tracking-[0.18em] text-ink-muted uppercase">
                 {site.name}
               </p>
             </div>
@@ -96,10 +96,10 @@ export default async function StudioLayout({
 
           {/* Identity + sign out, pinned to the bottom. */}
           <div className="relative mt-auto border-t border-rule p-5">
-            <p className="truncate font-display text-[0.9375rem] text-ink">
+            <p className="truncate text-[0.9375rem] font-semibold text-ink">
               {profile.full_name ?? profile.email}
             </p>
-            <p className="mt-0.5 truncate font-mono text-[0.5rem] tracking-[0.14em] text-ink-muted uppercase">
+            <p className="mt-0.5 truncate font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
               {profile.role}
             </p>
 
@@ -108,7 +108,7 @@ export default async function StudioLayout({
                 href="/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-[0.5625rem] tracking-[0.12em] text-ink-muted uppercase hover:text-brass"
+                className="font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase hover:text-brass"
               >
                 View live site ↗
               </Link>
@@ -126,7 +126,7 @@ export default async function StudioLayout({
           <div className="flex items-center justify-between px-5 py-4">
             <div className="flex items-center gap-2.5">
               <Monogram className="size-7 text-ink/70" />
-              <span className="font-display text-[1.0625rem] text-ink">Studio</span>
+              <span className="text-[1.0625rem] font-semibold text-ink">Studio</span>
             </div>
             <SignOutButton />
           </div>

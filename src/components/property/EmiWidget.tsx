@@ -32,7 +32,7 @@ export function EmiWidget({ price }: { price: number }) {
         <p className="eyebrow">Monthly, roughly</p>
         <Link
           href={`/calculators/home-loan-emi?price=${price}`}
-          className="group inline-flex items-center gap-1 font-mono text-[0.5625rem] tracking-[0.12em] text-brass uppercase"
+          className="group inline-flex items-center gap-1 font-semibold text-[0.6875rem] tracking-[0.12em] text-brass uppercase"
         >
           <span className="link-draw">Full calculator</span>
           <ArrowUpRight
@@ -45,12 +45,12 @@ export function EmiWidget({ price }: { price: number }) {
 
       <p className="mt-3 font-display text-h2 leading-none text-ink" data-numeric>
         {formatRupeesExact(Math.round(result.emi))}
-        <span className="ml-1.5 font-mono text-micro tracking-[0.1em] text-ink-muted uppercase">
+        <span className="ml-1.5 font-semibold text-micro tracking-[0.1em] text-ink-muted uppercase">
           /mo
         </span>
       </p>
 
-      <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 border-y border-rule-strong/50 py-4 font-mono text-[0.625rem] tracking-[0.08em] uppercase">
+      <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 border-y border-rule-strong/50 py-4 font-semibold text-[0.6875rem] tracking-[0.08em] uppercase">
         <div className="flex justify-between gap-2">
           <dt className="text-ink-faint">Loan</dt>
           <dd className="text-ink-soft" data-numeric>
@@ -123,7 +123,7 @@ function Slider({
   return (
     <label className="block">
       <span className="flex items-baseline justify-between gap-2">
-        <span className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-muted uppercase">
+        <span className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
           {label}
         </span>
         <span className="font-mono text-[0.625rem] text-ink tabular-nums" data-numeric>

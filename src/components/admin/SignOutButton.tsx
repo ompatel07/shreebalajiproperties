@@ -18,7 +18,7 @@ export function SignOutButton() {
       <button
         type="submit"
         disabled={pending}
-        className="inline-flex items-center gap-2 font-mono text-[0.5625rem] tracking-[0.12em] text-ink-muted uppercase transition-colors hover:text-alert disabled:opacity-50"
+        className="inline-flex items-center gap-2 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase transition-colors hover:text-alert disabled:opacity-50"
       >
         <LogOut className="size-3" strokeWidth={1.9} aria-hidden />
         {pending ? "Signing out…" : "Sign out"}

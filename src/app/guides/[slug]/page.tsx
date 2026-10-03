@@ -138,7 +138,7 @@ export default async function GuidePage({ params }: Props) {
                   {section.table && (
                     <div className="no-bar mt-7 overflow-x-auto">
                       <table className="w-full min-w-[30rem] border-collapse">
-                        <caption className="mb-3 text-left font-mono text-[0.5625rem] tracking-[0.14em] text-ink-muted uppercase">
+                        <caption className="mb-3 text-left font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
                           {section.table.caption}
                         </caption>
                         <thead>
@@ -147,7 +147,7 @@ export default async function GuidePage({ params }: Props) {
                               <th
                                 key={h}
                                 scope="col"
-                                className={`pb-3 font-mono text-[0.5625rem] tracking-[0.12em] font-normal text-ink-muted uppercase ${
+                                className={`pb-3 text-[0.6875rem] tracking-[0.12em] font-normal text-ink-muted uppercase ${
                                   k > 0 ? "text-right" : ""
                                 }`}
                               >
@@ -181,7 +181,7 @@ export default async function GuidePage({ params }: Props) {
 
                   {section.callout && (
                     <aside className="mt-7 rounded-[2px] border border-brass/30 bg-brass-pale/40 p-6">
-                      <p className="font-mono text-[0.5625rem] tracking-[0.14em] text-brass-deep uppercase">
+                      <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-brass-deep uppercase">
                         {section.callout.label}
                       </p>
                       <p className="mt-2.5 leading-relaxed text-ink-soft">
@@ -225,7 +225,7 @@ export default async function GuidePage({ params }: Props) {
                           className="group flex items-start justify-between gap-4 rounded-[2px] border border-rule bg-paper p-5 transition-all duration-400 hover:-translate-y-0.5 hover:border-rule-strong hover:shadow-[var(--shadow-lift)]"
                         >
                           <div>
-                            <p className="font-mono text-[0.5rem] tracking-[0.14em] text-brass uppercase">
+                            <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-brass uppercase">
                               {g.category} · {g.readMinutes} min
                             </p>
                             <p className="mt-1.5 font-display text-h4 leading-snug text-ink">

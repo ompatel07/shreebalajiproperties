@@ -30,7 +30,7 @@ export default function TermsPage() {
         <div className="shell py-10 lg:py-14">
           <Breadcrumbs trail={trail} />
           <h1 className="display-tight mt-6 font-display text-h2 text-ink">Terms of use</h1>
-          <p className="mt-4 font-mono text-micro tracking-[0.12em] text-ink-muted uppercase">
+          <p className="mt-4 font-semibold text-micro tracking-[0.12em] text-ink-muted uppercase">
             Last updated 3 October 2026
           </p>
         </div>

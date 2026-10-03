@@ -55,7 +55,7 @@ export function StatTile({
 
   return (
     <div className={cn("rounded-[2px] border p-5", tones[tone])}>
-      <p className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-muted uppercase">
+      <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
         {label}
       </p>
       <p
@@ -171,13 +171,13 @@ export function CompositionBar({
           <caption className="sr-only">Breakdown by component</caption>
           <thead>
             <tr className="border-b border-rule text-left">
-              <th scope="col" className="py-2 font-mono text-[0.5625rem] tracking-[0.12em] text-ink-muted uppercase">
+              <th scope="col" className="py-2 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase">
                 Component
               </th>
-              <th scope="col" className="py-2 text-right font-mono text-[0.5625rem] tracking-[0.12em] text-ink-muted uppercase">
+              <th scope="col" className="py-2 text-right font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase">
                 Amount
               </th>
-              <th scope="col" className="py-2 text-right font-mono text-[0.5625rem] tracking-[0.12em] text-ink-muted uppercase">
+              <th scope="col" className="py-2 text-right font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase">
                 Share
               </th>
             </tr>
@@ -243,7 +243,7 @@ export function AmortisationChart({ rows }: { rows: AmortPoint[] }) {
   return (
     <figure>
       <div className="flex items-baseline justify-between gap-4">
-        <figcaption className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-muted uppercase">
+        <figcaption className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
           Where each year&rsquo;s instalments go
         </figcaption>
 
@@ -259,7 +259,7 @@ export function AmortisationChart({ rows }: { rows: AmortPoint[] }) {
                 className="size-2.5 rounded-[1px]"
                 style={{ backgroundColor: `var(--color-series-${s.slot})` }}
               />
-              <span className="font-mono text-[0.5625rem] tracking-[0.1em] text-ink-muted uppercase">
+              <span className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
                 {s.label}
               </span>
             </li>
@@ -356,7 +356,7 @@ export function AmortisationChart({ rows }: { rows: AmortPoint[] }) {
             cursor, so it never covers the bar being inspected. */}
         {active && (
           <div className="pointer-events-none absolute -top-2 left-1/2 z-10 -translate-x-1/2 -translate-y-full rounded-[2px] border border-rule bg-paper px-4 py-3 shadow-[var(--shadow-float)]">
-            <p className="font-mono text-[0.5625rem] tracking-[0.14em] text-ink-muted uppercase">
+            <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
               Year {active.year}
             </p>
             <dl className="mt-2 space-y-1">
@@ -386,7 +386,7 @@ export function AmortisationChart({ rows }: { rows: AmortPoint[] }) {
                     key={h}
                     scope="col"
                     className={cn(
-                      "py-2 font-mono text-[0.5625rem] tracking-[0.12em] text-ink-muted uppercase",
+                      "py-2 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase",
                       i > 0 && "text-right",
                     )}
                   >
@@ -452,7 +452,7 @@ function TableToggle({ open, onToggle }: { open: boolean; onToggle: () => void }
       type="button"
       onClick={onToggle}
       aria-expanded={open}
-      className="mt-4 inline-flex items-center gap-1.5 font-mono text-[0.5625rem] tracking-[0.12em] text-ink-muted uppercase transition-colors hover:text-brass"
+      className="mt-4 inline-flex items-center gap-1.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase transition-colors hover:text-brass"
     >
       <Table2 className="size-3" strokeWidth={1.8} aria-hidden />
       {open ? "Hide table" : "View as table"}

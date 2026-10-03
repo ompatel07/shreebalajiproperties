@@ -71,7 +71,7 @@ function EditView({
     <div className="p-5 lg:p-10">
       <Link
         href="/studio/listings"
-        className="inline-flex items-center gap-1.5 font-mono text-[0.5625rem] tracking-[0.12em] text-ink-muted uppercase hover:text-brass"
+        className="inline-flex items-center gap-1.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase hover:text-brass"
       >
         <ChevronLeft className="size-3" strokeWidth={2.2} aria-hidden />
         Listings
@@ -88,7 +88,7 @@ function EditView({
 
           <h1 className="mt-2 font-display text-h3 text-ink">{row.title}</h1>
 
-          <p className="mt-2 font-mono text-[0.5625rem] tracking-[0.1em] text-ink-muted uppercase">
+          <p className="mt-2 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
             {row.view_count} views · {row.enquiry_count} enquiries · updated{" "}
             {formatRelative(row.updated_at)}
           </p>
@@ -99,7 +99,7 @@ function EditView({
             href={`/property/${row.slug}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex shrink-0 items-center gap-2 rounded-[2px] border border-rule-strong px-4 py-2.5 font-mono text-[0.5625rem] tracking-[0.12em] text-ink uppercase hover:border-ink hover:bg-ink hover:text-bone"
+            className="inline-flex shrink-0 items-center gap-2 rounded-[2px] border border-rule-strong px-4 py-2.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink uppercase hover:border-ink hover:bg-ink hover:text-bone"
           >
             View live
             <ExternalLink className="size-3" strokeWidth={1.9} aria-hidden />
