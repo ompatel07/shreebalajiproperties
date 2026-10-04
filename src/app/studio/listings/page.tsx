@@ -60,7 +60,7 @@ export default async function ListingsPage({ searchParams }: Props) {
     }
     return (
       <ListingsView
-        listings={items as never[]}
+        listings={items}
         count={items.length}
         activeStatus={activeStatus ?? "all"}
         q={q}

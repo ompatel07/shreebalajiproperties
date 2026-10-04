@@ -96,6 +96,17 @@ export function heroImageFor(
   return unsplash(id, width);
 }
 
+/**
+ * A stable photo for an AREA tile on the homepage.
+ *
+ * Exteriors only — an area tile is about a place, and a living room says
+ * nothing about Shela. Seeded off the slug so the same area always shows the
+ * same photo across renders and page views.
+ */
+export function localityImage(slug: string, width = 700): string {
+  return unsplash(EXTERIORS[hashString(slug) % EXTERIORS.length]!, width, 74);
+}
+
 /** A stable gallery for a listing that has no uploaded images yet. */
 export function galleryFor(slug: string, category: string | null, count = 6): string[] {
   const seed = hashString(slug);

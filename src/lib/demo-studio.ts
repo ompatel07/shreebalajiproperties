@@ -1,5 +1,5 @@
 import { demoProjects, demoProperties } from "@/lib/demo-data";
-import type { AdminStats, Lead, SiteVisit } from "@/types/db";
+import type { AdminStats, Lead, Property, SiteVisit } from "@/types/db";
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════
@@ -305,24 +305,63 @@ export function demoAdminStats(): AdminStats {
  * The admin list shows drafts, which the public fixtures deliberately
  * exclude — so one is synthesised here to demonstrate the publish workflow.
  */
-export function demoAdminProperties() {
-  const base = demoProperties[0]!;
+/**
+ * The exact shape the studio listings table reads.
+ *
+ * `demoProperties` is typed `PropertyCard`, which is the *public* card
+ * projection — it has no `enquiry_count`, `rera_id` or `updated_at`. The
+ * admin table needs all three, and because the page used to cast these rows
+ * `as never[]`, TypeScript never checked it: the Activity column rendered
+ * "412 views · enq." with the number silently `undefined`. Naming the
+ * contract here means the compiler catches the next missing column.
+ */
+export type AdminPropertyRow = Pick<
+  Property,
+  | "id" | "slug" | "title" | "status" | "city" | "locality_slug"
+  | "property_type" | "category" | "bhk" | "bathrooms" | "carpet_sqft"
+  | "price" | "price_on_request" | "hero_image" | "is_featured"
+  | "is_exclusive" | "rera_id" | "rera_verified" | "lat" | "lng"
+  | "possession" | "possession_date" | "view_count" | "enquiry_count"
+  | "updated_at"
+>;
 
-  const draft = {
-    ...base,
-    id: "demo-prop-draft",
-    slug: "3-bhk-draft-example-bodakdev",
-    title: "3 BHK in Bodakdev — draft, not yet live",
-    locality_slug: "bodakdev",
-    status: "draft" as const,
-    is_featured: false,
-    is_exclusive: false,
-    rera_verified: false,
-    view_count: 0,
-    price: 13_200_000,
-  };
+export function demoAdminProperties(): AdminPropertyRow[] {
+  const dayAgo = (n: number) =>
+    new Date(Date.now() - 1000 * 60 * 60 * 24 * n).toISOString();
 
-  return [...demoProperties, draft];
+  const rows: AdminPropertyRow[] = demoProperties.map((p, i) => ({
+    ...p,
+    // Columns the public card projection does not carry.
+    rera_id: p.rera_verified
+      ? "PR/GJ/AHMEDABAD/AHMEDABAD/AUDA/MAA11287/310125"
+      : null,
+    // Roughly one enquiry per 18 views, matching the detail fixtures.
+    enquiry_count: Math.round(p.view_count / 18),
+    // Staggered so the "recently edited" ordering is actually meaningful.
+    updated_at: dayAgo(2 + i),
+  }));
+
+  const base = rows[0]!;
+
+  return [
+    ...rows,
+    {
+      ...base,
+      id: "demo-prop-draft",
+      slug: "3-bhk-draft-example-bodakdev",
+      title: "3 BHK in Bodakdev — draft, not yet live",
+      locality_slug: "bodakdev",
+      status: "draft",
+      is_featured: false,
+      is_exclusive: false,
+      rera_verified: false,
+      rera_id: null,
+      view_count: 0,
+      enquiry_count: 0,
+      price: 13_200_000,
+      updated_at: dayAgo(0),
+    },
+  ];
 }
 
 /** Demo staff identity for the studio shell. */

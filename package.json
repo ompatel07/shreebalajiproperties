@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tests/register.mjs --test --test-reporter=spec tests/format.test.ts tests/finance.test.ts tests/validation.test.ts tests/routing-and-fixtures.test.ts tests/schema-contract.test.ts",
+    "test:smoke": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --import ./tests/register.mjs --test --test-reporter=spec tests/smoke.test.ts",
+    "verify": "npm run typecheck && npm run test",
+    "verify:supabase": "node scripts/verify-supabase.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",

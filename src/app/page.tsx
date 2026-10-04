@@ -16,6 +16,7 @@ import {
   getBuilders,
   getFeaturedListings,
   getLocalityCounts,
+  getSiteCounts,
   getTestimonials,
 } from "@/lib/queries";
 import { pageMeta } from "@/lib/seo";
@@ -57,20 +58,21 @@ export const metadata: Metadata = pageMeta({
 export default async function HomePage() {
   // Issued in parallel: five sequential round trips would add ~400ms to the
   // regeneration of a page that is cached anyway.
-  const [featured, localityCounts, bandCounts, testimonials, builders] =
+  const [featured, localityCounts, bandCounts, testimonials, builders, counts] =
     await Promise.all([
       getFeaturedListings(6),
       getLocalityCounts(),
       getBudgetBandCounts("ahmedabad"),
       getTestimonials(5),
       getBuilders(14),
+      getSiteCounts(),
     ]);
 
   return (
     <>
-      <Hero />
-      <QuickBrowse />
+      <Hero liveCount={counts.live} localityCounts={localityCounts} />
       <FeaturedListings listings={featured} bandCounts={bandCounts} />
+      <QuickBrowse />
       <LocalityShowcase counts={localityCounts} />
       <BuyerSteps />
       <ToolsStrip />

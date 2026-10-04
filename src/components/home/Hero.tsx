@@ -1,133 +1,170 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, Phone } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BadgeCheck } from "lucide-react";
 
 import { HeroSearch } from "@/components/home/HeroSearch";
 import { RevealLines } from "@/components/motion/Reveal";
-import { ahmedabadCount, localityCount, site } from "@/config/site";
-import { unsplash } from "@/lib/imagery";
-import { telLink } from "@/lib/utils";
+import {
+  featuredLocalities,
+  localityCount,
+  zoneLabels,
+  type Locality,
+} from "@/config/site";
+import { localityImage } from "@/lib/imagery";
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════
- * HERO — bright split composition
+ * HERO — search-first
  * ═══════════════════════════════════════════════════════════════════════════
  *
- * ── Why this is no longer a dark photo with an overlay ──────────────────
- * It was a full-bleed image under a near-black gradient, which is the hero
- * every property site in this market ships — and it quietly contradicted the
- * brand, which is bright on purpose because light reads as honest here.
- * Dimming a photograph until white text sits on it also throws the
- * photograph away.
+ * ── Why there is barely a photograph above the fold ─────────────────────
+ * Two earlier versions led with a big picture: a dark full-bleed overlay,
+ * then a bright split with the photo in its own column. Both were rejected,
+ * and the reason is the same in each case — a decorative photograph is a
+ * brochure gesture. It tells a buyer nothing and it costs the fold.
  *
- * So: an ivory ground, the headline set large in the display serif, and the
- * photograph kept bright and full-contrast in its own column, bleeding off
- * the right edge on wide screens. Breaking one element out of the shell is
- * the composition's single piece of asymmetry, and it is what stops the page
- * reading as a stack of centred boxes.
+ * This is the portal pattern instead: say what the site has, give one large
+ * search, then show the places as photographs you can actually click. Every
+ * pixel above the fold is now either a fact or a control.
  *
- * ── The header depends on this ──────────────────────────────────────────
- * Because the top of this section is ivory, the header sits transparent over
- * it in its normal ink colourway. The photo starts below the header's height
- * for exactly that reason; when it bled upward, the nav lost contrast against
- * the sky — which is what it was doing in the screenshot that prompted this.
+ * ── The area tiles are the real hero ────────────────────────────────────
+ * They are the only imagery, and they earn it: each one is a real locality
+ * with a live count, linking to a canonical indexable landing page. That
+ * makes them useful to a buyer ("how much is there in Bopal?"), useful for
+ * ranking (six internal links to facet pages from the homepage), and honest
+ * — the number under each name comes from the database, not from copy.
  *
- * The search sits under the headline, full width, above the fold. Everything
- * else here is secondary to getting someone into a result set.
+ * Counts arrive as props from the page, which already queries them for other
+ * sections; fetching them again here would double the round trips.
  */
-export function Hero() {
+export function Hero({
+  liveCount,
+  localityCounts,
+}: {
+  /** Total published listings. */
+  liveCount: number;
+  /** locality slug → number of live listings. */
+  localityCounts: Record<string, number>;
+}) {
+  // Busiest featured areas first. An area tile reading "0 homes" is worse
+  // than no tile, so anything empty drops out rather than being padded.
+  const tiles: Locality[] = [...featuredLocalities]
+    .sort((a, b) => (localityCounts[b.slug] ?? 0) - (localityCounts[a.slug] ?? 0))
+    .filter((l) => (localityCounts[l.slug] ?? 0) > 0)
+    .slice(0, 6);
+
+  const shortcuts = [
+    { label: "2 BHK", href: "/ahmedabad/2-bhk-flats" },
+    { label: "3 BHK", href: "/ahmedabad/3-bhk-flats" },
+    { label: "Ready to move in", href: "/ahmedabad/ready-to-move" },
+    { label: "Under ₹50 Lakh", href: "/ahmedabad/under-50-lakh" },
+    { label: "Villas", href: "/ahmedabad/villas" },
+    { label: "New launches", href: "/ahmedabad/new-launch" },
+  ];
+
   return (
     <section className="relative overflow-hidden bg-bone pt-16 lg:pt-[4.75rem]">
-      {/* Drafting grid. Masked to the top-right so it never runs rules
-          across the headline, where it read as a stray table border. */}
+      {/* One warm bloom so the ivory is not flat. Decorative, behind type. */}
       <div
-        className="blueprint pointer-events-none absolute inset-0 opacity-[0.3] [mask-image:radial-gradient(circle_at_85%_0%,black,transparent_60%)]"
-        aria-hidden
-      />
-      {/* One warm bloom behind the type, so the ivory is not flat. */}
-      <div
-        className="pointer-events-none absolute -top-40 -left-40 size-[34rem] rounded-full bg-brass-pale/50 blur-[120px]"
+        className="pointer-events-none absolute -top-48 left-1/2 size-[46rem] -translate-x-1/2 rounded-full bg-brass-pale/45 blur-[140px]"
         aria-hidden
       />
 
       <div className="shell relative">
-        <div className="grid items-center gap-10 pt-8 lg:grid-cols-12 lg:gap-14 lg:pt-10">
-          {/* ── Copy ──────────────────────────────────────────────────── */}
-          <div className="min-w-0 lg:col-span-6">
-            <p data-reveal="" className="eyebrow mb-5 flex items-center gap-3 text-brass">
-              <span className="h-px w-8 bg-brass" aria-hidden />
-              Ahmedabad &amp; Gandhinagar
-            </p>
+        {/* ── The claim ───────────────────────────────────────────────── */}
+        <div className="mx-auto max-w-3xl pt-9 text-center lg:pt-12">
+          <p data-reveal="" className="eyebrow mb-4 text-brass">
+            Ahmedabad &amp; Gandhinagar
+          </p>
 
-            <h1 className="display-tight font-display text-[clamp(2.5rem,6.2vw,4.75rem)] leading-[1.02] text-ink">
-              <RevealLines
-                lines={[
-                  "Find a home you",
-                  <span key="claim">
-                    actually{" "}
-                    <em className="display-wonk text-brass">want to live in.</em>
-                  </span>,
-                ]}
-                delay={0.1}
-              />
-            </h1>
+          <h1 className="display-tight font-display text-[clamp(2.25rem,4.8vw,3.875rem)] leading-[1.04] text-ink">
+            <RevealLines
+              lines={[
+                "Find a home in Ahmedabad",
+                <span key="claim">
+                  <em className="display-wonk text-brass">you actually want.</em>
+                </span>,
+              ]}
+              delay={0.1}
+            />
+          </h1>
 
-            <p
-              data-reveal=""
-              style={{ ["--reveal-delay" as string]: "440ms" }}
-              className="mt-6 max-w-lg text-lead text-ink-muted"
+          <p
+            data-reveal=""
+            style={{ ["--reveal-delay" as string]: "420ms" }}
+            className="mx-auto mt-5 max-w-xl text-lead text-ink-muted"
+          >
+            <span data-numeric className="font-semibold text-ink">
+              {liveCount}
+            </span>{" "}
+            properties across{" "}
+            <span data-numeric className="font-semibold text-ink">
+              {localityCount}
+            </span>{" "}
+            areas. Search below, or just tell us what you need.
+          </p>
+        </div>
+
+        {/* ── The control. The widest thing on the page, by intent. ───── */}
+        <div
+          data-reveal=""
+          style={{ ["--reveal-delay" as string]: "540ms" }}
+          className="relative z-20 mx-auto mt-8 max-w-5xl"
+        >
+          <HeroSearch />
+        </div>
+
+        {/* ── One-tap shortcuts, for people who will not use a dropdown ─ */}
+        <div
+          data-reveal=""
+          style={{ ["--reveal-delay" as string]: "620ms" }}
+          className="mx-auto mt-5 flex max-w-5xl flex-wrap items-center justify-center gap-2"
+        >
+          {shortcuts.map((s) => (
+            <Link
+              key={s.href}
+              href={s.href}
+              className="rounded-full border border-rule-strong bg-paper px-3.5 py-1.5 text-[0.8125rem] font-medium text-ink-soft transition-all duration-300 hover:-translate-y-0.5 hover:border-ink hover:bg-ink hover:text-bone"
             >
-              Flats, villas, offices and plots across {localityCount} areas.
-              Tell us what you are looking for — we will show you what is
-              genuinely available, and what it really costs.
-            </p>
+              {s.label}
+            </Link>
+          ))}
+        </div>
 
-            {/* ── Reassurance. Three facts, no adjectives. ───────────── */}
-            <ul
-              data-reveal=""
-              style={{ ["--reveal-delay" as string]: "560ms" }}
-              className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2.5"
+        {/* ── Reassurance. Three facts, no adjectives. ────────────────── */}
+        <ul
+          data-reveal=""
+          style={{ ["--reveal-delay" as string]: "680ms" }}
+          className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-2.5"
+        >
+          {[
+            "Every listing checked",
+            "No charge to buyers",
+            "One advisor, start to finish",
+          ].map((claim) => (
+            <li
+              key={claim}
+              className="flex items-center gap-2 text-[0.8125rem] font-medium text-ink-soft"
             >
-              {[
-                "Every listing checked",
-                "No charge to buyers",
-                "One advisor, start to finish",
-              ].map((claim) => (
-                <li
-                  key={claim}
-                  className="flex items-center gap-2 text-[0.8125rem] font-medium text-ink-soft"
-                >
-                  <BadgeCheck
-                    className="size-4 shrink-0 text-verdant"
-                    strokeWidth={2}
-                    aria-hidden
-                  />
-                  {claim}
-                </li>
-              ))}
-            </ul>
+              <BadgeCheck className="size-4 shrink-0 text-verdant" strokeWidth={2} aria-hidden />
+              {claim}
+            </li>
+          ))}
+        </ul>
 
+        {/* ── Areas, as photographs you can click ─────────────────────── */}
+        {tiles.length > 0 && (
+          <div className="pt-10 pb-14 lg:pt-12 lg:pb-20">
             <div
               data-reveal=""
-              style={{ ["--reveal-delay" as string]: "640ms" }}
-              className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3"
+              className="mb-5 flex flex-wrap items-baseline justify-between gap-3"
             >
-              <a
-                href={telLink(site.contact.phoneE164)}
-                className="group inline-flex items-center gap-2.5 text-[0.9375rem] font-semibold text-ink transition-colors hover:text-brass"
-              >
-                <span className="grid size-9 place-items-center rounded-full bg-forest-pale text-forest transition-colors duration-300 group-hover:bg-forest group-hover:text-bone">
-                  <Phone className="size-4" strokeWidth={2} aria-hidden />
-                </span>
-                <span data-numeric>{site.contact.phoneDisplay}</span>
-              </a>
-
-              {/* The builder audience gets one clear door, not the homepage. */}
+              <p className="eyebrow">Where people are buying</p>
               <Link
-                href="/for-builders"
-                className="group inline-flex items-center gap-1.5 text-[0.8125rem] font-medium text-ink-muted transition-colors hover:text-ink"
+                href="/localities"
+                className="group inline-flex items-center gap-1.5 text-[0.8125rem] font-semibold text-brass"
               >
-                <span className="link-draw">Are you a builder?</span>
+                <span className="link-draw">All {localityCount} areas</span>
                 <ArrowRight
                   className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
                   strokeWidth={2}
@@ -135,66 +172,73 @@ export function Hero() {
                 />
               </Link>
             </div>
-          </div>
 
-          {/* ── Photograph ────────────────────────────────────────────── */}
-          {/* Bleeds off the right edge from xl. The negative margin is matched
-              to the shell gutter rather than using 100vw, which on desktop
-              includes the scrollbar and shoves the layout sideways. */}
-          <div className="min-w-0 lg:col-span-6 xl:-mr-12 2xl:-mr-[4.5rem]">
-            <div className="relative">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] bg-sand lg:aspect-[4/3.4]">
-                <Image
-                  src={unsplash("1600607687939-ce8a6c25118c", 1400, 80)}
-                  /* An interior, deliberately. Every exterior in the stock
-                     library is a Mediterranean villa with a pool or a North
-                     American suburb — instantly wrong for Ahmedabad, and the
-                     old alt text claimed it was a local development, which
-                     was simply false. An interior carries no location tell,
-                     so it is both better looking and honest. Still stock:
-                     replace with the client's own project photography before
-                     launch. See src/lib/imagery.ts. */
-                  alt="A naturally lit living room in a modern home"
-                  fill
-                  priority
-                  fetchPriority="high"
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="ken-burns object-cover object-center"
-                />
-                {/* Just enough to seat the card — nowhere near a dimming layer. */}
-                <div
-                  className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/35 to-transparent"
-                  aria-hidden
-                />
-              </div>
+            <div
+              data-reveal-group=""
+              className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6"
+            >
+              {tiles.map((l, i) => {
+                const count = localityCounts[l.slug] ?? 0;
 
-              {/* ── The one floating element on the page. ─────────────── */}
-              <div
-                data-reveal=""
-                style={{ ["--reveal-delay" as string]: "700ms" }}
-                className="absolute bottom-5 left-5 rounded-[var(--radius-card)] bg-bone/95 px-5 py-4 shadow-[var(--shadow-float)] backdrop-blur-sm sm:bottom-6 sm:left-6"
-              >
-                <p className="font-display text-[2.25rem] leading-none text-ink">
-                  <span data-numeric>{localityCount}</span>
-                  <span className="text-brass">.</span>
-                </p>
-                <p className="mt-1.5 max-w-[11rem] text-[0.8125rem] leading-snug text-ink-muted">
-                  areas covered — {ahmedabadCount} across Ahmedabad, the rest in
-                  Gandhinagar.
-                </p>
-              </div>
+                return (
+                  <Link
+                    key={l.slug}
+                    href={`/${l.city}/${l.slug}`}
+                    className="group relative aspect-[4/5] overflow-hidden rounded-[var(--radius-lg)] bg-sand"
+                  >
+                    <Image
+                      src={localityImage(l.slug, 520)}
+                      alt=""
+                      fill
+                      /* The first row is above the fold on a laptop. */
+                      priority={i < 3}
+                      sizes="(min-width: 1024px) 17vw, (min-width: 768px) 33vw, 50vw"
+                      className="object-cover grayscale transition-transform duration-700 ease-[var(--ease-editorial)] group-hover:scale-105"
+                    />
+                    {/* ── Duotone ────────────────────────────────────────
+                        Six unrelated stock photographs side by side read as
+                        a grab-bag — a glass tower next to a New England
+                        cottage next to a Spanish villa. Desaturating and
+                        pushing them all through one brand colour makes them
+                        a deliberate set instead, and it survives the client
+                        swapping in their own photos later. */}
+                    <div
+                      className="absolute inset-0 bg-forest/75 mix-blend-multiply"
+                      aria-hidden
+                    />
+                    {/* Deep enough for white type at the foot, clear at the top. */}
+                    <div
+                      className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/20 to-transparent"
+                      aria-hidden
+                    />
+
+                    <div className="absolute inset-x-0 bottom-0 p-3.5">
+                      <p className="text-[0.9375rem] leading-tight font-semibold text-bone">
+                        {l.name}
+                      </p>
+                      <p className="mt-0.5 text-[0.75rem] text-bone/75">
+                        <span data-numeric>{count}</span>{" "}
+                        {count === 1 ? "home" : "homes"}
+                      </p>
+                    </div>
+
+                    <span
+                      className="absolute top-3 right-3 grid size-7 place-items-center rounded-full bg-bone/90 text-ink opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                      aria-hidden
+                    >
+                      <ArrowUpRight className="size-3.5" strokeWidth={2.2} />
+                    </span>
+
+                    {/* Zone is useful orientation for someone new to the city. */}
+                    <span className="sr-only">
+                      {zoneLabels[l.zone]}, {count} listings
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
           </div>
-        </div>
-
-        {/* ── Search. The main event, full width, above the fold. ──────── */}
-        <div
-          data-reveal=""
-          style={{ ["--reveal-delay" as string]: "760ms" }}
-          className="relative z-10 pt-9 pb-14 lg:pt-10 lg:pb-20"
-        >
-          <HeroSearch />
-        </div>
+        )}
       </div>
     </section>
   );

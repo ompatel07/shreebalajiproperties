@@ -1,20 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  CalendarCheck,
-  Building2,
-  Home,
-  LayoutDashboard,
-  MessageSquareQuote,
-  Users,
-} from "lucide-react";
 
 import { SignOutButton } from "@/components/admin/SignOutButton";
-import { StudioNav } from "@/components/admin/StudioNav";
+import { StudioNav, type StudioNavItem } from "@/components/admin/StudioNav";
 import { Monogram } from "@/components/ui/Logo";
 import { site } from "@/config/site";
 import { isDemoMode } from "@/lib/demo-data";
-import { demoProfile } from "@/lib/demo-studio";
+import type { AdminStats } from "@/types/db";
+import { demoAdminStats, demoProfile } from "@/lib/demo-studio";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -32,14 +25,54 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false, nocache: true },
 };
 
-const navItems = [
-  { href: "/studio", label: "Overview", icon: LayoutDashboard },
-  { href: "/studio/listings", label: "Listings", icon: Home },
-  { href: "/studio/leads", label: "Leads", icon: Users },
-  { href: "/studio/visits", label: "Site visits", icon: CalendarCheck },
-  { href: "/studio/projects", label: "Projects", icon: Building2 },
-  { href: "/studio/testimonials", label: "Testimonials", icon: MessageSquareQuote },
-];
+/**
+ * Counts shown on the nav.
+ *
+ * One `admin_stats()` RPC does all the aggregates in a single round trip and
+ * re-checks `is_staff()` server-side, so this costs one query for the whole
+ * shell rather than one per badge. A failure here must never take the panel
+ * down — the nav simply renders without badges.
+ */
+async function navCounts(demo: boolean): Promise<AdminStats | null> {
+  if (demo) return demoAdminStats();
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase.rpc("admin_stats");
+    return (data ?? null) as AdminStats | null;
+  } catch {
+    return null;
+  }
+}
+
+function buildNav(stats: AdminStats | null): StudioNavItem[] {
+  return [
+    { href: "/studio", label: "Overview", icon: "overview" },
+    {
+      href: "/studio/listings",
+      label: "Listings",
+      icon: "listings",
+      badge: stats?.properties_total,
+    },
+    {
+      href: "/studio/leads",
+      label: "Leads",
+      icon: "leads",
+      // New leads are the one thing in this panel that is genuinely urgent:
+      // an enquiry nobody called back is lost revenue.
+      badge: stats?.leads_new,
+      urgent: true,
+    },
+    {
+      href: "/studio/visits",
+      label: "Site visits",
+      icon: "visits",
+      badge: stats?.visits_upcoming,
+      urgent: true,
+    },
+    { href: "/studio/projects", label: "Projects", icon: "projects", badge: stats?.projects_total },
+    { href: "/studio/testimonials", label: "Testimonials", icon: "testimonials" },
+  ];
+}
 
 export default async function StudioLayout({
   children,
@@ -47,6 +80,7 @@ export default async function StudioLayout({
   children: React.ReactNode;
 }) {
   const demo = isDemoMode();
+  const navItems = buildNav(await navCounts(demo));
 
   // Skip the auth round trip entirely when there is no Supabase to ask.
   const supabase = demo ? null : await createClient();
@@ -77,7 +111,7 @@ export default async function StudioLayout({
     <div className="min-h-dvh bg-bone lg:grid lg:grid-cols-[15rem_1fr]">
       {/* ══ Sidebar ═══════════════════════════════════════════════════════ */}
       <aside className="relative hidden border-r border-rule bg-sand lg:block">
-        <div className="blueprint absolute inset-0 opacity-30" aria-hidden />
+        <div className="blueprint absolute inset-0 opacity-[0.18]" aria-hidden />
 
         <div className="sticky top-0 flex h-dvh flex-col">
           <div className="flex items-center gap-3 border-b border-rule px-5 py-5">
@@ -92,7 +126,7 @@ export default async function StudioLayout({
             </div>
           </div>
 
-          <StudioNav items={navItems.map(({ icon, ...rest }) => rest)} />
+          <StudioNav items={navItems} />
 
           {/* Identity + sign out, pinned to the bottom. */}
           <div className="relative mt-auto border-t border-rule p-5">
@@ -132,7 +166,7 @@ export default async function StudioLayout({
           </div>
 
           <StudioNav
-            items={navItems.map(({ icon, ...rest }) => rest)}
+            items={navItems}
             orientation="horizontal"
           />
         </div>

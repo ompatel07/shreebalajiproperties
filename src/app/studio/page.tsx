@@ -27,7 +27,7 @@ export default async function StudioDashboard() {
         stats={demoAdminStats()}
         leads={demoLeads.slice(0, 8)}
         visits={demoVisits.filter((v) => v.status === "requested" || v.status === "confirmed")}
-        drafts={demoAdminProperties().filter((p) => p.status === "draft") as never[]}
+        drafts={demoAdminProperties().filter((p) => p.status === "draft")}
       />
     );
   }
