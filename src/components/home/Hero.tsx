@@ -10,7 +10,7 @@ import {
   zoneLabels,
   type Locality,
 } from "@/config/site";
-import { localityImage } from "@/lib/imagery";
+import { localityImage, unsplash } from "@/lib/imagery";
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════
@@ -63,12 +63,52 @@ export function Hero({
   ];
 
   return (
-    <section className="relative overflow-hidden bg-bone pt-16 lg:pt-[4.75rem]">
-      {/* One warm bloom so the ivory is not flat. Decorative, behind type. */}
-      <div
-        className="pointer-events-none absolute -top-48 left-1/2 size-[46rem] -translate-x-1/2 rounded-full bg-brass-pale/45 blur-[140px]"
-        aria-hidden
-      />
+    <section className="relative isolate overflow-hidden bg-bone pt-16 lg:pt-[4.75rem]">
+      {/* ══ Backdrop ═══════════════════════════════════════════════════════
+          Four layers, all decorative, all behind the type.
+
+          The page was reading as a flat sheet of ivory with a search box on
+          it. The fix is depth, not darkness — the brand is bright on purpose,
+          so a photograph here is washed almost to the background colour and
+          does the job a paper stock does: you feel it before you notice it.
+
+          Order matters. Photograph, then the ivory veil that mutes it, then
+          the drafting grid and jaali on top of the veil so they stay crisp
+          rather than being dulled along with the picture.
+          ════════════════════════════════════════════════════════════════ */}
+      <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
+        {/* 1. Architectural geometry. Desaturated and at 14% it reads as
+              texture, not as a building — which also means it makes no claim
+              about being a local project. */}
+        <Image
+          src={unsplash("1486406146926-c627a92ad1ab", 1800, 52)}
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-[0.2] grayscale"
+        />
+
+        {/* 2. The veil, shaped rather than flat.
+              A uniform wash muted the photograph everywhere, including the
+              wide empty margins either side of the centred column — which is
+              exactly where the page looked bare. So the ivory is opaque in an
+              ellipse behind the type and opens up towards the edges: the
+              headline stays on clean ground, and the margins get texture
+              instead of nothing. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-bone via-bone/45 to-bone" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_56%_50%_at_50%_40%,var(--color-bone)_0%,var(--color-bone)_55%,transparent_100%)]" />
+
+        {/* 3. Two diffuse blooms, warm and cool, so the ground has a gradient
+              rather than a single flat tint. */}
+        <div className="absolute -top-56 left-1/2 size-[52rem] -translate-x-1/2 rounded-full bg-brass-pale/55 blur-[150px]" />
+        <div className="absolute -bottom-40 -left-32 size-[34rem] rounded-full bg-forest-pale/70 blur-[130px]" />
+
+        {/* 4. Drafting grid and the jaali lattice — the two pieces of house
+              vernacular. Masked so neither runs rules across the headline. */}
+        <div className="blueprint absolute inset-0 opacity-[0.35] [mask-image:linear-gradient(to_bottom,transparent,black_55%,transparent)]" />
+        <div className="jaali absolute -top-24 -right-24 size-[28rem] [mask-image:radial-gradient(circle_at_70%_30%,black,transparent_70%)]" />
+        <div className="jaali absolute -bottom-28 -left-28 size-[24rem] [mask-image:radial-gradient(circle_at_30%_70%,black,transparent_70%)]" />
+      </div>
 
       <div className="shell relative">
         {/* ── The claim ───────────────────────────────────────────────── */}
@@ -109,7 +149,7 @@ export function Hero({
         <div
           data-reveal=""
           style={{ ["--reveal-delay" as string]: "540ms" }}
-          className="relative z-20 mx-auto mt-8 max-w-5xl"
+          className="relative z-20 mx-auto mt-8 max-w-5xl [&>form]:shadow-[var(--shadow-float)]"
         >
           <HeroSearch />
         </div>
