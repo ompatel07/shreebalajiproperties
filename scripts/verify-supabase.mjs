@@ -71,8 +71,18 @@ if (!URL || URL.includes("xxxx") || URL.includes("placeholder")) {
   pass(`Project URL ${URL}`);
 }
 
-/** Supabase keys are JWTs; the role is in the payload. */
+/**
+ * Supabase has two generations of key.
+ *
+ * Legacy keys are JWTs carrying `role` in the payload. The current ones are
+ * opaque and prefixed `sb_publishable_` / `sb_secret_`. Both are in active
+ * use — a project created today shows the new pair in the dashboard while the
+ * legacy anon JWT still works — so this has to understand both, or it reports
+ * a perfectly good key as unrecognised.
+ */
 function roleOf(key) {
+  if (key.startsWith("sb_publishable_")) return "anon";
+  if (key.startsWith("sb_secret_")) return "service_role";
   try {
     const payload = JSON.parse(Buffer.from(key.split(".")[1], "base64").toString());
     return payload.role ?? null;
@@ -126,10 +136,36 @@ const EXPECTED_TABLES = [
   ),
 ];
 
+/**
+ * A real GET, never `head: true`.
+ *
+ * `.select("*", { head: true })` resolves with NO error and a null count when
+ * the table does not exist — so a completely empty database reported all 12
+ * tables present. A body-returning select surfaces PGRST205 properly.
+ */
+async function tableExists(table) {
+  const { error } = await admin.from(table).select("*").limit(1);
+  return error ? error.message : null;
+}
+
+let missing = 0;
 for (const table of EXPECTED_TABLES) {
-  const { error } = await admin.from(table).select("*", { count: "exact", head: true });
-  if (error) fail(`table "${table}" is not reachable`, error.message);
-  else pass(`table "${table}"`);
+  const problem = await tableExists(table);
+  if (problem) {
+    missing++;
+    fail(`table "${table}" is not reachable`, problem.slice(0, 90));
+  } else {
+    pass(`table "${table}"`);
+  }
+}
+
+if (missing === EXPECTED_TABLES.length) {
+  console.log("");
+  console.log("  [33mNothing in the public schema at all — schema.sql has not been run.[0m");
+  console.log("  Open the Supabase dashboard → SQL Editor, paste supabase/schema.sql, run it,");
+  console.log("  then do the same with supabase/seed.sql. See supabase/MIGRATION.md.");
+  console.log("");
+  process.exit(1);
 }
 
 // Columns the studio listings table reads — the ones that broke before.
@@ -184,9 +220,17 @@ section("Row Level Security");
 section("Functions");
 
 {
+  // schema.sql does `revoke all ... from public, anon` then grants EXECUTE to
+  // `authenticated` only. The secret key is service_role, which is NOT in
+  // that grant, so PostgREST will not expose the function to this client even
+  // when it exists. Treat a failure here as "could not confirm", not as a
+  // fault — the dashboard calls it as a signed-in staff user.
   const { error } = await admin.rpc("admin_stats");
-  if (error) fail("admin_stats() is not callable — the dashboard will be empty", error.message);
-  else pass("admin_stats() responds");
+  if (!error) pass("admin_stats() responds");
+  else warn(
+    "admin_stats() not callable with the secret key — expected, it is granted " +
+      "to `authenticated` only. Confirm by signing in to /studio.",
+  );
 }
 
 /* ── 5. Data ───────────────────────────────────────────────────────────── */

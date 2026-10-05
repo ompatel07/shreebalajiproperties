@@ -68,11 +68,19 @@ before launch** — the seed copy is explicitly marked as demonstration data.
 
 ## 4. Create the admin user
 
-1. Dashboard → **Authentication** → **Users** → **Add user**.
-2. Use the client's real e-mail. Set a strong password and tick
-   *Auto-confirm user*.
-3. Copy the new user's UUID.
-4. SQL Editor:
+Once `.env.local` has the keys (step 6), one command does both halves:
+
+```bash
+node scripts/setup-admin.mjs owner@example.com "Shree Krishna Properties"
+```
+
+It creates a confirmed auth user, prints a generated password to change on
+first sign-in, and upserts the matching `profiles` row with role `admin`. It
+is idempotent, so re-running repairs a half-finished attempt rather than
+failing.
+
+Doing it by hand instead: **Authentication → Users → Add user** (tick
+*Auto-confirm*), copy the UUID, then in the SQL Editor:
 
 ```sql
 insert into profiles (id, email, full_name, role)
@@ -94,8 +102,18 @@ Dashboard → **Project Settings** → **API**:
 | Dashboard label | Environment variable |
 |---|---|
 | Project URL | `NEXT_PUBLIC_SUPABASE_URL` |
-| `anon` `public` | `NEXT_PUBLIC_SUPABASE_ANON_KEY` |
-| `service_role` `secret` | `SUPABASE_SERVICE_ROLE_KEY` |
+| Publishable key (`sb_publishable_…`), or the legacy `anon` JWT | `NEXT_PUBLIC_SUPABASE_ANON_KEY` |
+| Secret key (`sb_secret_…`), or the legacy `service_role` JWT | `SUPABASE_SERVICE_ROLE_KEY` |
+
+Supabase now issues opaque `sb_publishable_` / `sb_secret_` keys instead of the
+old JWT pair, and a new project shows both generations. Either works — the
+installed `@supabase/supabase-js` understands both, and `verify:supabase`
+recognises both formats. The variable names keep their old spelling so nothing
+in the code or on Vercel has to be renamed.
+
+The **JWT secret** on that page is a different thing again: it signs user
+sessions. The app never reads it, so do not put it in `.env.local`. If it ever
+leaks, rotate it — anyone holding it can mint a token for any user.
 
 > **The `service_role` key bypasses every RLS policy.** It must never be
 > prefixed `NEXT_PUBLIC_`, never imported into a Client Component, and never
