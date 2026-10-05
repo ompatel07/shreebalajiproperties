@@ -39,7 +39,7 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
   const go = (next: number) => setIndex((next + count) % count);
 
   return (
-    <section id="testimonials" className="border-t border-rule bg-bone py-20 lg:py-28">
+    <section id="testimonials" className="border-t border-rule bg-bone py-14 lg:py-20">
       <div className="shell">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6 border-b border-rule pb-8">

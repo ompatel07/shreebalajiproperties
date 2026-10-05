@@ -5,6 +5,8 @@ import { BuyerSteps } from "@/components/home/BuyerSteps";
 import { CtaBand } from "@/components/home/CtaBand";
 import { FeaturedListings } from "@/components/home/FeaturedListings";
 import { ForBuildersBand } from "@/components/home/ForBuildersBand";
+import { ProjectsBand } from "@/components/home/ProjectsBand";
+import { PropertyTypeBand } from "@/components/home/PropertyTypeBand";
 import { Hero } from "@/components/home/Hero";
 import { LocalityShowcase } from "@/components/home/LocalityShowcase";
 import { QuickBrowse } from "@/components/home/QuickBrowse";
@@ -16,8 +18,10 @@ import {
   getBuilders,
   getFeaturedListings,
   getLocalityCounts,
+  getPartneredProjects,
   getSiteCounts,
   getTestimonials,
+  getTypeCounts,
 } from "@/lib/queries";
 import { pageMeta } from "@/lib/seo";
 
@@ -58,20 +62,32 @@ export const metadata: Metadata = pageMeta({
 export default async function HomePage() {
   // Issued in parallel: five sequential round trips would add ~400ms to the
   // regeneration of a page that is cached anyway.
-  const [featured, localityCounts, bandCounts, testimonials, builders, counts] =
-    await Promise.all([
-      getFeaturedListings(6),
-      getLocalityCounts(),
-      getBudgetBandCounts("ahmedabad"),
-      getTestimonials(5),
-      getBuilders(14),
-      getSiteCounts(),
-    ]);
+  const [
+    featured,
+    localityCounts,
+    bandCounts,
+    testimonials,
+    builders,
+    counts,
+    typeCounts,
+    projects,
+  ] = await Promise.all([
+    getFeaturedListings(6),
+    getLocalityCounts(),
+    getBudgetBandCounts("ahmedabad"),
+    getTestimonials(5),
+    getBuilders(14),
+    getSiteCounts(),
+    getTypeCounts(),
+    getPartneredProjects(4),
+  ]);
 
   return (
     <>
       <Hero liveCount={counts.live} localityCounts={localityCounts} />
+      <PropertyTypeBand counts={typeCounts} />
       <FeaturedListings listings={featured} bandCounts={bandCounts} />
+      <ProjectsBand projects={projects} />
       <QuickBrowse />
       <LocalityShowcase counts={localityCounts} />
       <BuyerSteps />

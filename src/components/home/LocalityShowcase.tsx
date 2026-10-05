@@ -46,7 +46,7 @@ export function LocalityShowcase({ counts }: { counts: Record<string, number> })
   const rows = featuredLocalities;
 
   return (
-    <section id="localities" className="relative border-t border-rule bg-bone py-20 lg:py-28">
+    <section id="localities" className="relative border-t border-rule bg-bone py-14 lg:py-20">
       <div className="shell">
         {/* ── Heading. Numeral set beside the title rather than an eyebrow
                stacked above it, so this section does not open the same way

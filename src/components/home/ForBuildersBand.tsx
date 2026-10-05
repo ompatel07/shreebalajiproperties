@@ -25,7 +25,7 @@ import { portfolio, services } from "@/config/site";
  */
 export function ForBuildersBand() {
   return (
-    <section className="relative overflow-hidden bg-ink py-16 lg:py-20">
+    <section className="relative overflow-hidden bg-ink py-14 lg:py-18">
       <div className="pointer-events-none absolute inset-0 opacity-[0.06]" aria-hidden>
         <div className="jaali size-full" />
       </div>

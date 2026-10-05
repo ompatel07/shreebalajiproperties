@@ -15,7 +15,12 @@ import { hashString } from "@/lib/utils";
  *     first, so swapping a listing's photo is just a field edit in the admin
  *     panel — no code change.
  *
- * Every ID below was HTTP-200 verified at build time.
+ * ⚠️  The group names below are NOT reliable as subject labels. Every ID was
+ *     verified to return HTTP 200 — not to depict what the group is called.
+ *     Spot-checked Oct 2026: "1560448204-e02f11c3d0e2" in COMMERCIAL is a
+ *     residential living room, and both of the first two LAND entries are
+ *     houses among trees, not plots. Look at an image before using it
+ *     anywhere the label is shown to a visitor.
  */
 
 /** Exteriors, elevations, towers. */

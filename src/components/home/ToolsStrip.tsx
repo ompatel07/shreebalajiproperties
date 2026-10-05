@@ -66,7 +66,7 @@ const tools = [
 
 export function ToolsStrip() {
   return (
-    <section id="tools" className="border-t border-rule bg-paper py-20 lg:py-28">
+    <section id="tools" className="border-t border-rule bg-paper py-14 lg:py-20">
       <div className="shell">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
           {/* ── Sticky heading column ──────────────────────────────────── */}

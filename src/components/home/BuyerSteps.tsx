@@ -57,7 +57,7 @@ export function BuyerSteps() {
   const message = `Hi ${site.name}, I am looking for a property in Ahmedabad.`;
 
   return (
-    <section id="how-it-works" className="border-t border-rule bg-sand py-16 lg:py-24">
+    <section id="how-it-works" className="border-t border-rule bg-sand py-14 lg:py-18">
       <div className="shell">
         <Reveal>
           <div className="max-w-2xl">

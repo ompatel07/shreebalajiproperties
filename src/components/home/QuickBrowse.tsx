@@ -36,7 +36,7 @@ export function QuickBrowse() {
   ];
 
   return (
-    <section className="relative border-t border-rule bg-sand py-16 lg:py-20">
+    <section className="relative border-t border-rule bg-sand py-14 lg:py-18">
       <div className="shell">
         {/* ── Popular searches: the fastest path in ───────────────────── */}
         <Reveal>

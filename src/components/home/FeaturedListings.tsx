@@ -40,7 +40,7 @@ export function FeaturedListings({
   const row = rest.slice(2, 5);
 
   return (
-    <section id="inventory" className="bg-bone py-20 lg:py-28">
+    <section id="inventory" className="bg-bone py-14 lg:py-20">
       <div className="shell">
         {/* ── Heading. Title left, meta column right — a different opening
                shape from the sections either side of it. ─────────────── */}

@@ -530,6 +530,36 @@ export async function getLocalityCounts(): Promise<Record<string, number>> {
   return counts;
 }
 
+/**
+ * Live listings per property type, for the homepage type cards.
+ *
+ * Same shape and caching story as `getLocalityCounts`: one narrow select,
+ * counted in memory. PostgREST has no GROUP BY, and a per-type `head: true`
+ * count would be thirteen round trips for a page that is cached anyway.
+ */
+export async function getTypeCounts(): Promise<Record<string, number>> {
+  if (isDemoMode()) {
+    const counts: Record<string, number> = {};
+    for (const p of demoProperties) {
+      if (p.status !== "published") continue;
+      counts[p.property_type] = (counts[p.property_type] ?? 0) + 1;
+    }
+    return counts;
+  }
+
+  const supabase = createPublicClient();
+  const { data } = await supabase
+    .from("properties")
+    .select("property_type")
+    .eq("status", "published");
+
+  const counts: Record<string, number> = {};
+  for (const row of (data ?? []) as { property_type: string }[]) {
+    counts[row.property_type] = (counts[row.property_type] ?? 0) + 1;
+  }
+  return counts;
+}
+
 /** Headline numbers for the homepage trust rail. */
 export async function getSiteCounts(): Promise<{
   live: number;
