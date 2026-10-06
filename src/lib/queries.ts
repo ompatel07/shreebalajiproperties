@@ -589,6 +589,90 @@ export async function getSiteCounts(): Promise<{
 }
 
 /** Which budget bands actually have inventory — drives the homepage chips. */
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ * HOME FACTS — every homepage count in ONE round trip
+ * ═══════════════════════════════════════════════════════════════════════════
+ *
+ * The homepage needed four separate aggregates — locality counts, type
+ * counts, budget-band counts and the headline totals. Each was its own query,
+ * and each scanned the same table: four round trips, four full reads of
+ * `properties`, for numbers derived from the same four columns.
+ *
+ * PostgREST has no GROUP BY, so the counting has to happen somewhere. Doing
+ * it once in memory over a single narrow select is strictly better than doing
+ * it four times over four selects — same work, a quarter of the latency and a
+ * quarter of the egress, which is the binding constraint on the Supabase free
+ * tier.
+ *
+ * The individual functions are kept: other pages use them on their own, and
+ * there a single scan is already the minimum.
+ */
+export interface HomeFacts {
+  localityCounts: Record<string, number>;
+  typeCounts: Record<string, number>;
+  bandCounts: { slug: string; label: string; count: number }[];
+  live: number;
+  localities: number;
+  value: number;
+}
+
+export async function getHomeFacts(city = "ahmedabad"): Promise<HomeFacts> {
+  type Row = {
+    price: number | null;
+    locality_slug: string;
+    property_type: string;
+    city: string;
+  };
+
+  let rows: Row[];
+
+  if (isDemoMode()) {
+    rows = demoProperties
+      .filter((p) => p.status === "published")
+      .map((p) => ({
+        price: p.price,
+        locality_slug: p.locality_slug,
+        property_type: p.property_type,
+        city: p.city,
+      }));
+  } else {
+    const supabase = createPublicClient();
+    const { data, error } = await supabase
+      .from("properties")
+      .select("price, locality_slug, property_type, city")
+      .eq("status", "published");
+
+    if (error) console.error("[getHomeFacts]", error.message);
+    rows = (data ?? []) as Row[];
+  }
+
+  const localityCounts: Record<string, number> = {};
+  const typeCounts: Record<string, number> = {};
+  const cityPrices: number[] = [];
+  let value = 0;
+
+  for (const r of rows) {
+    localityCounts[r.locality_slug] = (localityCounts[r.locality_slug] ?? 0) + 1;
+    typeCounts[r.property_type] = (typeCounts[r.property_type] ?? 0) + 1;
+    value += r.price ?? 0;
+    if (r.city === city && r.price != null) cityPrices.push(r.price);
+  }
+
+  return {
+    localityCounts,
+    typeCounts,
+    bandCounts: budgetBands.map((band) => ({
+      slug: band.slug,
+      label: band.label,
+      count: cityPrices.filter((p) => p >= band.min && (band.max === null || p <= band.max)).length,
+    })),
+    live: rows.length,
+    localities: Object.keys(localityCounts).length,
+    value,
+  };
+}
+
 export async function getBudgetBandCounts(
   city = "ahmedabad",
 ): Promise<{ slug: string; label: string; count: number }[]> {

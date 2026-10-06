@@ -396,6 +396,84 @@ export async function archiveProperty(id: string): Promise<AdminResult> {
 }
 
 /**
+ * Permanently delete a listing.
+ *
+ * The panel previously stopped at archiving, on the reasoning that a hard
+ * delete loses commercial history and should therefore be awkward. The
+ * requirement is now that an admin can genuinely remove a listing, so this
+ * exists — but it keeps the part of that reasoning that was right:
+ *
+ *   • The caller must type DELETE. Not a browser `confirm()`, which people
+ *     dismiss by reflex.
+ *   • The entire row is snapshotted into `audit_log.diff` BEFORE the delete,
+ *     so a mistake is recoverable by hand from the audit trail.
+ *
+ * What the database does with the dependants is already correct and is worth
+ * stating, because it is the reason this is safe at all:
+ *
+ *   property_images, floor_plans  → ON DELETE CASCADE  (media dies with it)
+ *   leads, site_visits, testimonials → ON DELETE SET NULL
+ *
+ * So enquiries and booked visits survive with a null property reference. The
+ * commercial history is kept; only the listing goes.
+ *
+ * Archiving remains the right default and stays one click away in the UI —
+ * it hides the listing from the public site (RLS only exposes published rows)
+ * while keeping the row joinable.
+ */
+export async function deleteProperty(
+  id: string,
+  confirmation: string,
+): Promise<AdminResult> {
+  if (isDemoMode()) return DEMO_READONLY;
+
+  const { supabase, profile } = await assertStaff();
+
+  if (!z.string().uuid().safeParse(id).success) {
+    return { ok: false, message: "Invalid listing id." };
+  }
+
+  if (confirmation.trim().toUpperCase() !== "DELETE") {
+    return { ok: false, message: "Type DELETE to confirm." };
+  }
+
+  // Snapshot first. If this read fails there is nothing to recover from, so
+  // the delete does not proceed.
+  const { data: snapshot, error: readError } = await supabase
+    .from("properties")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (readError || !snapshot) {
+    console.error("[deleteProperty] snapshot", readError?.message);
+    return { ok: false, message: "Could not find that listing." };
+  }
+
+  const row = snapshot as { slug: string; city: string; locality_slug: string; title: string };
+
+  await audit(profile, "property.delete", "properties", id, {
+    reason: "permanent delete from studio",
+    snapshot,
+  });
+
+  const { error } = await supabase.from("properties").delete().eq("id", id);
+
+  if (error) {
+    console.error("[deleteProperty]", error.message);
+    return { ok: false, message: "Could not delete the listing." };
+  }
+
+  revalidatePath("/");
+  revalidatePath("/properties");
+  revalidatePath(`/property/${row.slug}`);
+  revalidatePath(`/${row.city}/${row.locality_slug}`);
+  revalidatePath("/studio/listings");
+
+  return { ok: true, message: `Deleted "${row.title}". Recoverable from the audit log.` };
+}
+
+/**
  * Duplicate a listing.
  *
  * The single most useful shortcut in this panel: most inventory arrives in

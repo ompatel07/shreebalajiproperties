@@ -71,34 +71,62 @@ export default async function ListingsPage({ searchParams }: Props) {
 
   const supabase = await createClient();
 
-  let query = supabase
-    .from("properties")
-    .select(
-      `id, slug, title, status, city, locality_slug, property_type, category,
+  const BASE_COLUMNS = `id, slug, title, status, city, locality_slug, property_type, category,
        bhk, bathrooms, carpet_sqft, price, price_on_request, hero_image,
        is_featured, is_exclusive, rera_id, rera_verified, lat, lng,
-       possession, possession_date, view_count, enquiry_count, updated_at`,
-      { count: "exact" },
-    )
-    .order("updated_at", { ascending: false })
-    .limit(100);
+       possession, possession_date, view_count, enquiry_count, updated_at`;
 
   const activeStatus = STATUS_TABS.some((t) => t.value === status) ? status : "all";
-  if (activeStatus && activeStatus !== "all") {
-    query = query.eq("status", activeStatus);
+  const needle = q ? q.replace(/[%_]/g, "") : "";
+
+  /**
+   * One query, built twice.
+   *
+   * `ref_code` only exists once `supabase/migrations/001_listing_reference.sql`
+   * has been applied, and selecting a column that is not there fails the whole
+   * request. Rather than leave the panel broken in the window between deploy
+   * and migration, this asks for the reference first and silently falls back
+   * to the base columns if Postgres says the column is unknown (42703).
+   *
+   * Drop the fallback once the migration is everywhere.
+   */
+  async function run(withRef: boolean) {
+    let query = supabase
+      .from("properties")
+      .select(withRef ? `${BASE_COLUMNS}, ref_no, ref_code` : BASE_COLUMNS, {
+        count: "exact",
+      })
+      .order(withRef ? "ref_no" : "updated_at", { ascending: false })
+      .limit(100);
+
+    if (activeStatus && activeStatus !== "all") query = query.eq("status", activeStatus);
+
+    if (needle) {
+      // An admin searching their own catalogue wants substring matching, not
+      // stemmed relevance — so `ilike`, not the tsvector index. Searching the
+      // reference as well is the point of having one: type "42" or "SK-0042"
+      // and land on the listing.
+      const pattern = `%${needle}%`;
+      query = withRef
+        ? query.or(`title.ilike.${pattern},ref_code.ilike.${pattern},locality_slug.ilike.${pattern}`)
+        : query.or(`title.ilike.${pattern},locality_slug.ilike.${pattern}`);
+    }
+
+    return query;
   }
 
-  if (q) {
-    // `ilike` rather than the tsvector index: an admin searching their own
-    // catalogue wants substring matching on a partial title, not stemmed
-    // full-text relevance.
-    query = query.ilike("title", `%${q.replace(/[%_]/g, "")}%`);
-  }
+  let { data, count, error } = await run(true);
 
-  const { data, count, error } = await query;
+  if (error && /ref_code|ref_no|42703/i.test(`${error.message} ${error.code ?? ""}`)) {
+    ({ data, count, error } = await run(false));
+  }
 
   // `Row` is declared below, next to the view that consumes it.
-  const listings = (data ?? []) as Row[];
+  //
+  // Through `unknown` because the select list is built at runtime (with or
+  // without `ref_code`), and supabase-js types `.select()` from the literal
+  // string — it cannot parse a template, so it widens to a ParserError.
+  const listings = (data ?? []) as unknown as Row[];
 
   return (
     <ListingsView
@@ -118,7 +146,11 @@ type Row = Pick<
   | "hero_image" | "is_featured" | "is_exclusive" | "rera_id" | "rera_verified"
   | "lat" | "lng" | "possession" | "possession_date" | "view_count"
   | "enquiry_count" | "updated_at"
->;
+> & {
+  /** Present only after the reference migration. */
+  ref_no?: number | null;
+  ref_code?: string | null;
+};
 
 function ListingsView({
   listings,
@@ -261,12 +293,22 @@ function ListingsView({
                       </div>
 
                       <div className="min-w-0">
-                        <Link
-                          href={`/studio/listings/${p.id}`}
-                          className="line-clamp-1 text-[0.9375rem] font-semibold text-ink group-hover:text-brass"
-                        >
-                          {p.title}
-                        </Link>
+                        <div className="flex items-baseline gap-2">
+                          {p.ref_code && (
+                            <span
+                              className="shrink-0 rounded-[2px] bg-sand-deep px-1.5 py-0.5 font-mono text-[0.625rem] font-semibold text-ink-soft"
+                              data-numeric
+                            >
+                              {p.ref_code}
+                            </span>
+                          )}
+                          <Link
+                            href={`/studio/listings/${p.id}`}
+                            className="line-clamp-1 text-[0.9375rem] font-semibold text-ink group-hover:text-brass"
+                          >
+                            {p.title}
+                          </Link>
+                        </div>
                         <p className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
                           {localityBySlug.get(p.locality_slug)?.name ?? p.locality_slug} ·{" "}
                           {propertyTypes.find((t) => t.slug === p.property_type)?.singular ??
@@ -297,6 +339,9 @@ function ListingsView({
                       slug={p.slug}
                       price={p.price}
                       priceOnRequest={p.price_on_request}
+                      title={p.title}
+                      refCode={p.ref_code}
+                      status={p.status}
                     />
                   </td>
 

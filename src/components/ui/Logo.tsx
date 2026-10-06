@@ -1,19 +1,30 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { site } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 /**
- * A purely typographic logotype, by design.
+ * The client's mark, paired with the wordmark.
  *
- * The client has no mark yet, and a placeholder pictogram would look like a
- * stock icon. Instead: a drawn monogram built from the jaali lattice motif,
- * plus the wordmark in the display serif with the second half in brass. It
- * reads as finished work rather than a gap, and when a real mark arrives it
- * drops into `<Monogram>` alone.
+ * ── On the artwork ──────────────────────────────────────────────────────
+ * The supplied file is gold on a baked-in dark radial gradient, which would
+ * put a black rectangle in an ivory header. `scripts/prepare-logo.mjs` floods
+ * inward from the border to clear only backdrop — a plain luminance key would
+ * have eaten the artwork's own dark outlines — and writes:
  *
- * Everything reads from `site.wordmark`, so renaming the business is a
- * one-line change in `src/config/site.ts`.
+ *   public/logo-mark.png   the emblem alone, transparent (used here)
+ *   public/logo.png        full lockup, transparent
+ *   public/logo-full.png   untouched original, for dark surfaces where the
+ *                          original gold-on-black is faithful
+ *
+ * `<Monogram>` is kept as the jaali fallback — it is still used for the
+ * favicon and the OG image, which need a vector.
+ *
+ * NOTE: the artwork reads "Shree Krishna REAL ESTATE" while `site.name` is
+ * "Shree Krishna Properties" (from the client's own proposal PDF). The
+ * wordmark here follows the config. Confirm which is correct — it is a
+ * one-line change in `src/config/identity.ts`.
  */
 
 export function Monogram({ className }: { className?: string }) {
@@ -53,12 +64,35 @@ export function Logo({
       aria-label={`${site.name} — home`}
       className={cn("group inline-flex items-center gap-3", className)}
     >
-      <Monogram
+      {/* ── The mark, on a plaque ──────────────────────────────────────
+          The artwork is gold, drawn to sit on black. Dropped straight onto
+          ivory it reads as a pale smudge — correct colours, no contrast. An
+          ink plaque gives it the ground it was designed for, and a small dark
+          badge beside a serif wordmark is a normal premium lockup rather than
+          a workaround.
+
+          On already-dark surfaces the plaque would be invisible, so there it
+          is dropped and the mark sits directly on the background.
+
+          Sized by HEIGHT with width auto: the emblem is about 2.2:1, and a
+          square box letterboxes it to half the usable height. */}
+      <span
         className={cn(
-          "transition-colors duration-500",
-          isInverse ? "text-bone/80 group-hover:text-bone" : "text-ink/75 group-hover:text-brass",
+          "grid shrink-0 place-items-center transition-colors duration-500",
+          isInverse
+            ? ""
+            : "rounded-[var(--radius-card)] bg-ink px-2 py-1.5 group-hover:bg-brass-deep",
         )}
-      />
+      >
+        <Image
+          src="/logo-mark.png"
+          alt=""
+          width={350}
+          height={160}
+          priority
+          className="h-7 w-auto object-contain lg:h-8"
+        />
+      </span>
 
       <span className="flex flex-col leading-none">
         <span

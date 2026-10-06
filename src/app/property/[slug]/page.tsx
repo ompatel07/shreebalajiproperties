@@ -213,6 +213,19 @@ export default async function PropertyPage({ params }: Props) {
                 {property.title}
               </h1>
 
+              {/* The reference, shown publicly on purpose: it is what a buyer
+                  quotes on the phone ("I'm calling about SK-0042") and what
+                  the team searches on to pull the listing up. Hidden until
+                  the reference migration has run. */}
+              {property.ref_code && (
+                <p className="mt-3 inline-flex items-center gap-2 rounded-full border border-rule-strong bg-sand px-3 py-1 text-[0.75rem] text-ink-muted">
+                  Reference
+                  <span className="font-mono font-semibold text-ink" data-numeric>
+                    {property.ref_code}
+                  </span>
+                </p>
+              )}
+
               <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-ink-muted">
                 <MapPin className="size-4 shrink-0 text-ink-faint" strokeWidth={1.6} aria-hidden />
                 {property.address ? `${property.address}, ` : ""}

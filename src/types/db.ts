@@ -120,6 +120,14 @@ export interface Property {
   id: string;
   slug: string;
   title: string;
+  /**
+   * Human reference, e.g. "SK-0042" — a stored generated column over the
+   * `ref_no` sequence. Optional because it only exists once
+   * `supabase/migrations/001_listing_reference.sql` has been applied; code
+   * reading it must tolerate its absence.
+   */
+  ref_no?: number | null;
+  ref_code?: string | null;
   project_id: string | null;
   builder_id: string | null;
 

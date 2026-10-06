@@ -14,14 +14,11 @@ import { Testimonials } from "@/components/home/Testimonials";
 import { ToolsStrip } from "@/components/home/ToolsStrip";
 import { localityCount, site } from "@/config/site";
 import {
-  getBudgetBandCounts,
   getBuilders,
   getFeaturedListings,
-  getLocalityCounts,
+  getHomeFacts,
   getPartneredProjects,
-  getSiteCounts,
   getTestimonials,
-  getTypeCounts,
 } from "@/lib/queries";
 import { pageMeta } from "@/lib/seo";
 
@@ -62,29 +59,21 @@ export const metadata: Metadata = pageMeta({
 export default async function HomePage() {
   // Issued in parallel: five sequential round trips would add ~400ms to the
   // regeneration of a page that is cached anyway.
-  const [
-    featured,
-    localityCounts,
-    bandCounts,
-    testimonials,
-    builders,
-    counts,
-    typeCounts,
-    projects,
-  ] = await Promise.all([
+  // `getHomeFacts` replaces four separate aggregates that each scanned the
+  // same table — see its comment in queries.ts. Five round trips, not eight.
+  const [featured, facts, testimonials, builders, projects] = await Promise.all([
     getFeaturedListings(6),
-    getLocalityCounts(),
-    getBudgetBandCounts("ahmedabad"),
+    getHomeFacts("ahmedabad"),
     getTestimonials(5),
     getBuilders(14),
-    getSiteCounts(),
-    getTypeCounts(),
     getPartneredProjects(4),
   ]);
 
+  const { localityCounts, typeCounts, bandCounts } = facts;
+
   return (
     <>
-      <Hero liveCount={counts.live} localityCounts={localityCounts} />
+      <Hero liveCount={facts.live} localityCounts={localityCounts} />
       <PropertyTypeBand counts={typeCounts} />
       <FeaturedListings listings={featured} bandCounts={bandCounts} />
       <ProjectsBand projects={projects} />
