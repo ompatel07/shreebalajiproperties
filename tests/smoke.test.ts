@@ -253,6 +253,37 @@ describe("the admin panel is never open", () => {
   });
 });
 
+describe("the site's own canonical host is reachable", () => {
+  /**
+   * `NEXT_PUBLIC_SITE_URL` drives every canonical tag, the og:url and every
+   * <loc> in the sitemap. Nothing validates that the host it names actually
+   * resolves, so a typo or a renamed project points thousands of canonicals
+   * at a dead domain — and because a *.vercel.app deployment is blocked in
+   * robots.txt anyway, nothing complains. It shipped exactly that way: every
+   * canonical referenced a host returning 404.
+   */
+  it("the canonical host responds", async () => {
+    const { html } = await get("/");
+    const canonical =
+      /<link rel="canonical" href="(https?:\/\/[^/"]+)/.exec(html)?.[1] ??
+      /property="og:url" content="(https?:\/\/[^/"]+)/.exec(html)?.[1];
+
+    assert.ok(canonical, "no canonical or og:url on the homepage");
+
+    const res = await fetch(canonical, {
+      method: "HEAD",
+      redirect: "manual",
+      signal: AbortSignal.timeout(15000),
+    }).catch(() => null);
+
+    assert.ok(
+      res && res.status < 400,
+      `canonical host ${canonical} returned ${res ? res.status : "no response"} — ` +
+        "every canonical, og:url and sitemap entry points at a host that does not serve",
+    );
+  });
+});
+
 describe("security", () => {
   it("sends the hardening headers", async () => {
     const { headers } = await get("/");
