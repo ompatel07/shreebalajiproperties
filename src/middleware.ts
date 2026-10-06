@@ -22,15 +22,35 @@ async function handle(request: NextRequest) {
   /**
    * DEMO MODE — Supabase is not configured.
    *
-   * With no database there is no session to establish and no real data to
-   * protect, so the studio is opened for review. This is the same condition
-   * that drives the fixture fallback and the amber banner, and it switches
-   * itself off the instant real credentials exist.
-   *
-   * The studio shell renders a prominent "auth bypassed" strip while this is
-   * active, and robots.ts keeps /studio out of every index regardless.
+   * Drives the fixture fallback and the amber banner, and switches itself off
+   * the instant real credentials exist.
    */
   const demoMode = !supabaseUrl || supabaseUrl.includes("placeholder") || supabaseUrl.includes("xxxx");
+
+  /**
+   * ── Why the demo bypass is restricted to localhost ──────────────────────
+   *
+   * This used to open `/studio` whenever Supabase was unconfigured, reasoning
+   * that with no database there is no session to establish and no real data
+   * to protect. That is true of the data and false of the exposure, and it
+   * failed in the obvious way: `NEXT_PUBLIC_*` values are inlined at BUILD
+   * time, so adding them in Vercel after a build leaves the deployed bundle
+   * in demo mode. The production URL served an admin panel with sign-in
+   * bypassed to anyone who typed /studio.
+   *
+   * A missing environment variable must never be the thing standing between
+   * the public and the admin panel. The bypass now requires a local host, so
+   * the convenience survives where it is useful and the failure mode on a
+   * public deployment is "locked", not "open".
+   */
+  const hostname = request.nextUrl.hostname;
+  const isLocalHost =
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "[::1]" ||
+    hostname.endsWith(".local");
+
+  const demoBypass = demoMode && isLocalHost;
 
   /**
    * ── Why the script policy differs by surface ──────────────────────────
@@ -159,7 +179,16 @@ async function handle(request: NextRequest) {
   const isStudio = pathname.startsWith("/studio");
   const isLogin = pathname === "/studio/login";
 
-  if (isStudio && !isLogin && !demoMode) {
+  // Unconfigured AND public: say so plainly rather than bouncing the visitor
+  // around a login form that cannot possibly succeed.
+  if (isStudio && demoMode && !isLocalHost && pathname !== "/studio/denied") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/studio/denied";
+    url.search = "?reason=unconfigured";
+    return NextResponse.redirect(url);
+  }
+
+  if (isStudio && !isLogin && !demoBypass) {
     if (!user) {
       const url = request.nextUrl.clone();
       url.pathname = "/studio/login";
@@ -184,7 +213,7 @@ async function handle(request: NextRequest) {
   }
 
   // Already signed in and sitting on the login page → go to the dashboard.
-  if (isLogin && (user || demoMode)) {
+  if (isLogin && (user || demoBypass)) {
     const url = request.nextUrl.clone();
     url.pathname = "/studio";
     url.search = "";

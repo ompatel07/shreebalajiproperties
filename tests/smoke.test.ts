@@ -200,6 +200,59 @@ describe("crawl surface", () => {
   });
 });
 
+describe("the admin panel is never open", () => {
+  /**
+   * This shipped broken once and is the highest-severity thing on the site.
+   *
+   * `NEXT_PUBLIC_*` values are inlined at BUILD time. Adding them in Vercel
+   * after a build leaves the deployed bundle in demo mode, and demo mode used
+   * to bypass the studio sign-in — so production served an admin panel to
+   * anyone who typed /studio. The bypass is now restricted to localhost.
+   *
+   * Against a public SMOKE_URL every studio route must either redirect or
+   * refuse. It must never answer 200 with the panel.
+   */
+  const isLocal = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:|\/|$)/.test(BASE);
+
+  for (const route of ["/studio", "/studio/listings", "/studio/leads", "/studio/visits"]) {
+    it(`${route} is not served unauthenticated`, async () => {
+      const { status, html } = await get(route);
+
+      if (isLocal) {
+        // Locally the bypass is allowed, so only assert it is not an error.
+        assert.ok(status < 500, `${route} returned ${status}`);
+        return;
+      }
+
+      assert.ok(
+        status === 307 || status === 302 || status === 303 || status === 401 || status === 404,
+        `${route} returned ${status} on a public host — the panel must not be reachable`,
+      );
+      assert.ok(
+        !/sign-in is bypassed/i.test(html),
+        `${route} served the demo bypass banner on a public host`,
+      );
+    });
+  }
+
+  it("the public site is not serving demo fixtures", async () => {
+    if (isLocal) return;
+
+    // The marker lives in the fixture DESCRIPTIONS, which only the detail page
+    // renders — checking the search page passed while the site was in fact
+    // serving fictional data. Follow a listing through.
+    const search = await get("/properties");
+    const slug = /href="\/property\/([a-z0-9-]+)"/.exec(search.html)?.[1];
+    assert.ok(slug, "no listing link found on the search page");
+
+    const detail = await get(`/property/${slug}`);
+    assert.ok(
+      !/DEMO DATA/i.test(detail.html),
+      "production is serving demo fixtures — redeploy so the Supabase env vars are baked into the bundle",
+    );
+  });
+});
+
 describe("security", () => {
   it("sends the hardening headers", async () => {
     const { headers } = await get("/");
