@@ -8,6 +8,8 @@ import { formatPriceRange } from "@/lib/format";
 import { unsplash, EXTERIORS } from "@/lib/imagery";
 import { hashString } from "@/lib/utils";
 import type { PartneredProjectCard } from "@/lib/queries";
+import { RAIL, RAIL_ITEM, RAIL_TO_GRID } from "@/lib/rail";
+import { cn } from "@/lib/utils";
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════
@@ -40,8 +42,7 @@ export function ProjectsBand({ projects }: { projects: PartneredProjectCard[] })
             <div>
               <p className="eyebrow mb-3 text-brass">New launches &amp; under construction</p>
               <h2 className="display-tight font-display text-h2">
-                Projects we are{" "}
-                <em className="display-wonk text-brass">marketing now.</em>
+                New projects, <em className="display-wonk text-brass">booking now.</em>
               </h2>
             </div>
             <Link
@@ -60,7 +61,7 @@ export function ProjectsBand({ projects }: { projects: PartneredProjectCard[] })
 
         <div
           data-reveal-group=""
-          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          className={cn(RAIL, RAIL_TO_GRID, "md:grid-cols-2 md:gap-4 lg:grid-cols-4")}
         >
           {cards.map((project) => {
             const locality = localityBySlug.get(project.locality_slug);
@@ -72,7 +73,7 @@ export function ProjectsBand({ projects }: { projects: PartneredProjectCard[] })
               <Link
                 key={project.id}
                 href={`/projects/${project.slug}`}
-                className="group flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-rule bg-paper shadow-[var(--shadow-lift)] transition-all duration-400 hover:-translate-y-1 hover:shadow-[var(--shadow-raise)]"
+                className={cn(RAIL_ITEM, "group flex w-[72vw] max-w-xs flex-col overflow-hidden rounded-[var(--radius-lg)] border border-rule bg-paper shadow-[var(--shadow-lift)] transition-all duration-400 hover:-translate-y-1 hover:shadow-[var(--shadow-raise)]")}
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-sand-deep">
                   <Image

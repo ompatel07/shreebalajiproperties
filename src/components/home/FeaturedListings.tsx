@@ -1,165 +1,135 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { Reveal, RevealGroup } from "@/components/motion/Reveal";
 import { PropertyCard } from "@/components/property/PropertyCard";
 import { ButtonLink } from "@/components/ui/Button";
+import { RAIL, RAIL_ITEM, RAIL_TO_GRID, RAIL_TO_WRAP } from "@/lib/rail";
+import { cn } from "@/lib/utils";
 import type { PropertyCard as PropertyCardType } from "@/types/db";
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════
- * CURRENT INVENTORY
+ * FEATURED HOMES
  * ═══════════════════════════════════════════════════════════════════════════
  *
- * ── Layout ──────────────────────────────────────────────────────────────
- * Asymmetric on purpose. One large plate occupying seven of twelve columns,
- * two stacked beside it, then a three-up row beneath. A uniform 3×2 grid of
- * identical cards is what made this page look bought rather than designed —
- * and it also flattens the client's merchandising, because the listing they
- * most want seen gets the same weight as the fifth-best.
+ * The section a buyer actually came for, so it is laid out like a results
+ * page rather than a magazine spread:
  *
- * On a phone it becomes a snap-scrolling rail. Six stacked cards is a lot of
- * thumb travel, and a rail signals "there is more sideways" far better than
- * a tall column does.
+ *   heading → budget filter → results → "see all"
  *
- * ── The budget chips ────────────────────────────────────────────────────
- * "Under ₹50 lakh" is how buyers self-segment before they know anything else
- * about a home, and each chip is a canonical landing page. Live counts keep
- * the row honest — a band with nothing in it says so rather than leading to
- * an empty page.
+ * ── What changed and why ────────────────────────────────────────────────
+ * • The heading read "The projects we are marketing this month", with body
+ *   copy about "lead generation and enquiry management". That was the builder
+ *   pitch left behind on a buyer section — and it sat directly above a second
+ *   section titled "Projects we are marketing now", which is the clearest
+ *   case of the repetition the client called out.
+ * • Budget chips moved ABOVE the cards. They filter this content, and a
+ *   filter goes before its results. Below the cards they read as an
+ *   afterthought, and showed counts as zero-padded mono ("03", "—").
+ * • Desktop was an asymmetric editorial grid — one large card, two stacked,
+ *   then a row of three. It left a visible hole whenever the stacked column
+ *   was shorter than the lead card. A uniform grid has no holes and scans
+ *   the way every property portal a buyer has used before scans.
  */
 export function FeaturedListings({
   listings,
   bandCounts,
+  total,
 }: {
   listings: PropertyCardType[];
   bandCounts: { slug: string; label: string; count: number }[];
+  /** All live listings, for the "see all" link. */
+  total: number;
 }) {
-  const [lead, ...rest] = listings;
-  const stacked = rest.slice(0, 2);
-  const row = rest.slice(2, 5);
-
   return (
-    <section id="inventory" className="bg-bone py-14 lg:py-20">
+    <section id="inventory" className="border-t border-rule bg-bone py-12 lg:py-16">
       <div className="shell">
-        {/* ── Heading. Title left, meta column right — a different opening
-               shape from the sections either side of it. ─────────────── */}
         <Reveal>
-          <div className="grid gap-6 border-b border-rule pb-8 lg:grid-cols-12 lg:items-end lg:gap-10">
-            <div className="lg:col-span-7">
-              <p className="eyebrow mb-4">06 — Live right now</p>
+          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+            <div>
+              <p className="eyebrow mb-3 text-brass">Featured homes</p>
               <h2 className="display-tight font-display text-h2">
-                The projects we are{" "}
-                <em className="display-wonk text-brass">marketing this month.</em>
+                Worth a visit <em className="display-wonk text-brass">this week.</em>
               </h2>
+              <p className="mt-3 max-w-lg text-[0.9375rem] text-ink-muted">
+                Price, RERA number and possession date confirmed with the
+                builder before any of these went live.
+              </p>
             </div>
 
-            <div className="lg:col-span-5 lg:pl-10">
-              <p className="max-w-md text-ink-muted">
-                Every enquiry on these pages is answered, logged and followed
-                up by our team — this is what lead generation and enquiry
-                management actually look like in practice.
-              </p>
-              <Link
-                href="/properties"
-                className="group mt-5 inline-flex items-center gap-2 font-semibold text-micro tracking-[0.14em] text-brass uppercase"
-              >
-                <span className="link-draw">Browse all listings</span>
-                <ArrowRight
-                  className="size-3.5 transition-transform duration-300 group-hover:translate-x-1"
-                  strokeWidth={2}
-                  aria-hidden
-                />
-              </Link>
-            </div>
+            <Link
+              href="/properties"
+              className="group hidden items-center gap-2 rounded-full border border-rule-strong bg-paper px-5 py-2.5 text-[0.875rem] font-semibold text-ink transition-colors hover:border-ink hover:bg-ink hover:text-bone md:inline-flex"
+            >
+              View all {total} homes
+              <ArrowRight
+                className="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                strokeWidth={2}
+                aria-hidden
+              />
+            </Link>
           </div>
         </Reveal>
 
+        {/* ── Budget: the filter, before the results ──────────────────── */}
+        {/* One swipeable row on a phone rather than three wrapped lines. */}
+        <div className={cn(RAIL, RAIL_TO_WRAP, "mt-6 gap-2")}>
+          {bandCounts.map((band) => {
+            const empty = band.count === 0;
+            return (
+              <Link
+                key={band.slug}
+                href={`/ahmedabad/${band.slug}`}
+                className={cn(
+                  "inline-flex shrink-0 snap-start items-center gap-2 rounded-full border px-4 py-2 text-[0.8125rem] font-medium whitespace-nowrap transition-colors duration-200",
+                  empty
+                    ? "border-rule text-ink-faint hover:border-rule-strong"
+                    : "border-rule-strong bg-paper text-ink hover:border-ink hover:bg-ink hover:text-bone",
+                )}
+              >
+                {band.label}
+                {!empty && (
+                  <span
+                    className="rounded-full bg-sand-deep px-1.5 py-0.5 text-[0.6875rem] font-semibold text-ink-muted"
+                    data-numeric
+                  >
+                    {band.count}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+        </div>
+
         {listings.length > 0 ? (
           <>
-            {/* ══ Desktop: asymmetric editorial grid ═══════════════════ */}
-            <div className="mt-10 hidden lg:block">
-              <RevealGroup className="grid grid-cols-12 gap-x-6 gap-y-14" stagger={0.1}>
-                {lead && (
-                  <div className="col-span-7">
-                    <PropertyCard property={lead} size="large" priority />
-                  </div>
-                )}
+            {/* ── Results ─────────────────────────────────────────────── */}
+            {/* Phones: one swipeable row. Tablet and up: a uniform grid. */}
+            <RevealGroup
+              className={cn(RAIL, RAIL_TO_GRID, "mt-7 pb-1 md:grid-cols-2 md:gap-x-5 md:gap-y-9 md:pb-0 lg:grid-cols-3")}
+              stagger={0.06}
+            >
+              {listings.slice(0, 6).map((p, i) => (
+                <div key={p.id} className={cn(RAIL_ITEM, "w-[80vw] max-w-sm")}>
+                  <PropertyCard property={p} priority={i < 3} />
+                </div>
+              ))}
+            </RevealGroup>
 
-                {stacked.length > 0 && (
-                  <div className="col-span-5 flex flex-col gap-10">
-                    {stacked.map((p) => (
-                      <PropertyCard key={p.id} property={p} size="compact" priority />
-                    ))}
-                  </div>
-                )}
-              </RevealGroup>
-
-              {row.length > 0 && (
-                <RevealGroup
-                  className="mt-14 grid grid-cols-3 gap-x-6 border-t border-rule pt-14"
-                  stagger={0.09}
-                >
-                  {row.map((p) => (
-                    <PropertyCard key={p.id} property={p} />
-                  ))}
-                </RevealGroup>
-              )}
-            </div>
-
-            {/* ══ Mobile / tablet: snap rail ═══════════════════════════ */}
-            <div className="mt-8 lg:hidden">
-              {/* Bleeds past the shell so cards run to the screen edge. */}
-              <div className="rail rail-bleed pb-2">
-                {listings.map((p, i) => (
-                  <div key={p.id} className="w-[78vw] max-w-sm sm:w-[46vw]">
-                    <PropertyCard property={p} priority={i === 0} />
-                  </div>
-                ))}
-              </div>
-
-              <p className="mt-4 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
-                Swipe for more →
-              </p>
+            <div className="mt-6 md:hidden">
+              <Link
+                href="/properties"
+                className="flex w-full items-center justify-center gap-2 rounded-full bg-ink py-3.5 text-[0.9375rem] font-semibold text-bone"
+              >
+                View all {total} homes
+                <ArrowRight className="size-4" strokeWidth={2} aria-hidden />
+              </Link>
             </div>
           </>
         ) : (
           <EmptyInventory />
         )}
-
-        {/* ── Budget entry points ──────────────────────────────────────── */}
-        <div className="mt-16 border-t border-rule pt-10 lg:mt-20">
-          <div className="flex flex-wrap items-baseline justify-between gap-4">
-            <p className="eyebrow">Start from your budget</p>
-            <Link
-              href="/properties"
-              className="group inline-flex items-center gap-1.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase hover:text-brass"
-            >
-              <span className="link-draw">Or filter everything</span>
-              <ArrowUpRight className="size-2.5" strokeWidth={2.2} aria-hidden />
-            </Link>
-          </div>
-
-          <div className="mt-6 flex flex-wrap gap-2">
-            {bandCounts.map((band) => (
-              <Link
-                key={band.slug}
-                href={`/ahmedabad/${band.slug}`}
-                className="group inline-flex items-center gap-2.5 border border-rule px-4 py-2.5 transition-all duration-300 hover:border-ink hover:bg-ink"
-              >
-                <span className="text-[0.875rem] text-ink transition-colors duration-300 group-hover:text-bone">
-                  {band.label}
-                </span>
-                <span
-                  className="font-mono text-[0.5625rem] text-ink-faint tabular-nums transition-colors duration-300 group-hover:text-brass-light"
-                  data-numeric
-                >
-                  {band.count > 0 ? String(band.count).padStart(2, "0") : "—"}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
@@ -171,16 +141,15 @@ export function FeaturedListings({
  */
 function EmptyInventory() {
   return (
-    <div className="relative mt-10 overflow-hidden border border-rule bg-paper px-6 py-20 text-center">
+    <div className="relative mt-8 overflow-hidden rounded-[var(--radius-lg)] border border-rule bg-paper px-6 py-16 text-center">
       <div className="jaali absolute inset-0" aria-hidden />
       <div className="relative">
         <p className="eyebrow">Nothing live right now</p>
         <h3 className="mx-auto mt-4 max-w-lg font-display text-h3">
-          Our shelves are between restocks.
+          New homes are being checked.
         </h3>
         <p className="mx-auto mt-4 max-w-md leading-relaxed text-ink-muted">
-          We would rather show you nothing than show you something we have not
-          checked. Tell us what you are looking for and we will call you the day
+          Tell us what you are looking for and we will call you the day
           something fits.
         </p>
         <div className="mt-8">

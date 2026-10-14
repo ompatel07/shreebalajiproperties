@@ -84,7 +84,7 @@ export function Services() {
           </Reveal>
 
           <Reveal className="mt-10">
-            <div className="no-bar overflow-x-auto">
+            <div className="no-bar overflow-x-auto relative">
               <table className="w-full min-w-[34rem] border-collapse">
                 <caption className="sr-only">
                   Conventional agency approach compared with a project

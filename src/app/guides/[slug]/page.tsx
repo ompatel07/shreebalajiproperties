@@ -136,7 +136,7 @@ export default async function GuidePage({ params }: Props) {
                   </div>
 
                   {section.table && (
-                    <div className="no-bar mt-7 overflow-x-auto">
+                    <div className="no-bar mt-7 overflow-x-auto relative">
                       <table className="w-full min-w-[30rem] border-collapse">
                         <caption className="mb-3 text-left font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
                           {section.table.caption}

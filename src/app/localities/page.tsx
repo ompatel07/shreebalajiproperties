@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight, Info } from "lucide-react";
 
 import { Reveal } from "@/components/motion/Reveal";
+import { ZoneTabs } from "@/components/localities/ZoneTabs";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import {
   ahmedabadCount,
@@ -46,6 +47,7 @@ export const metadata: Metadata = pageMeta({
 export default async function LocalitiesPage() {
   const counts = await getLocalityCounts();
   const zones = Object.keys(zoneLabels) as Zone[];
+  const activeZones = zones.filter((z) => localities.some((l) => l.zone === z));
 
   const withRates = localities.filter(
     (l): l is Locality & { pricePerSqft: [number, number] } => Boolean(l.pricePerSqft),
@@ -77,10 +79,9 @@ export default async function LocalitiesPage() {
             </h1>
 
             <p className="mt-5 max-w-2xl text-lead text-ink-muted">
-              Wherever a project is, we can market it. {ahmedabadCount} areas
-              across Ahmedabad and {gandhinagarCount} across Gandhinagar — the
-              western spine, the Bopal belt, the north corridor, the east, the
-              walled city and GIFT.
+              Pick an area to see the homes for sale there. {ahmedabadCount} areas
+              across Ahmedabad and {gandhinagarCount} across Gandhinagar, grouped
+              by corridor so you can compare neighbours side by side.
             </p>
 
             <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-rule-strong/50 pt-6">
@@ -139,10 +140,18 @@ export default async function LocalitiesPage() {
 
         {/* ── By corridor ──────────────────────────────────────────────── */}
         <div className="shell py-12 lg:py-16">
-          <div className="space-y-16">
-            {zones.map((zone, zi) => {
+          {/* Phones get one corridor at a time behind sticky tabs; desktop
+              shows them all. Empty corridors are dropped BEFORE mapping so
+              tabs and panels stay index-aligned. */}
+          <ZoneTabs
+            zones={activeZones.map((z) => ({
+              id: z,
+              label: zoneLabels[z],
+              count: localities.filter((l) => l.zone === z).length,
+            }))}
+          >
+            {activeZones.map((zone, zi) => {
               const inZone = localities.filter((l) => l.zone === zone);
-              if (inZone.length === 0) return null;
 
               const core = [...inZone]
                 .filter((l): l is Locality & { pricePerSqft: [number, number] } =>
@@ -166,7 +175,7 @@ export default async function LocalitiesPage() {
 
                     {/* ── Core: rate table ──────────────────────────────── */}
                     {core.length > 0 && (
-                      <div className="no-bar mt-6 overflow-x-auto">
+                      <div className="no-bar mt-6 overflow-x-auto relative">
                         <table className="w-full min-w-[40rem] border-collapse">
                           <caption className="sr-only">
                             {zoneLabels[zone]} areas with indicative rates
@@ -276,13 +285,12 @@ export default async function LocalitiesPage() {
                 </Reveal>
               );
             })}
-          </div>
+          </ZoneTabs>
 
-          <p className="mt-16 max-w-prose border-t border-rule pt-6 text-caption leading-relaxed text-ink-muted">
-            Marketing a project in an area not listed here? It almost certainly
-            is not a problem — this list reflects where we have worked, not a
-            boundary. Tell us where the site is and we will tell you honestly
-            whether we are the right partner for that micro-market.
+          <p className="mt-12 max-w-prose border-t border-rule pt-6 text-caption leading-relaxed text-ink-muted">
+            Looking somewhere not on this list? Tell us the area and your
+            budget — this list is where we have listings today, not a limit on
+            where we will look for you.
           </p>
         </div>
       </div>

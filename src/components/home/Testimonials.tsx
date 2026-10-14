@@ -44,7 +44,7 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6 border-b border-rule pb-8">
             <div className="max-w-2xl">
-              <p className="eyebrow mb-4">06 — In their words</p>
+              <p className="eyebrow mb-4">In their words</p>
               <h2 className="display-tight font-display text-h2">
                 Most of our work comes from{" "}
                 <em className="display-wonk text-brass">people we have already helped.</em>

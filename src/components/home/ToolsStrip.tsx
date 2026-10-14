@@ -66,9 +66,9 @@ const tools = [
 
 export function ToolsStrip() {
   return (
-    <section id="tools" className="border-t border-rule bg-paper py-14 lg:py-20">
+    <section id="tools" className="border-t border-rule bg-paper py-12 lg:py-20">
       <div className="shell">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+        <div className="grid gap-6 lg:grid-cols-12 lg:gap-14">
           {/* ── Sticky heading column ──────────────────────────────────── */}
           <div className="lg:col-span-4 lg:sticky lg:top-28 lg:h-fit lg:self-start">
             <Reveal>
@@ -77,14 +77,14 @@ export function ToolsStrip() {
                 Run the numbers before you{" "}
                 <em className="display-wonk text-brass">talk to anyone.</em>
               </h2>
-              <p className="mt-5 text-ink-muted">
+              <p className="mt-4 hidden text-ink-muted sm:block">
                 Including us. These are the same calculations we run for
                 clients — no email gate, no lead form in the way.
               </p>
 
               <Link
                 href="/contact"
-                className="group mt-7 inline-flex items-center gap-2 font-semibold text-micro tracking-[0.14em] text-brass uppercase"
+                className="group mt-7 hidden items-center gap-2 font-semibold text-micro tracking-[0.14em] text-brass uppercase lg:inline-flex"
               >
                 <span className="link-draw">Prefer we ran them for you?</span>
                 <ArrowUpRight
@@ -105,10 +105,10 @@ export function ToolsStrip() {
                 <li key={tool.href} className="border-t border-rule last:border-b">
                   <Link
                     href={tool.href}
-                    className="group flex items-start gap-5 py-6 transition-colors duration-400 sm:gap-7 lg:py-7"
+                    className="group flex items-center gap-4 py-4 transition-colors duration-400 sm:items-start sm:gap-7 sm:py-6 lg:py-7"
                   >
                     <span
-                      className="w-7 shrink-0 pt-1 font-mono text-[0.625rem] text-ink-faint tabular-nums"
+                      className="hidden w-7 shrink-0 pt-1 font-mono text-[0.625rem] text-ink-faint tabular-nums sm:block"
                       data-numeric
                     >
                       {tool.n}
@@ -116,7 +116,7 @@ export function ToolsStrip() {
 
                     <span className="min-w-0 flex-1">
                       <span className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                        <span className="font-display text-h4 leading-tight text-ink transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1.5">
+                        <span className="text-[1.0625rem] font-semibold leading-tight text-ink sm:font-display sm:text-h4 sm:font-normal transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1.5">
                           {tool.label}
                         </span>
                         {tool.tag && (
@@ -126,7 +126,7 @@ export function ToolsStrip() {
                         )}
                       </span>
 
-                      <span className="mt-2 block max-w-xl text-caption leading-relaxed text-ink-muted">
+                      <span className="mt-2 hidden max-w-xl text-caption leading-relaxed text-ink-muted sm:block">
                         {tool.body}
                       </span>
                     </span>

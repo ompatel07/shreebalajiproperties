@@ -40,7 +40,7 @@ const CARD_COLUMNS = `
   id, slug, title, city, locality_slug, category, property_type, transaction,
   status, bhk, bathrooms, carpet_sqft, super_sqft, plot_sqft, price,
   price_on_request, possession, possession_date, rera_verified, hero_image,
-  is_featured, is_exclusive, lat, lng, view_count
+  is_featured, is_exclusive, lat, lng, view_count, ref_no
 `;
 
 export const PAGE_SIZE = 12;

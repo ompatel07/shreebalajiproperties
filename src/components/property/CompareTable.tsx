@@ -94,7 +94,7 @@ export function CompareTable() {
       </div>
 
       {/* Horizontal scroll on narrow screens; the row labels stay stuck. */}
-      <div className="no-bar -mx-5 overflow-x-auto px-5 lg:mx-0 lg:px-0">
+      <div className="no-bar -mx-5 overflow-x-auto px-5 lg:mx-0 lg:px-0 relative">
         <table className="w-full min-w-[46rem] border-collapse">
           <caption className="sr-only">
             Side-by-side comparison of {items.length} shortlisted properties

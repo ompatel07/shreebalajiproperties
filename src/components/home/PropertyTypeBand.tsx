@@ -5,6 +5,8 @@ import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
 import { propertyTypes } from "@/config/site";
 import { unsplash } from "@/lib/imagery";
+import { RAIL, RAIL_ITEM, RAIL_TO_GRID } from "@/lib/rail";
+import { cn } from "@/lib/utils";
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════
@@ -87,7 +89,7 @@ export function PropertyTypeBand({
 
         <div
           data-reveal-group=""
-          className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6"
+          className={cn(RAIL, RAIL_TO_GRID, "md:grid-cols-3 md:gap-3 lg:grid-cols-6")}
         >
           {cards.map((type) => {
             const count = counts[type.slug] ?? 0;
@@ -97,7 +99,7 @@ export function PropertyTypeBand({
               <Link
                 key={type.slug}
                 href={`/ahmedabad/${type.slug}`}
-                className="group relative aspect-[4/5] overflow-hidden rounded-[var(--radius-lg)] bg-sand"
+                className={cn(RAIL_ITEM, "group relative aspect-[4/5] w-[40vw] max-w-[11rem] overflow-hidden rounded-[var(--radius-lg)] bg-sand")}
               >
                 {id ? (
                   <>

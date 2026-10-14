@@ -204,10 +204,21 @@ create table if not exists projects (
 -- PROPERTIES — an individual sellable unit. The core of the site.
 -- ═══════════════════════════════════════════════════════════════════════════
 
+-- Human reference numbers (SK-0001…). Must exist before the table, because
+-- the column default calls it. Mirrors migrations/001_listing_reference.sql,
+-- which upgrades databases created before this was folded in; on a fresh
+-- install that migration is a no-op.
+create sequence if not exists properties_ref_no_seq;
+
 create table if not exists properties (
   id               uuid primary key default gen_random_uuid(),
   slug             text not null unique,
   title            text not null,
+
+  -- Never reused after a delete: a reference that changes is worse than none.
+  ref_no           bigint not null default nextval('properties_ref_no_seq'),
+  ref_code         text generated always as ('SK-' || lpad(ref_no::text, 4, '0')) stored,
+  constraint properties_ref_no_unique unique (ref_no),
 
   project_id       uuid references projects(id) on delete set null,
   builder_id       uuid references builders(id) on delete set null,
@@ -312,6 +323,8 @@ alter table properties
   ) stored;
 
 -- ── Indexes. Each one maps to a query the app actually issues. ────────────
+alter sequence properties_ref_no_seq owned by properties.ref_no;
+create index if not exists properties_ref_code_idx  on properties (ref_code);
 create index if not exists properties_search_idx    on properties using gin (search_doc);
 create index if not exists properties_browse_idx    on properties (status, category, city, locality_slug);
 create index if not exists properties_price_idx     on properties (price) where status = 'published';

@@ -161,7 +161,10 @@ function DashboardView({
         </div>
       )}
 
-      <div className="mt-10 grid gap-8 xl:grid-cols-[1.4fr_1fr]">
+      {/* `[&>*]:min-w-0`: grid children default to min-width:auto and will
+          not shrink below their content, so on a 320px phone the leads and
+          visits columns held the page 70px wider than the screen. */}
+      <div className="mt-10 grid gap-8 xl:grid-cols-[1.4fr_1fr] [&>*]:min-w-0">
         {/* ══ Leads ══════════════════════════════════════════════════════ */}
         <section aria-labelledby="recent-leads">
           <div className="flex items-baseline justify-between gap-4 border-b border-rule pb-3">

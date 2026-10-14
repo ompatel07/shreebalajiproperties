@@ -242,7 +242,10 @@ export function AmortisationChart({ rows }: { rows: AmortPoint[] }) {
 
   return (
     <figure>
-      <div className="flex items-baseline justify-between gap-4">
+      {/* Wraps: at 320px the caption and the two-item legend do not fit on
+          one line, and a non-wrapping row pushed the legend 4px past the
+          screen edge — enough to widen the whole page on a phone. */}
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
         <figcaption className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
           Where each year&rsquo;s instalments go
         </figcaption>
@@ -376,7 +379,7 @@ export function AmortisationChart({ rows }: { rows: AmortPoint[] }) {
       <TableToggle open={showTable} onToggle={() => setShowTable((v) => !v)} />
 
       {showTable && (
-        <div className="mt-3 max-h-72 overflow-y-auto">
+        <div className="relative mt-3 max-h-72 overflow-y-auto">
           <table className="w-full border-collapse text-caption">
             <caption className="sr-only">Year-by-year amortisation schedule</caption>
             <thead className="sticky top-0 bg-bone">

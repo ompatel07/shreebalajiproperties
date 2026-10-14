@@ -114,8 +114,8 @@ export function PropertyCard({
 
         <h3
           className={cn(
-            "mt-2 font-display leading-snug text-ink",
-            isLarge ? "text-h3" : "text-[1.125rem]",
+            "mt-2 line-clamp-2 font-semibold leading-snug tracking-[-0.01em] text-ink",
+            isLarge ? "text-[1.375rem]" : "text-[1rem]",
           )}
         >
           <Link href={`/property/${property.slug}`} className="link-draw">
@@ -135,14 +135,14 @@ export function PropertyCard({
               {property.price_on_request ? "On request" : formatPrice(property.price)}
             </p>
             {property.price && area && (
-              <p className="font-mono text-[0.625rem] tracking-[0.06em] text-brass" data-numeric>
+              <p className="text-[0.75rem] font-medium text-brass tabular-nums" data-numeric>
                 {pricePerSqft(property.price, area)}
               </p>
             )}
           </div>
 
-          {/* One monospace spec line rather than a row of icon chips. */}
-          <p className="mt-2 font-mono text-[0.625rem] tracking-[0.08em] text-ink-muted" data-numeric>
+          {/* One spec line rather than a row of icon chips. */}
+          <p className="mt-2 text-[0.8125rem] text-ink-muted tabular-nums" data-numeric>
             {[
               property.bhk ? formatBhk(property.bhk) : null,
               property.bathrooms ? `${property.bathrooms} bath` : null,

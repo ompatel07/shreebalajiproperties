@@ -346,6 +346,7 @@ export type PropertyCard = Pick<
   | "lat"
   | "lng"
   | "view_count"
+  | "ref_no"
 >;
 
 export interface ProjectWithRelations extends Project {

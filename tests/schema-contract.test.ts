@@ -126,15 +126,30 @@ function collectSelects(): SelectSite[] {
     while ((f = fromRe.exec(src))) froms.push({ table: f[1]!, at: f.index });
     if (!froms.length) continue;
 
-    const selRe = /\.select\(\s*(`[^`]*`|"[^"]*"|'[^']*')/g;
+    // Column lists declared once as a constant and passed by name —
+    // `.select(CARD_COLUMNS)` — are the most-used selects on the site, and a
+    // literal-only scan skipped them entirely. Resolve them too.
+    const consts = new Map<string, string>();
+    const constRe = /const\s+([A-Z][A-Z0-9_]*)\s*=\s*(`[^`]*`|"[^"]*"|'[^']*')/g;
+    let c: RegExpExecArray | null;
+    while ((c = constRe.exec(src))) consts.set(c[1]!, c[2]!.slice(1, -1));
+
+    const selRe = /\.select\(\s*(`[^`]*`|"[^"]*"|'[^']*'|[A-Z][A-Z0-9_]*)/g;
     let s: RegExpExecArray | null;
     while ((s = selRe.exec(src))) {
       const prior = froms.filter((x) => x.at < s!.index).pop();
       if (!prior) continue;
+      const arg = s[1]!;
+      const isIdent = /^[A-Z]/.test(arg);
+      if (isIdent && !consts.has(arg)) continue; // not a column-list constant
+      const columns = isIdent ? consts.get(arg)! : arg.slice(1, -1);
+      // A template with interpolation is built at runtime; it cannot be
+      // checked statically, so skip rather than report noise.
+      if (columns.includes("${")) continue;
       sites.push({
-        file: path.relative(ROOT, file),
+        file: path.relative(ROOT, file) + (isIdent ? ` (${arg})` : ""),
         table: prior.table,
-        columns: s[1]!.slice(1, -1),
+        columns,
       });
     }
   }

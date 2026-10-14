@@ -261,7 +261,7 @@ export default async function ProjectPage({ params }: Props) {
                     Configurations
                   </h2>
 
-                  <div className="no-bar overflow-x-auto">
+                  <div className="no-bar overflow-x-auto relative">
                     <table className="w-full min-w-[32rem] border-collapse">
                       <thead>
                         <tr className="border-b border-rule-strong text-left">

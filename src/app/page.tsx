@@ -8,8 +8,6 @@ import { ForBuildersBand } from "@/components/home/ForBuildersBand";
 import { ProjectsBand } from "@/components/home/ProjectsBand";
 import { PropertyTypeBand } from "@/components/home/PropertyTypeBand";
 import { Hero } from "@/components/home/Hero";
-import { LocalityShowcase } from "@/components/home/LocalityShowcase";
-import { QuickBrowse } from "@/components/home/QuickBrowse";
 import { Testimonials } from "@/components/home/Testimonials";
 import { ToolsStrip } from "@/components/home/ToolsStrip";
 import { localityCount, site } from "@/config/site";
@@ -32,17 +30,27 @@ import { pageMeta } from "@/lib/seo";
  * behind four sections of B2B argument. The pitch is still here in full — it
  * moved to /for-builders, with one compact band pointing at it.
  *
- * Order follows what a buyer needs, in sequence:
+ * Order follows what a buyer needs, in sequence — and each job is done ONCE:
  *
- *   Hero         headline + the search box, above the fold
- *   QuickBrowse  one-tap routes in: budget, bedrooms, area, type
- *   Featured     actual properties, as early as possible
- *   Areas        where we cover, with live counts
- *   BuyerSteps   what happens after you enquire, in plain words
- *   Tools        EMI, affordability, stamp duty — free, no sign-up
- *   Proof        testimonials and developer names
- *   Builders     the one band for the other audience
- *   CTA          call, WhatsApp, or send a brief
+ *   Hero          search, one-tap shortcuts, and the areas as photo tiles
+ *   By type       flats / villas / offices … as photo cards
+ *   Featured      budget filter, then the homes themselves
+ *   Projects      new launches, with the builder named
+ *   How it works  what happens after you enquire
+ *   Tools         EMI, affordability, stamp duty
+ *   Proof         testimonials, then developer names
+ *   Builders      the one band for the other audience
+ *   CTA           call, WhatsApp, or send a brief
+ *
+ * ── Removed, and why ────────────────────────────────────────────────────
+ * QuickBrowse ("Four ways in") and LocalityShowcase ("145 micro-markets")
+ * both pre-dated the photo bands that replaced them, and were never taken
+ * out. Measured at 390px, the page was 22,213px — 26 phone screens — and 28
+ * link targets were offered in more than one section: every area, type,
+ * budget and shortcut appeared two or three times. LocalityShowcase alone was
+ * 6,848px, eight screens of area names, which is the "locations section too
+ * long to scroll" the client reported. The full list still lives at
+ * /localities, one tap from the hero.
  *
  * ISR at 10 minutes: five tables read, but the page changes rarely, so edge
  * caching is faster and cheaper on the Supabase free tier where egress is the
@@ -75,10 +83,8 @@ export default async function HomePage() {
     <>
       <Hero liveCount={facts.live} localityCounts={localityCounts} />
       <PropertyTypeBand counts={typeCounts} />
-      <FeaturedListings listings={featured} bandCounts={bandCounts} />
+      <FeaturedListings listings={featured} bandCounts={bandCounts} total={facts.live} />
       <ProjectsBand projects={projects} />
-      <QuickBrowse />
-      <LocalityShowcase counts={localityCounts} />
       <BuyerSteps />
       <ToolsStrip />
       <Testimonials testimonials={testimonials} />

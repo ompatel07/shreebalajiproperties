@@ -223,7 +223,7 @@ function ListingsView({
             type="search"
             name="q"
             defaultValue={q ?? ""}
-            placeholder="Search titles…"
+            placeholder="SK number, title or area…"
             aria-label="Search listings by title"
             className="w-48 rounded-[2px] border border-rule-strong bg-paper px-3 py-2 text-caption text-ink focus:border-brass focus:outline-none"
           />
@@ -257,7 +257,77 @@ function ListingsView({
           </div>
         </div>
       ) : (
-        <div className="no-bar mt-6 overflow-x-auto">
+        <>
+        {/* ── Phones: one card per listing ────────────────────────────────
+            The table is 56rem wide. On a phone the title truncated to
+            "5 BHK vil…" and price, status, edit and delete all sat off to
+            the right behind a sideways swipe on every row — the part of the
+            panel the owner uses most, made the hardest to reach. Here every
+            control is on screen at once. */}
+        <ul className="mt-6 divide-y divide-rule border-y border-rule md:hidden">
+          {listings.map((p) => (
+            <li key={p.id} className="py-4">
+              <div className="flex gap-3">
+                <div className="relative size-16 shrink-0 overflow-hidden rounded-[var(--radius-card)] bg-sand">
+                  <Image
+                    src={heroImageFor(p, 160)}
+                    alt=""
+                    fill
+                    sizes="64px"
+                    placeholder="blur"
+                    blurDataURL={blurPlaceholder()}
+                    className="object-cover"
+                  />
+                </div>
+                <div className="min-w-0 flex-1">
+                  {p.ref_code && (
+                    <span
+                      className="inline-block rounded-[2px] bg-sand-deep px-1.5 py-0.5 font-mono text-[0.6875rem] font-semibold text-ink-soft"
+                      data-numeric
+                    >
+                      {p.ref_code}
+                    </span>
+                  )}
+                  <Link
+                    href={`/studio/listings/${p.id}`}
+                    className="mt-1 line-clamp-2 block text-[0.9375rem] font-semibold leading-snug text-ink"
+                  >
+                    {p.title}
+                  </Link>
+                  <p className="mt-1 text-[0.8125rem] text-ink-muted">
+                    {localityBySlug.get(p.locality_slug)?.name ?? p.locality_slug}
+                    {p.bhk ? ` · ${formatBhk(p.bhk)}` : ""}
+                    {p.carpet_sqft ? ` · ${formatArea(p.carpet_sqft)}` : ""}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+                <StatusMenu id={p.id} status={p.status} />
+                <Link
+                  href={`/studio/listings/${p.id}`}
+                  className="rounded-full border border-rule-strong px-4 py-1.5 text-[0.8125rem] font-semibold text-ink hover:border-ink"
+                >
+                  Edit
+                </Link>
+              </div>
+              <div className="mt-2 flex justify-start">
+                <ListingRowActions
+                  id={p.id}
+                  slug={p.slug}
+                  price={p.price}
+                  priceOnRequest={p.price_on_request}
+                  title={p.title}
+                  refCode={p.ref_code}
+                  status={p.status}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        {/* ── Tablet and up: the full table ─────────────────────────── */}
+        <div className="no-bar relative mt-6 hidden overflow-x-auto md:block">
           <table className="w-full min-w-[56rem] border-collapse">
             <caption className="sr-only">All listings with status controls</caption>
             <thead>
@@ -387,6 +457,7 @@ function ListingsView({
             </tbody>
           </table>
         </div>
+        </>
       )}
 
       {/* RERA count — a compliance nudge rather than a vanity metric. */}

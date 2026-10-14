@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ArrowRight, MessageCircle, Search, Key, MapPin } from "lucide-react";
 
 import { Reveal, RevealGroup } from "@/components/motion/Reveal";
+import { RAIL, RAIL_ITEM, RAIL_TO_GRID } from "@/lib/rail";
+import { cn } from "@/lib/utils";
 import { FINANCE_DISCLAIMER, site } from "@/config/site";
 import { whatsappLink } from "@/lib/utils";
 
@@ -57,7 +59,7 @@ export function BuyerSteps() {
   const message = `Hi ${site.name}, I am looking for a property in Ahmedabad.`;
 
   return (
-    <section id="how-it-works" className="border-t border-rule bg-sand py-14 lg:py-18">
+    <section id="how-it-works" className="border-t border-rule bg-sand py-12 lg:py-18">
       <div className="shell">
         <Reveal>
           <div className="max-w-2xl">
@@ -74,15 +76,24 @@ export function BuyerSteps() {
           </div>
         </Reveal>
 
+        {/* Phones: the four steps as one swipeable row — they are a
+            sequence, and 1-2-3-4 left-to-right reads as one. Stacked, they
+            were 1,469px of text, the longest thing left on the page. */}
         <RevealGroup
-          className="mt-12 grid gap-px bg-rule-strong/40 sm:grid-cols-2 lg:grid-cols-4"
+          className={cn(RAIL, RAIL_TO_GRID, "mt-8 md:mt-12 md:grid-cols-2 md:gap-px md:bg-rule-strong/40 lg:grid-cols-4")}
           stagger={0.08}
         >
           {steps.map((step) => {
             const Icon = step.icon;
 
             return (
-              <div key={step.n} className="group bg-sand p-6 lg:p-7">
+              <div
+                key={step.n}
+                className={cn(
+                  RAIL_ITEM,
+                  "group w-[74vw] max-w-[18rem] rounded-[var(--radius-lg)] border border-rule bg-paper p-5 md:rounded-none md:border-0 md:bg-sand md:p-6 lg:p-7",
+                )}
+              >
                 <div className="flex items-center gap-3">
                   <span className="grid size-9 shrink-0 place-items-center rounded-full bg-ink font-mono text-[0.75rem] text-bone">
                     {step.n}

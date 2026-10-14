@@ -82,23 +82,37 @@ export function unsplash(id: string, width = 1600, quality = 72): string {
  * Deterministic photo for a listing, so a card never swaps image between
  * server render and hydration, or between two page views.
  */
+/**
+ * Residential fallbacks: every exterior and interior except the one image
+ * that is unmistakably a downtown office district.
+ */
+const RESIDENTIAL = [...EXTERIORS, ...INTERIORS].filter(
+  (id) => id !== "1486406146926-c627a92ad1ab",
+);
+
 export function heroImageFor(
-  row: { hero_image?: string | null; slug: string; category?: string | null },
+  row: {
+    hero_image?: string | null;
+    slug: string;
+    category?: string | null;
+    ref_no?: number | null;
+  },
   width = 1200,
 ): string {
   if (row.hero_image) return row.hero_image;
 
   const pool =
-    row.category === "commercial"
-      ? COMMERCIAL
-      : row.category === "land"
-        ? LAND
-        : hashString(row.slug) % 3 === 0
-          ? EXTERIORS
-          : INTERIORS;
+    row.category === "commercial" ? COMMERCIAL : row.category === "land" ? LAND : RESIDENTIAL;
 
-  const id = pool[hashString(row.slug) % pool.length]!;
-  return unsplash(id, width);
+  // ── Why ref_no and not a hash ─────────────────────────────────────────
+  // Hashing the slug into a pool of ten guaranteed collisions with 17
+  // listings — the first two featured cards on the homepage were the same
+  // photograph, side by side, which reads as exactly the repetition the
+  // client complained about. `ref_no` is sequential, so walking the pool by
+  // it gives consecutive listings consecutive, different photos. The hash
+  // remains only as a fallback for rows without a reference (demo fixtures).
+  const index = row.ref_no ?? hashString(row.slug);
+  return unsplash(pool[index % pool.length]!, width);
 }
 
 /**
