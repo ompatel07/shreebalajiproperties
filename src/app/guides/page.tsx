@@ -60,7 +60,7 @@ export default function GuidesPage() {
               <RevealItem as="li" key={guide.slug}>
                 <Link
                   href={`/guides/${guide.slug}`}
-                  className="group flex h-full flex-col rounded-[2px] border border-rule bg-paper p-7 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-rule-strong hover:shadow-[var(--shadow-raise)] lg:p-8"
+                  className="group flex h-full flex-col rounded-lg border border-rule bg-paper p-7 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-rule-strong hover:shadow-[var(--shadow-raise)] lg:p-8"
                 >
                   <p className="flex flex-wrap items-center gap-x-4 gap-y-1.5 font-semibold text-[0.6875rem] tracking-[0.14em] uppercase">
                     <span className="text-brass">{guide.category}</span>

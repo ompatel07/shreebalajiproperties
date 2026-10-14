@@ -38,7 +38,7 @@ export function SellForm() {
 
   if (result?.ok) {
     return (
-      <div className="pop-in rounded-[2px] border border-verdant/30 bg-verdant-pale p-7 text-center">
+      <div className="pop-in rounded-lg border border-verdant/30 bg-verdant-pale p-7 text-center">
         <span className="mx-auto grid size-12 place-items-center rounded-full bg-verdant text-paper">
           <Check className="size-5" strokeWidth={2.4} aria-hidden />
         </span>
@@ -54,7 +54,7 @@ export function SellForm() {
   const land = propertyTypes.filter((t) => t.category === "land");
 
   return (
-    <div className="rounded-[2px] border border-rule bg-paper p-6 lg:p-8">
+    <div className="rounded-lg border border-rule bg-paper p-6 lg:p-8">
       <p className="eyebrow">List with us</p>
       <h2 className="mt-2.5 font-display text-h4 leading-snug text-ink">
         What are you selling?
@@ -210,7 +210,7 @@ export function SellForm() {
         </div>
 
         {result && !result.ok && (
-          <p role="alert" className="rounded-[2px] bg-alert-pale px-3.5 py-3 text-caption text-alert">
+          <p role="alert" className="rounded-lg bg-alert-pale px-3.5 py-3 text-caption text-alert">
             {result.message}
           </p>
         )}

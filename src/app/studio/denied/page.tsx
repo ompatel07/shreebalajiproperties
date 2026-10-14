@@ -53,7 +53,7 @@ export default async function DeniedPage({
 
           <Link
             href="/"
-            className="mt-8 inline-block font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase hover:text-brass"
+            className="mt-8 inline-block font-bold text-[0.9375rem] text-ink-muted hover:text-brass"
           >
             ← Back to site
           </Link>
@@ -83,7 +83,7 @@ export default async function DeniedPage({
           <SignOutButton />
           <Link
             href="/"
-            className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase hover:text-brass"
+            className="font-bold text-[0.9375rem] text-ink-muted hover:text-brass"
           >
             ← Back to site
           </Link>

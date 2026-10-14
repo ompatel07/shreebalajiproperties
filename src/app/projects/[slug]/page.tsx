@@ -170,7 +170,7 @@ export default async function ProjectPage({ params }: Props) {
             {/* ── Co-investment disclosure ─────────────────────────────── */}
             {project.is_partnered && (
               <Reveal className="mt-10">
-                <aside className="rounded-[2px] border border-brass/30 bg-brass-pale/40 p-6 lg:p-7">
+                <aside className="rounded-lg border border-brass/30 bg-brass-pale/40 p-6 lg:p-7">
                   <p className="flex items-center gap-2.5 font-semibold text-micro tracking-[0.14em] text-brass-deep uppercase">
                     <Handshake className="size-3.5" strokeWidth={2} aria-hidden />
                     Who you are dealing with
@@ -322,7 +322,7 @@ export default async function ProjectPage({ params }: Props) {
                     {project.amenities.map((a) => (
                       <li
                         key={a}
-                        className="rounded-[2px] border border-rule bg-paper px-3.5 py-2 text-caption text-ink-soft"
+                        className="rounded-lg border border-rule bg-paper px-3.5 py-2 text-caption text-ink-soft"
                       >
                         {a}
                       </li>

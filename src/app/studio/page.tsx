@@ -146,7 +146,7 @@ function DashboardView({
           />
         </div>
       ) : (
-        <div className="mt-8 rounded-[2px] border border-alert/30 bg-alert-pale p-6">
+        <div className="mt-8 rounded-lg border border-alert/30 bg-alert-pale p-6">
           <p className="font-semibold text-micro tracking-[0.12em] text-alert uppercase">
             Could not load counters
           </p>
@@ -374,7 +374,7 @@ function ScoreChip({ score }: { score: number }) {
 
 function EmptyPanel({ title, body }: { title: string; body: string }) {
   return (
-    <div className="relative overflow-hidden rounded-[2px] border border-rule bg-paper px-5 py-10 text-center">
+    <div className="relative overflow-hidden rounded-lg border border-rule bg-paper px-5 py-10 text-center">
       <div className="jaali absolute inset-0" aria-hidden />
       <div className="relative">
         <p className="flex items-center justify-center gap-2 text-[1.0625rem] font-semibold text-ink">

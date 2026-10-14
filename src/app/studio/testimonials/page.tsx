@@ -66,13 +66,13 @@ function TestimonialsView({
       </header>
 
       {error ? (
-        <div className="mt-8 rounded-[2px] border border-alert/30 bg-alert-pale p-6">
+        <div className="mt-8 rounded-lg border border-alert/30 bg-alert-pale p-6">
           <p className="font-semibold text-micro tracking-[0.12em] text-alert uppercase">
             Could not load testimonials
           </p>
         </div>
       ) : testimonials.length === 0 ? (
-        <div className="relative mt-8 overflow-hidden rounded-[2px] border border-rule bg-paper px-6 py-20 text-center">
+        <div className="relative mt-8 overflow-hidden rounded-lg border border-rule bg-paper px-6 py-20 text-center">
           <div className="jaali absolute inset-0" aria-hidden />
           <div className="relative">
             <p className="eyebrow">Nothing yet</p>
@@ -88,7 +88,7 @@ function TestimonialsView({
           {testimonials.map((t) => (
             <li
               key={t.id}
-              className={`rounded-[2px] border p-5 ${
+              className={`rounded-lg border p-5 ${
                 t.is_published ? "border-rule bg-paper" : "border-brass/30 bg-brass-pale/30"
               }`}
             >

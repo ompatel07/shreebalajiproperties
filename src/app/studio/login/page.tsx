@@ -47,7 +47,7 @@ export default async function LoginPage({ searchParams }: Props) {
         <p className="mt-6 text-center">
           <Link
             href="/"
-            className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase hover:text-brass"
+            className="font-bold text-[0.9375rem] text-ink-muted hover:text-brass"
           >
             ← Back to site
           </Link>

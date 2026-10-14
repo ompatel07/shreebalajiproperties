@@ -1,12 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, MapPin } from "lucide-react";
+import { BadgeCheck, MapPin } from "lucide-react";
 
-import { Reveal } from "@/components/motion/Reveal";
+import { SectionHeader } from "@/components/home/SectionHeader";
 import { localityBySlug } from "@/config/site";
 import { formatPriceRange } from "@/lib/format";
-import { unsplash, EXTERIORS } from "@/lib/imagery";
-import { hashString } from "@/lib/utils";
+import { PROJECT_EXTERIORS, unsplash } from "@/lib/imagery";
 import type { PartneredProjectCard } from "@/lib/queries";
 import { RAIL, RAIL_ITEM, RAIL_TO_GRID } from "@/lib/rail";
 import { cn } from "@/lib/utils";
@@ -37,36 +36,21 @@ export function ProjectsBand({ projects }: { projects: PartneredProjectCard[] })
   return (
     <section className="border-t border-rule bg-sand py-14 lg:py-18">
       <div className="shell">
-        <Reveal>
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="eyebrow mb-3 text-brass">New launches &amp; under construction</p>
-              <h2 className="display-tight font-display text-h2">
-                New projects, <em className="display-wonk text-brass">booking now.</em>
-              </h2>
-            </div>
-            <Link
-              href="/projects"
-              className="group inline-flex items-center gap-1.5 text-[0.875rem] font-semibold text-brass"
-            >
-              <span className="link-draw">All projects</span>
-              <ArrowRight
-                className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
-                strokeWidth={2.2}
-                aria-hidden
-              />
-            </Link>
-          </div>
-        </Reveal>
+        <SectionHeader
+          title="New projects, booking now"
+          subtitle="Launches and under-construction towers from developers we work with directly."
+          action={{ label: "All projects", href: "/projects" }}
+        />
 
         <div
           data-reveal-group=""
-          className={cn(RAIL, RAIL_TO_GRID, "md:grid-cols-2 md:gap-4 lg:grid-cols-4")}
+          className={cn(RAIL, RAIL_TO_GRID, "mt-7 md:grid-cols-2 md:gap-4 lg:mt-9 lg:grid-cols-4")}
         >
-          {cards.map((project) => {
+          {cards.map((project, i) => {
             const locality = localityBySlug.get(project.locality_slug);
-            // Deterministic, so a card never swaps image between renders.
-            const fallback = EXTERIORS[hashString(project.slug) % EXTERIORS.length]!;
+            // By POSITION, not by hash: hashing four slugs into a small pool
+            // put the same township on all four cards.
+            const fallback = PROJECT_EXTERIORS[i % PROJECT_EXTERIORS.length]!;
             const price = formatPriceRange(project.price_min, project.price_max);
 
             return (
@@ -109,7 +93,7 @@ export function ProjectsBand({ projects }: { projects: PartneredProjectCard[] })
                   </p>
 
                   <p
-                    className="mt-auto pt-3 font-display text-[1.25rem] text-ink"
+                    className="mt-auto pt-3 text-[1.25rem] font-extrabold tracking-[-0.025em] text-ink"
                     data-numeric
                   >
                     {price}

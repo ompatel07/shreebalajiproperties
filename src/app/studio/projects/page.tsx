@@ -68,13 +68,13 @@ function ProjectsView({ projects, error }: { projects: Project[]; error: string 
       </header>
 
       {error ? (
-        <div className="mt-8 rounded-[2px] border border-alert/30 bg-alert-pale p-6">
+        <div className="mt-8 rounded-lg border border-alert/30 bg-alert-pale p-6">
           <p className="font-semibold text-micro tracking-[0.12em] text-alert uppercase">
             Could not load projects
           </p>
         </div>
       ) : projects.length === 0 ? (
-        <div className="relative mt-8 overflow-hidden rounded-[2px] border border-rule bg-paper px-6 py-20 text-center">
+        <div className="relative mt-8 overflow-hidden rounded-lg border border-rule bg-paper px-6 py-20 text-center">
           <div className="jaali absolute inset-0" aria-hidden />
           <div className="relative">
             <p className="eyebrow">Nothing yet</p>
@@ -92,7 +92,7 @@ function ProjectsView({ projects, error }: { projects: Project[]; error: string 
           {projects.map((project) => (
             <li
               key={project.id}
-              className="overflow-hidden rounded-[2px] border border-rule bg-paper"
+              className="overflow-hidden rounded-lg border border-rule bg-paper"
             >
               <div className="relative aspect-[16/10] bg-sand">
                 <Image
@@ -166,7 +166,7 @@ function ProjectsView({ projects, error }: { projects: Project[]; error: string 
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`View ${project.name} on the live site`}
-                      className="grid size-8 shrink-0 place-items-center rounded-[2px] text-ink-muted hover:bg-sand hover:text-ink"
+                      className="grid size-8 shrink-0 place-items-center rounded-lg text-ink-muted hover:bg-sand hover:text-ink"
                     >
                       <ExternalLink className="size-3.5" strokeWidth={1.8} aria-hidden />
                     </Link>

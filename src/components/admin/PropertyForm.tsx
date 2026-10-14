@@ -662,7 +662,7 @@ export function PropertyForm({
                   </span>
                   {d.amenities.length > 0 && (
                     <button type="button" onClick={() => set("amenities", [])}
-                      className="font-semibold text-[0.6875rem] tracking-[0.1em] text-brass uppercase hover:underline">
+                      className="font-bold text-[0.9375rem] text-brass hover:underline">
                       Clear
                     </button>
                   )}
@@ -770,7 +770,7 @@ export function PropertyForm({
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as typeof status)}
-                className="border border-rule-strong bg-paper px-2.5 py-1.5 font-semibold text-[0.6875rem] tracking-[0.1em] uppercase focus:border-brass focus:outline-none"
+                className="border border-rule-strong bg-paper px-2.5 py-1.5 font-bold text-[0.875rem] focus:border-brass focus:outline-none rounded-full"
               >
                 <option value="draft">Draft</option>
                 <option value="published" disabled={blockers > 0}>
@@ -833,7 +833,7 @@ function LivePreview({ draft }: { draft: ListingDraft }) {
 
   return (
     <div className="border border-rule bg-paper">
-      <p className="flex items-center gap-2 border-b border-rule px-4 py-2.5 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+      <p className="flex items-center gap-2 border-b border-rule px-4 py-2.5 font-bold text-[0.875rem] text-ink-muted rounded-full">
         <Eye className="size-3" strokeWidth={2} aria-hidden />
         How the card will look
       </p>
@@ -854,11 +854,11 @@ function LivePreview({ draft }: { draft: ListingDraft }) {
           />
           <div className="absolute inset-x-2 top-2 flex gap-1.5">
             {draft.reraVerified ? (
-              <span className="bg-verdant px-1.5 py-0.5 font-semibold text-[0.6875rem] tracking-[0.1em] text-paper uppercase">
+              <span className="bg-verdant px-1.5 py-0.5 font-bold text-[0.875rem] text-paper rounded-full">
                 RERA ✓
               </span>
             ) : (
-              <span className="bg-bone/85 px-1.5 py-0.5 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
+              <span className="bg-bone/85 px-1.5 py-0.5 font-bold text-[0.875rem] text-ink-muted rounded-full">
                 Resale
               </span>
             )}

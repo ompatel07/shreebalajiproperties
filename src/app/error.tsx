@@ -44,7 +44,7 @@ export default function Error({
           <button
             type="button"
             onClick={reset}
-            className="inline-flex h-13 items-center justify-center gap-2.5 rounded-[2px] bg-ink px-7 py-4 font-semibold text-micro tracking-[0.14em] text-bone uppercase transition-colors hover:bg-brass-deep"
+            className="inline-flex h-13 items-center justify-center gap-2.5 rounded-full bg-ink px-7 py-4 font-bold text-[0.875rem] text-white transition-colors hover:bg-brass-deep"
           >
             <RotateCcw className="size-3.5" strokeWidth={2} aria-hidden />
             Try again
@@ -52,7 +52,7 @@ export default function Error({
 
           <a
             href={telLink(site.contact.phoneE164)}
-            className="inline-flex h-13 items-center justify-center gap-2.5 rounded-[2px] border border-ink/25 px-7 py-4 font-semibold text-micro tracking-[0.14em] text-ink uppercase transition-colors hover:border-ink hover:bg-ink hover:text-bone"
+            className="inline-flex h-13 items-center justify-center gap-2.5 rounded-full border border-ink/25 px-7 py-4 font-bold text-[0.875rem] text-ink transition-colors hover:border-ink hover:bg-ink hover:text-white"
           >
             {site.contact.phoneDisplay}
           </a>

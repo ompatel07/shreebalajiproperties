@@ -121,7 +121,7 @@ export function EmiCalculator({ initialPrice }: { initialPrice?: number }) {
         {/* Part-to-whole: what the total outflow is made of. */}
         <section
           aria-labelledby="split"
-          className="rounded-[2px] border border-rule bg-paper p-6 lg:p-7"
+          className="rounded-lg border border-rule bg-paper p-6 lg:p-7"
         >
           <h2 id="split" className="eyebrow mb-5">
             What you actually pay the bank
@@ -140,7 +140,7 @@ export function EmiCalculator({ initialPrice }: { initialPrice?: number }) {
         {/* Change over time. */}
         <section
           aria-labelledby="amort"
-          className="rounded-[2px] border border-rule bg-paper p-6 lg:p-7"
+          className="rounded-lg border border-rule bg-paper p-6 lg:p-7"
         >
           <h2 id="amort" className="sr-only">
             Amortisation schedule
@@ -159,7 +159,7 @@ export function EmiCalculator({ initialPrice }: { initialPrice?: number }) {
         {/* Cash needed — the number that catches buyers out. */}
         <section
           aria-labelledby="cash"
-          className="rounded-[2px] border border-brass/30 bg-brass-pale/40 p-6 lg:p-7"
+          className="rounded-lg border border-brass/30 bg-brass-pale/40 p-6 lg:p-7"
         >
           <h2 id="cash" className="eyebrow mb-5 text-brass-deep">
             Cash you need before the keys
@@ -196,7 +196,7 @@ export function EmiCalculator({ initialPrice }: { initialPrice?: number }) {
         </section>
 
         {/* Tax relief, flagged as indicative. */}
-        <section aria-labelledby="tax" className="rounded-[2px] border border-rule bg-sand p-6">
+        <section aria-labelledby="tax" className="rounded-lg border border-rule bg-sand p-6">
           <h2 id="tax" className="eyebrow mb-4">
             Indicative tax relief, first year
           </h2>

@@ -142,7 +142,7 @@ export default async function StudioLayout({
                 href="/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase hover:text-brass"
+                className="font-bold text-[0.9375rem] text-ink-muted hover:text-brass"
               >
                 View live site ↗
               </Link>

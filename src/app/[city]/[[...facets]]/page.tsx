@@ -305,7 +305,7 @@ export default async function FacetPage({ params, searchParams }: Props) {
 
 function NoResults({ heading, city }: { heading: string; city: string }) {
   return (
-    <div className="relative overflow-hidden rounded-[2px] border border-rule bg-paper px-6 py-20 text-center">
+    <div className="relative overflow-hidden rounded-lg border border-rule bg-paper px-6 py-20 text-center">
       <div className="jaali absolute inset-0" aria-hidden />
       <div className="relative">
         <p className="eyebrow">Nothing matching, today</p>

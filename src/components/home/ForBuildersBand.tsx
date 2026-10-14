@@ -52,7 +52,7 @@ export function ForBuildersBand() {
 
               <Link
                 href="/for-builders"
-                className="group mt-7 inline-flex h-13 items-center gap-2.5 bg-brass px-7 font-semibold text-[0.75rem] tracking-[0.14em] text-paper uppercase transition-colors duration-300 hover:bg-bone hover:text-ink"
+                className="group mt-7 inline-flex h-13 items-center gap-2.5 bg-brass px-7 font-bold text-[0.875rem] text-paper transition-colors duration-300 hover:bg-bone hover:text-ink rounded-full"
               >
                 See what we do for builders
                 <ArrowRight

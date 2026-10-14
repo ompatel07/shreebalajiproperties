@@ -27,7 +27,7 @@ export function EmiWidget({ price }: { price: number }) {
   const result = useMemo(() => calculateEmi(loan, rate, years), [loan, rate, years]);
 
   return (
-    <div className="rounded-[2px] border border-rule bg-sand p-6">
+    <div className="rounded-lg border border-rule bg-sand p-6">
       <div className="flex items-baseline justify-between gap-3">
         <p className="eyebrow">Monthly, roughly</p>
         <Link

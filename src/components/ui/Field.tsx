@@ -51,7 +51,7 @@ export function Field({
     <div className={cn("flex flex-col gap-1.5", className)}>
       <label
         htmlFor={id}
-        className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase"
+        className="text-[0.8125rem] font-semibold text-ink-soft"
       >
         {label}
         {required && (
@@ -84,7 +84,7 @@ export function Field({
 }
 
 const controlBase =
-  "w-full rounded-[2px] border bg-paper px-3.5 py-3 text-[0.9375rem] text-ink " +
+  "w-full rounded-xl border bg-paper px-3.5 py-3 text-[0.9375rem] text-ink " +
   "transition-colors duration-250 placeholder:text-ink-faint " +
   "focus:border-brass focus:outline-none disabled:opacity-50 " +
   "aria-[invalid=true]:border-alert";

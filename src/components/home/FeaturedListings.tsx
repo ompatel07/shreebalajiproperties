@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import { Reveal, RevealGroup } from "@/components/motion/Reveal";
+import { RevealGroup } from "@/components/motion/Reveal";
+import { SectionHeader } from "@/components/home/SectionHeader";
 import { PropertyCard } from "@/components/property/PropertyCard";
 import { ButtonLink } from "@/components/ui/Button";
 import { RAIL, RAIL_ITEM, RAIL_TO_GRID, RAIL_TO_WRAP } from "@/lib/rail";
@@ -43,34 +44,13 @@ export function FeaturedListings({
   total: number;
 }) {
   return (
-    <section id="inventory" className="border-t border-rule bg-bone py-12 lg:py-16">
+    <section id="inventory" className="bg-paper py-14 lg:py-20">
       <div className="shell">
-        <Reveal>
-          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
-            <div>
-              <p className="eyebrow mb-3 text-brass">Featured homes</p>
-              <h2 className="display-tight font-display text-h2">
-                Worth a visit <em className="display-wonk text-brass">this week.</em>
-              </h2>
-              <p className="mt-3 max-w-lg text-[0.9375rem] text-ink-muted">
-                Price, RERA number and possession date confirmed with the
-                builder before any of these went live.
-              </p>
-            </div>
-
-            <Link
-              href="/properties"
-              className="group hidden items-center gap-2 rounded-full border border-rule-strong bg-paper px-5 py-2.5 text-[0.875rem] font-semibold text-ink transition-colors hover:border-ink hover:bg-ink hover:text-bone md:inline-flex"
-            >
-              View all {total} homes
-              <ArrowRight
-                className="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
-                strokeWidth={2}
-                aria-hidden
-              />
-            </Link>
-          </div>
-        </Reveal>
+        <SectionHeader
+          title="Homes for sale"
+          subtitle="Price, RERA number and possession date confirmed with the builder before any of these went live."
+          action={{ label: `View all ${total} homes`, href: "/properties" }}
+        />
 
         {/* ── Budget: the filter, before the results ──────────────────── */}
         {/* One swipeable row on a phone rather than three wrapped lines. */}

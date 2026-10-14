@@ -229,19 +229,21 @@ export default async function PropertyPage({ params }: Props) {
               <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-ink-muted">
                 <MapPin className="size-4 shrink-0 text-ink-faint" strokeWidth={1.6} aria-hidden />
                 {property.address ? `${property.address}, ` : ""}
-                <Link
-                  href={`/${property.city}/${property.locality_slug}`}
-                  className="link-draw text-ink"
-                >
-                  {localityName}
-                </Link>
-                , {cityName}
+                <span>
+                  <Link
+                    href={`/${property.city}/${property.locality_slug}`}
+                    className="font-semibold text-ink hover:text-brass"
+                  >
+                    {localityName}
+                  </Link>
+                  , {cityName}
+                </span>
               </p>
 
               {/* Price block — with the ₹/sq.ft that makes it comparable. */}
               <div className="mt-8 flex flex-wrap items-end justify-between gap-6 border-y border-rule py-7">
                 <div>
-                  <p className="font-display text-h2 leading-none text-ink" data-numeric>
+                  <p className="text-[clamp(2.25rem,4vw,3rem)] leading-none font-extrabold tracking-[-0.03em] text-ink" data-numeric>
                     {property.price_on_request ? "Price on request" : formatPrice(property.price)}
                   </p>
 
@@ -274,7 +276,7 @@ export default async function PropertyPage({ params }: Props) {
                   Specification
                 </h2>
 
-                <dl className="grid grid-cols-2 gap-px bg-rule sm:grid-cols-3 lg:grid-cols-4">
+                <dl className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
                   {property.bhk && (
                     <Spec icon={Layers} label="Configuration" value={formatBhk(property.bhk)} />
                   )}
@@ -387,7 +389,7 @@ export default async function PropertyPage({ params }: Props) {
                     {property.amenities.map((a) => (
                       <li
                         key={a}
-                        className="rounded-[2px] border border-rule bg-paper px-3.5 py-2 text-caption text-ink-soft"
+                        className="rounded-lg border border-rule bg-paper px-3.5 py-2 text-caption text-ink-soft"
                       >
                         {a}
                       </li>
@@ -408,7 +410,7 @@ export default async function PropertyPage({ params }: Props) {
                     {property.floor_plans.map((plan) => (
                       <figure
                         key={plan.id}
-                        className="overflow-hidden rounded-[2px] border border-rule bg-paper"
+                        className="overflow-hidden rounded-lg border border-rule bg-paper"
                       >
                         {plan.image_url && (
                           <div className="relative aspect-[4/3] bg-sand">
@@ -459,7 +461,7 @@ export default async function PropertyPage({ params }: Props) {
                     }}
                   />
                 ) : (
-                  <div className="relative overflow-hidden rounded-[2px] border border-rule bg-sand p-12 text-center">
+                  <div className="relative overflow-hidden rounded-lg border border-rule bg-sand p-12 text-center">
                     <div className="jaali absolute inset-0" aria-hidden />
                     <p className="relative font-semibold text-micro tracking-[0.14em] text-ink-muted uppercase">
                       Exact location shared on enquiry
@@ -468,16 +470,16 @@ export default async function PropertyPage({ params }: Props) {
                 )}
 
                 {nearby.length > 0 && (
-                  <dl className="mt-6 grid gap-px bg-rule sm:grid-cols-2 lg:grid-cols-3">
+                  <dl className="mt-6 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
                     {nearby.map((place) => (
-                      <div key={place.name} className="flex items-baseline justify-between gap-3 bg-paper px-4 py-3.5">
+                      <div key={place.name} className="flex items-baseline justify-between gap-3 rounded-xl bg-paper px-4 py-3.5 ring-1 ring-rule">
                         <div className="min-w-0">
-                          <dt className="truncate text-[0.9375rem] text-ink">{place.name}</dt>
+                          <dt className="truncate text-[0.9375rem] font-semibold text-ink">{place.name}</dt>
                           <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
                             {place.type}
                           </p>
                         </div>
-                        <dd className="shrink-0 font-mono text-caption text-brass tabular-nums" data-numeric>
+                        <dd className="shrink-0 text-[0.875rem] font-bold text-brass tabular-nums" data-numeric>
                           {place.distance_km} km
                         </dd>
                       </div>
@@ -486,7 +488,7 @@ export default async function PropertyPage({ params }: Props) {
                 )}
 
                 {locality && (
-                  <div className="mt-7 rounded-[2px] border border-rule bg-sand p-6">
+                  <div className="mt-7 rounded-lg border border-rule bg-sand p-6">
                     <p className="eyebrow mb-3">On {locality.name}</p>
                     <p className="max-w-prose text-[0.9375rem] leading-relaxed text-ink-soft">
                       {locality.blurb}
@@ -602,12 +604,12 @@ function Spec({
   className?: string;
 }) {
   return (
-    <div className="bg-paper px-4 py-4">
+    <div className="rounded-xl bg-paper px-4 py-4 ring-1 ring-rule">
       <dt className="flex items-center gap-2 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
         <Icon className="size-3" strokeWidth={1.8} />
         {label}
       </dt>
-      <dd className={`mt-1.5 font-display text-[1.125rem] text-ink ${className ?? ""}`}>
+      <dd className={`mt-1.5 text-[1.125rem] font-bold text-ink ${className ?? ""}`}>
         {value}
         {note && (
           <span className="ml-1.5 font-semibold text-[0.6875rem] tracking-[0.1em] text-brass uppercase">
@@ -631,7 +633,7 @@ function AreaExplainer({ carpet }: { carpet: number }) {
   const a = areaConversions(carpet);
 
   return (
-    <div className="mt-5 rounded-[2px] border border-brass/25 bg-brass-pale/40 p-5">
+    <div className="mt-5 rounded-lg border border-brass/25 bg-brass-pale/40 p-5">
       <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-brass-deep uppercase">
         What the same flat would be advertised as
       </p>

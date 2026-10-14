@@ -66,7 +66,7 @@ export function CtaBand() {
 
               <a
                 href={telLink(site.contact.phoneE164)}
-                className="inline-flex h-14 items-center justify-center gap-2.5 rounded-[2px] border border-bone/35 px-8 font-semibold text-[0.8125rem] tracking-[0.14em] text-bone uppercase transition-all duration-300 hover:border-bone hover:bg-bone hover:text-ink"
+                className="inline-flex h-14 items-center justify-center gap-2.5 rounded-full border border-bone/35 px-8 font-bold text-[0.8125rem] text-white transition-all duration-300 hover:border-bone hover:bg-bone hover:text-ink"
               >
                 <Phone className="size-4" strokeWidth={1.9} aria-hidden />
                 {site.contact.phoneDisplay}

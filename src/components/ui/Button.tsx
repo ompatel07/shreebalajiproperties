@@ -7,13 +7,13 @@ type Variant = "primary" | "outline" | "ghost" | "brass" | "inverse";
 type Size = "sm" | "md" | "lg";
 
 /**
- * Buttons are near-square (2px radius) and the label is monospace small-caps.
- * That combination is doing a lot of the "architectural" work in the design —
- * it reads as a drawing label rather than a web button.
+ * Pill buttons with a bold, sentence-case label — the same shape as the
+ * homepage search and CTAs, so inner pages speak the same language. The old
+ * square, letter-spaced small-caps read as a template to the client.
  */
 const base =
-  "group relative inline-flex items-center justify-center gap-2.5 font-semibold uppercase " +
-  "tracking-[0.14em] whitespace-nowrap rounded-[2px] transition-all duration-300 " +
+  "group relative inline-flex items-center justify-center gap-2.5 font-bold " +
+  "whitespace-nowrap rounded-full transition-all duration-300 " +
   "ease-[cubic-bezier(0.22,1,0.36,1)] disabled:pointer-events-none disabled:opacity-45 " +
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brass";
 
@@ -23,16 +23,16 @@ const variants: Record<Variant, string> = {
   brass:
     "bg-brass text-paper hover:bg-brass-deep active:scale-[0.985] shadow-[var(--shadow-lift)] hover:shadow-[var(--shadow-raise)]",
   outline:
-    "border border-ink/25 text-ink bg-transparent hover:border-ink hover:bg-ink hover:text-bone active:scale-[0.985]",
+    "border border-ink/25 text-ink bg-transparent hover:border-ink hover:bg-ink hover:text-white active:scale-[0.985]",
   ghost: "text-ink hover:bg-sand active:scale-[0.985]",
   inverse:
     "bg-bone text-ink hover:bg-brass-pale active:scale-[0.985] shadow-[var(--shadow-lift)]",
 };
 
 const sizes: Record<Size, string> = {
-  sm: "h-9 px-4 text-[0.6875rem]",
-  md: "h-12 px-6 text-[0.75rem]",
-  lg: "h-14 px-8 text-[0.8125rem]",
+  sm: "h-9 px-4 text-[0.8125rem]",
+  md: "h-12 px-6 text-[0.9375rem]",
+  lg: "h-14 px-8 text-[1rem]",
 };
 
 interface SharedProps {

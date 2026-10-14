@@ -147,13 +147,13 @@ export function ListingRowActions({
             }}
             placeholder="Type DELETE"
             aria-label="Type DELETE to confirm"
-            className="w-28 rounded-[2px] border border-alert/60 bg-paper px-2 py-1 text-[0.75rem] text-ink focus:border-alert focus:outline-none"
+            className="w-28 rounded-lg border border-alert/60 bg-paper px-2 py-1 text-[0.75rem] text-ink focus:border-alert focus:outline-none"
           />
           <button
             type="button"
             onClick={remove}
             disabled={pending || typed.trim().toUpperCase() !== "DELETE"}
-            className="rounded-[2px] bg-alert px-2.5 py-1.5 text-[0.6875rem] font-semibold text-paper disabled:opacity-35"
+            className="rounded-lg bg-alert px-2.5 py-1.5 text-[0.6875rem] font-semibold text-paper disabled:opacity-35"
           >
             Delete
           </button>
@@ -161,7 +161,7 @@ export function ListingRowActions({
             type="button"
             onClick={() => { setConfirming(false); setTyped(""); }}
             aria-label="Cancel delete"
-            className="grid size-7 place-items-center rounded-[2px] border border-rule-strong text-ink-muted hover:bg-sand"
+            className="grid size-7 place-items-center rounded-lg border border-rule-strong text-ink-muted hover:bg-sand"
           >
             <X className="size-3.5" strokeWidth={2.2} aria-hidden />
           </button>

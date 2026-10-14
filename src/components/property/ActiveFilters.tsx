@@ -213,7 +213,7 @@ export function ActiveFilters({
                 if (sortActive) next.set("sort", sortActive);
                 push(next);
               }}
-              className="font-semibold text-[0.6875rem] tracking-[0.12em] text-brass uppercase hover:underline"
+              className="font-bold text-[0.9375rem] text-brass hover:underline"
             >
               Clear all
             </button>

@@ -69,7 +69,7 @@ export function EnquiryForm({
   if (result?.ok) {
     return (
       <div className={cn(
-          "pop-in rounded-[2px] border border-verdant/30 bg-verdant-pale p-7 text-center",
+          "pop-in rounded-lg border border-verdant/30 bg-verdant-pale p-7 text-center",
           className,
         )}
       >
@@ -87,14 +87,14 @@ export function EnquiryForm({
             href={whatsappLink(site.contact.whatsapp, waMessage)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-[2px] border border-verdant px-5 py-3 font-semibold text-micro tracking-[0.14em] text-verdant uppercase transition-colors hover:bg-verdant hover:text-paper"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-verdant px-5 py-3 font-bold text-[0.875rem] text-verdant transition-colors hover:bg-verdant hover:text-paper"
           >
             <MessageCircle className="size-3.5" strokeWidth={1.9} aria-hidden />
             Message us now
           </a>
           <a
             href={telLink(site.contact.phoneE164)}
-            className="inline-flex items-center justify-center gap-2 rounded-[2px] px-5 py-3 font-semibold text-micro tracking-[0.14em] text-ink-muted uppercase transition-colors hover:text-ink"
+            className="inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 font-bold text-[0.875rem] text-ink-muted transition-colors hover:text-ink"
           >
             <Phone className="size-3.5" strokeWidth={1.9} aria-hidden />
             {site.contact.phoneDisplay}
@@ -110,7 +110,7 @@ export function EnquiryForm({
   return (
     <div
       className={cn(
-        "rounded-[2px] border border-rule bg-paper p-6 lg:p-7",
+        "rounded-lg border border-rule bg-paper p-6 lg:p-7",
         className,
       )}
     >
@@ -127,7 +127,7 @@ export function EnquiryForm({
       <div className="mt-5 grid grid-cols-2 gap-2">
         <a
           href={telLink(site.contact.phoneE164)}
-          className="flex items-center justify-center gap-2 rounded-[2px] border border-rule-strong py-3 font-semibold text-micro tracking-[0.12em] text-ink uppercase transition-colors hover:border-ink hover:bg-ink hover:text-bone"
+          className="flex items-center justify-center gap-2 rounded-lg border border-rule-strong py-3 font-bold text-[0.9375rem] text-ink transition-colors hover:border-ink hover:bg-ink hover:text-white"
         >
           <Phone className="size-3.5" strokeWidth={1.9} aria-hidden />
           Call
@@ -136,7 +136,7 @@ export function EnquiryForm({
           href={whatsappLink(site.contact.whatsapp, waMessage)}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 rounded-[2px] border border-verdant/40 py-3 font-semibold text-micro tracking-[0.12em] text-verdant uppercase transition-colors hover:bg-verdant hover:text-paper"
+          className="flex items-center justify-center gap-2 rounded-lg border border-verdant/40 py-3 font-bold text-[0.9375rem] text-verdant transition-colors hover:bg-verdant hover:text-paper"
         >
           <MessageCircle className="size-3.5" strokeWidth={1.9} aria-hidden />
           WhatsApp
@@ -250,7 +250,7 @@ export function EnquiryForm({
         </Field>
 
         {result && !result.ok && (
-          <p role="alert" className="rounded-[2px] bg-alert-pale px-3.5 py-3 text-caption text-alert">
+          <p role="alert" className="rounded-lg bg-alert-pale px-3.5 py-3 text-caption text-alert">
             {result.message}
           </p>
         )}

@@ -43,7 +43,7 @@ export function CompareButton({
           onClick={onClick}
           aria-pressed={ready ? active : undefined}
           className={cn(
-            "inline-flex w-full items-center justify-center gap-2 rounded-[2px] border px-4 py-3 font-semibold text-micro tracking-[0.14em] uppercase transition-all duration-300",
+            "inline-flex w-full items-center justify-center gap-2 rounded-lg border px-4 py-3 font-semibold text-micro tracking-[0.14em] uppercase transition-all duration-300",
             active
               ? "border-brass bg-brass-pale text-brass-deep"
               : "border-rule-strong text-ink hover:border-ink hover:bg-ink hover:text-bone",
@@ -81,7 +81,7 @@ export function CompareButton({
       {notice && (
         <p
           role="status"
-          className="absolute top-full right-0 z-30 mt-2 w-44 rounded-[2px] bg-ink px-3 py-2 text-[0.6875rem] leading-snug text-bone"
+          className="absolute top-full right-0 z-30 mt-2 w-44 rounded-lg bg-ink px-3 py-2 text-[0.6875rem] leading-snug text-bone"
         >
           {notice}
         </p>

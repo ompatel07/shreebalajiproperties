@@ -70,7 +70,7 @@ export function MoneyField({
             if (parsed !== null) onChange(Math.min(max, Math.max(0, parsed)));
             else if (e.target.value.trim() === "") onChange(0);
           }}
-          className="w-full rounded-[2px] border border-rule-strong bg-paper px-3 py-2.5 text-[0.9375rem] text-ink tabular-nums focus:border-brass focus:outline-none"
+          className="w-full rounded-lg border border-rule-strong bg-paper px-3 py-2.5 text-[0.9375rem] text-ink tabular-nums focus:border-brass focus:outline-none"
         />
       </div>
 
@@ -94,7 +94,7 @@ export function MoneyField({
               type="button"
               onClick={() => onChange(q)}
               className={cn(
-                "rounded-[2px] border px-2.5 py-1 font-mono text-[0.5625rem] tracking-[0.08em] transition-colors",
+                "rounded-lg border px-2.5 py-1 font-mono text-[0.5625rem] tracking-[0.08em] transition-colors",
                 value === q
                   ? "border-ink bg-ink text-bone"
                   : "border-rule-strong text-ink-muted hover:border-ink hover:text-ink",
@@ -195,7 +195,7 @@ export function ChoiceField<T extends string>({
             onClick={() => onChange(opt.value)}
             aria-pressed={value === opt.value}
             className={cn(
-              "rounded-[2px] border px-3.5 py-2 font-mono text-micro tracking-[0.08em] transition-colors",
+              "rounded-lg border px-3.5 py-2 font-mono text-micro tracking-[0.08em] transition-colors",
               value === opt.value
                 ? "border-ink bg-ink text-bone"
                 : "border-rule-strong text-ink-soft hover:border-ink",

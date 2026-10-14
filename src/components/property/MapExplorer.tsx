@@ -131,7 +131,7 @@ export function MapExplorer({ properties }: { properties: PropertyCard[] }) {
                         selected === p.slug ? "bg-brass-pale/50" : "hover:bg-sand",
                       )}
                     >
-                      <div className="relative size-24 shrink-0 overflow-hidden rounded-[2px] bg-sand">
+                      <div className="relative size-24 shrink-0 overflow-hidden rounded-lg bg-sand">
                         <Image
                           src={heroImageFor(p, 300)}
                           alt={p.title}
@@ -203,7 +203,7 @@ function FilterSelect({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full min-w-0 cursor-pointer truncate rounded-[2px] border border-rule-strong bg-paper px-2 py-2 text-[0.75rem] text-ink focus:border-brass focus:outline-none sm:text-[0.8125rem]"
+        className="w-full min-w-0 cursor-pointer truncate rounded-lg border border-rule-strong bg-paper px-2 py-2 text-[0.75rem] text-ink focus:border-brass focus:outline-none sm:text-[0.8125rem]"
       >
         {children}
       </select>

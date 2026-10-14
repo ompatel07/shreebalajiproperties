@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
+import { IBM_Plex_Mono, Manrope } from "next/font/google";
 
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { DemoBanner } from "@/components/layout/DemoBanner";
@@ -26,24 +26,15 @@ import "./globals.css";
  */
 
 /**
- * Display. One weight, high contrast, tight fit. Carries h1/h2 and the hero
- * only; at label sizes it is too delicate, which is why h3/h4 moved to the
- * sans. A single static weight also means a far smaller file than the old
- * variable serif.
+ * Manrope, for everything. One family, with weight doing the work a second
+ * typeface used to do — 800 for headlines, 600-700 for UI, 400 for reading.
+ * A single variable file is also lighter than the serif + sans pair it
+ * replaces.
  */
-const instrument = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-instrument",
-});
-
-/** Everything structural: body, h3/h4, labels, UI. */
-const jakarta = Plus_Jakarta_Sans({
+const manrope = Manrope({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-jakarta",
+  variable: "--font-manrope",
 });
 
 /** Figures only — prices, areas, counts. Not labels any more. */
@@ -107,7 +98,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en-IN"
-      className={`${instrument.variable} ${jakarta.variable} ${plexMono.variable}`}
+      className={`${manrope.variable} ${plexMono.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -136,7 +127,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* First tab stop on every page. */}
         <a
           href="#main"
-          className="sr-only-focusable fixed top-4 left-4 z-[100] bg-ink px-5 py-3 font-semibold text-micro tracking-[0.14em] uppercase text-bone"
+          className="sr-only-focusable fixed top-4 left-4 z-[100] bg-ink px-5 py-3 font-bold text-[0.875rem] text-white rounded-full"
         >
           Skip to content
         </a>

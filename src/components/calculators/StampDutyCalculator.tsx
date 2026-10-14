@@ -49,7 +49,7 @@ export function StampDutyCalculator({ initialPrice }: { initialPrice?: number })
           hint="Gujarat waives the 1% registration fee when the sole purchaser is a woman. On a joint purchase the fee applies."
         />
 
-        <div className="rounded-[2px] border border-rule bg-sand p-5">
+        <div className="rounded-lg border border-rule bg-sand p-5">
           <p className="flex items-center gap-2 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
             <Info className="size-3" strokeWidth={2} aria-hidden />
             Rates applied
@@ -110,7 +110,7 @@ export function StampDutyCalculator({ initialPrice }: { initialPrice?: number })
         {/* The saving, when it applies. Worth its own callout — it is real
             money and most buyers do not know it exists. */}
         {result.savingsVsMale > 0 && (
-          <div className="rounded-[2px] border border-verdant/30 bg-verdant-pale p-6">
+          <div className="rounded-lg border border-verdant/30 bg-verdant-pale p-6">
             <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-verdant uppercase">
               Saving available
             </p>
@@ -130,7 +130,7 @@ export function StampDutyCalculator({ initialPrice }: { initialPrice?: number })
 
         <section
           aria-labelledby="breakdown"
-          className="rounded-[2px] border border-rule bg-paper p-6 lg:p-7"
+          className="rounded-lg border border-rule bg-paper p-6 lg:p-7"
         >
           <h2 id="breakdown" className="eyebrow mb-5">
             Total acquisition cost
@@ -148,7 +148,7 @@ export function StampDutyCalculator({ initialPrice }: { initialPrice?: number })
           />
         </section>
 
-        <section aria-labelledby="notes" className="rounded-[2px] border border-rule bg-sand p-6">
+        <section aria-labelledby="notes" className="rounded-lg border border-rule bg-sand p-6">
           <h2 id="notes" className="eyebrow mb-4">
             What this does not include
           </h2>

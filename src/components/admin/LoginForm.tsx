@@ -36,7 +36,7 @@ export function LoginForm({ next }: { next: string }) {
   return (
     <form
       action={onSubmit}
-      className="space-y-5 rounded-[2px] border border-rule bg-paper p-7 shadow-[var(--shadow-raise)]"
+      className="space-y-5 rounded-lg border border-rule bg-paper p-7 shadow-[var(--shadow-raise)]"
     >
       <input type="hidden" name="next" value={next} />
 
@@ -72,7 +72,7 @@ export function LoginForm({ next }: { next: string }) {
       {result && !result.ok && !result.errors && (
         <p
           role="alert"
-          className="rounded-[2px] bg-alert-pale px-3.5 py-3 text-caption text-alert"
+          className="rounded-lg bg-alert-pale px-3.5 py-3 text-caption text-alert"
         >
           {result.message}
         </p>

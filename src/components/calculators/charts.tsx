@@ -54,7 +54,7 @@ export function StatTile({
   } as const;
 
   return (
-    <div className={cn("rounded-[2px] border p-5", tones[tone])}>
+    <div className={cn("rounded-lg border p-5", tones[tone])}>
       <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
         {label}
       </p>
@@ -104,7 +104,7 @@ export function CompositionBar({
     <figure>
       {/* ── Bar ──────────────────────────────────────────────────────────── */}
       <div
-        className="flex h-11 w-full gap-[2px] overflow-hidden rounded-[2px]"
+        className="flex h-11 w-full gap-[2px] overflow-hidden rounded-lg"
         role="img"
         aria-label={segments
           .map((s) => `${s.label}: ${formatRupeesExact(s.value)}`)
@@ -358,7 +358,7 @@ export function AmortisationChart({ rows }: { rows: AmortPoint[] }) {
         {/* Tooltip. Positioned above the plot rather than following the
             cursor, so it never covers the bar being inspected. */}
         {active && (
-          <div className="pointer-events-none absolute -top-2 left-1/2 z-10 -translate-x-1/2 -translate-y-full rounded-[2px] border border-rule bg-paper px-4 py-3 shadow-[var(--shadow-float)]">
+          <div className="pointer-events-none absolute -top-2 left-1/2 z-10 -translate-x-1/2 -translate-y-full rounded-lg border border-rule bg-paper px-4 py-3 shadow-[var(--shadow-float)]">
             <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
               Year {active.year}
             </p>
@@ -455,7 +455,7 @@ function TableToggle({ open, onToggle }: { open: boolean; onToggle: () => void }
       type="button"
       onClick={onToggle}
       aria-expanded={open}
-      className="mt-4 inline-flex items-center gap-1.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase transition-colors hover:text-brass"
+      className="mt-4 inline-flex items-center gap-1.5 font-bold text-[0.9375rem] text-ink-muted transition-colors hover:text-brass"
     >
       <Table2 className="size-3" strokeWidth={1.8} aria-hidden />
       {open ? "Hide table" : "View as table"}

@@ -180,7 +180,7 @@ export default async function GuidePage({ params }: Props) {
                   )}
 
                   {section.callout && (
-                    <aside className="mt-7 rounded-[2px] border border-brass/30 bg-brass-pale/40 p-6">
+                    <aside className="mt-7 rounded-lg border border-brass/30 bg-brass-pale/40 p-6">
                       <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-brass-deep uppercase">
                         {section.callout.label}
                       </p>
@@ -222,7 +222,7 @@ export default async function GuidePage({ params }: Props) {
                       <li key={g.slug}>
                         <Link
                           href={`/guides/${g.slug}`}
-                          className="group flex items-start justify-between gap-4 rounded-[2px] border border-rule bg-paper p-5 transition-all duration-400 hover:-translate-y-0.5 hover:border-rule-strong hover:shadow-[var(--shadow-lift)]"
+                          className="group flex items-start justify-between gap-4 rounded-lg border border-rule bg-paper p-5 transition-all duration-400 hover:-translate-y-0.5 hover:border-rule-strong hover:shadow-[var(--shadow-lift)]"
                         >
                           <div>
                             <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-brass uppercase">

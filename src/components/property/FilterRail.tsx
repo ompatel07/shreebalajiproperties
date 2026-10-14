@@ -116,7 +116,7 @@ export function FilterRail({
           <button
             type="button"
             onClick={clearAll}
-            className="font-semibold text-[0.6875rem] tracking-[0.12em] text-brass uppercase hover:underline"
+            className="font-bold text-[0.9375rem] text-brass hover:underline"
           >
             Clear all
           </button>
@@ -154,7 +154,7 @@ export function FilterRail({
                     }
                   }}
                   className={cn(
-                    "flex w-full items-center justify-between rounded-[2px] px-3 py-2 text-left text-caption transition-colors",
+                    "flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-caption transition-colors",
                     active
                       ? "bg-ink text-bone"
                       : "text-ink-soft hover:bg-sand",
@@ -182,7 +182,7 @@ export function FilterRail({
                   onClick={() => setParam("bhk", active ? null : String(n))}
                   aria-pressed={active}
                   className={cn(
-                    "rounded-[2px] border px-3 py-2.5 text-[0.8125rem] transition-colors",
+                    "rounded-lg border px-3 py-2.5 text-[0.8125rem] transition-colors",
                     active
                       ? "border-ink bg-ink text-bone"
                       : "border-rule-strong text-ink-soft hover:border-ink",
@@ -205,7 +205,7 @@ export function FilterRail({
               return (
                 <label
                   key={type.slug}
-                  className="flex cursor-pointer items-center gap-2.5 rounded-[2px] px-1 py-1.5 text-caption text-ink-soft transition-colors hover:text-ink"
+                  className="flex cursor-pointer items-center gap-2.5 rounded-lg px-1 py-1.5 text-caption text-ink-soft transition-colors hover:text-ink"
                 >
                   <input
                     type="radio"
@@ -233,7 +233,7 @@ export function FilterRail({
               return (
                 <label
                   key={p.slug}
-                  className="flex cursor-pointer items-center gap-2.5 rounded-[2px] px-1 py-1.5 text-caption text-ink-soft transition-colors hover:text-ink"
+                  className="flex cursor-pointer items-center gap-2.5 rounded-lg px-1 py-1.5 text-caption text-ink-soft transition-colors hover:text-ink"
                 >
                   <input
                     type="radio"
@@ -259,7 +259,7 @@ export function FilterRail({
             {localities.map((l) => (
               <label
                 key={l.slug}
-                className="flex cursor-pointer items-center gap-2.5 rounded-[2px] px-1 py-1.5 text-caption text-ink-soft transition-colors hover:text-ink"
+                className="flex cursor-pointer items-center gap-2.5 rounded-lg px-1 py-1.5 text-caption text-ink-soft transition-colors hover:text-ink"
               >
                 <input
                   type="checkbox"
@@ -291,7 +291,7 @@ export function FilterRail({
                 onClick={() => setParam("furnishing", active ? null : f.v)}
                 aria-pressed={active}
                 className={cn(
-                  "rounded-[2px] border px-3 py-2 text-[0.8125rem] transition-colors",
+                  "rounded-lg border px-3 py-2 text-[0.8125rem] transition-colors",
                   active
                     ? "border-ink bg-ink text-bone"
                     : "border-rule-strong text-ink-soft hover:border-ink",
@@ -310,7 +310,7 @@ export function FilterRail({
           {amenities.slice(0, 18).map((a) => (
             <label
               key={a}
-              className="flex cursor-pointer items-center gap-2.5 rounded-[2px] px-1 py-1.5 text-caption text-ink-soft transition-colors hover:text-ink"
+              className="flex cursor-pointer items-center gap-2.5 rounded-lg px-1 py-1.5 text-caption text-ink-soft transition-colors hover:text-ink"
             >
               <input
                 type="checkbox"
@@ -340,7 +340,7 @@ export function FilterRail({
       <button
         type="button"
         onClick={() => setMobileOpen(true)}
-        className="inline-flex items-center gap-2.5 rounded-[2px] border border-rule-strong bg-paper px-4 py-2.5 font-semibold text-micro tracking-[0.12em] text-ink uppercase lg:hidden"
+        className="inline-flex items-center gap-2.5 rounded-full border border-rule-strong bg-paper px-4 py-2.5 font-bold text-[0.875rem] text-ink lg:hidden"
       >
         <SlidersHorizontal className="size-3.5" strokeWidth={1.8} aria-hidden />
         Filters

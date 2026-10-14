@@ -81,7 +81,7 @@ export function Logo({
           "grid shrink-0 place-items-center transition-colors duration-500",
           isInverse
             ? ""
-            : "rounded-[var(--radius-card)] bg-ink px-2 py-1.5 group-hover:bg-brass-deep",
+            : "rounded-lg bg-ink px-2 py-1.5 group-hover:bg-brass-deep",
         )}
       >
         <Image
@@ -94,24 +94,36 @@ export function Logo({
         />
       </span>
 
+      {/* Mirrors the artwork's own lockup: the name, then PROPERTIES tracked
+          out beneath it. Gold changes with the ground — the light gold only
+          reaches legible contrast on dark (it is ~2:1 on ivory, which is what
+          the previous version shipped). */}
       <span className="flex flex-col leading-none">
         <span
           className={cn(
-            "font-display text-[1.375rem] leading-none tracking-[0.02em]",
-            isInverse ? "text-bone" : "text-ink",
+            "text-[1.1875rem] leading-none font-extrabold tracking-[-0.02em] uppercase sm:text-[1.25rem]",
+            isInverse ? "text-white" : "text-ink",
           )}
         >
           {site.wordmark.lead}
-          <span className="text-brass-light transition-colors duration-500 group-hover:text-brass">
+          <span className={cn("transition-colors duration-500", isInverse ? "text-brass-light" : "text-brass group-hover:text-brass-deep")}>
             {site.wordmark.tail}
           </span>
+        </span>
+        <span
+          className={cn(
+            "mt-1 text-[0.5625rem] font-bold tracking-[0.42em] uppercase",
+            isInverse ? "text-white/55" : "text-ink-faint",
+          )}
+        >
+          Properties
         </span>
 
         {showTagline && (
           <span
             className={cn(
-              "mt-1 font-semibold text-[0.6875rem] tracking-[0.2em] uppercase",
-              isInverse ? "text-bone/55" : "text-ink-muted",
+              "mt-2 text-[0.6875rem] font-semibold tracking-[0.12em] uppercase",
+              isInverse ? "text-white/55" : "text-ink-muted",
             )}
           >
             {site.tagline}

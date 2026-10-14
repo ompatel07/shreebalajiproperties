@@ -56,14 +56,14 @@ export function Pagination({
           href={href(page - 1)}
           rel="prev"
           aria-label="Previous page"
-          className="grid size-10 place-items-center rounded-[2px] border border-rule-strong text-ink transition-colors hover:border-ink hover:bg-ink hover:text-bone"
+          className="grid size-10 place-items-center rounded-lg border border-rule-strong text-ink transition-colors hover:border-ink hover:bg-ink hover:text-bone"
         >
           <ChevronLeft className="size-4" strokeWidth={1.8} aria-hidden />
         </Link>
       ) : (
         <span
           aria-hidden
-          className="grid size-10 place-items-center rounded-[2px] border border-rule text-ink-faint"
+          className="grid size-10 place-items-center rounded-lg border border-rule text-ink-faint"
         >
           <ChevronLeft className="size-4" strokeWidth={1.8} />
         </span>
@@ -85,7 +85,7 @@ export function Pagination({
             aria-label={`Page ${p}`}
             aria-current={p === page ? "page" : undefined}
             className={cn(
-              "grid size-10 place-items-center rounded-[2px] border font-mono text-micro tabular-nums transition-colors",
+              "grid size-10 place-items-center rounded-lg border font-mono text-micro tabular-nums transition-colors",
               p === page
                 ? "border-ink bg-ink text-bone"
                 : "border-rule-strong text-ink hover:border-ink",
@@ -102,14 +102,14 @@ export function Pagination({
           href={href(page + 1)}
           rel="next"
           aria-label="Next page"
-          className="grid size-10 place-items-center rounded-[2px] border border-rule-strong text-ink transition-colors hover:border-ink hover:bg-ink hover:text-bone"
+          className="grid size-10 place-items-center rounded-lg border border-rule-strong text-ink transition-colors hover:border-ink hover:bg-ink hover:text-bone"
         >
           <ChevronRight className="size-4" strokeWidth={1.8} aria-hidden />
         </Link>
       ) : (
         <span
           aria-hidden
-          className="grid size-10 place-items-center rounded-[2px] border border-rule text-ink-faint"
+          className="grid size-10 place-items-center rounded-lg border border-rule text-ink-faint"
         >
           <ChevronRight className="size-4" strokeWidth={1.8} />
         </span>

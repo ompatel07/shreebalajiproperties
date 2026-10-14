@@ -74,7 +74,7 @@ export function WishlistView() {
           <button
             type="button"
             onClick={clear}
-            className="inline-flex items-center gap-2 rounded-[2px] border border-rule-strong px-4 py-2 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase transition-colors hover:border-alert hover:text-alert"
+            className="inline-flex items-center gap-2 rounded-full border border-rule-strong px-4 py-2 font-bold text-[0.875rem] text-ink-muted transition-colors hover:border-alert hover:text-alert"
           >
             <Trash2 className="size-3.5" strokeWidth={1.8} aria-hidden />
             Clear
@@ -89,7 +89,7 @@ export function WishlistView() {
       </div>
 
       {/* Honest note about where the list lives. */}
-      <div className="mt-12 rounded-[2px] border border-rule bg-sand p-6">
+      <div className="mt-12 rounded-lg border border-rule bg-sand p-6">
         <p className="eyebrow mb-3">About this list</p>
         <p className="max-w-prose text-[0.9375rem] leading-relaxed text-ink-soft">
           Your shortlist is stored on this device only — we deliberately do not
@@ -106,7 +106,7 @@ export function WishlistView() {
 
 function EmptyWishlist() {
   return (
-    <div className="relative overflow-hidden rounded-[2px] border border-rule bg-paper px-6 py-20 text-center">
+    <div className="relative overflow-hidden rounded-lg border border-rule bg-paper px-6 py-20 text-center">
       <div className="jaali absolute inset-0" aria-hidden />
       <div className="relative">
         <p className="eyebrow">Nothing saved yet</p>

@@ -4,7 +4,7 @@ import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { EnquiryForm } from "@/components/property/EnquiryForm";
 import { StaticMap } from "@/components/property/StaticMap";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
-import { site } from "@/config/site";
+import { officeAddressLines, site } from "@/config/site";
 import { breadcrumbSchema, pageMeta } from "@/lib/seo";
 import { telLink, whatsappLink } from "@/lib/utils";
 
@@ -65,9 +65,9 @@ export default function ContactPage() {
               <div className="grid gap-3 sm:grid-cols-2">
                 <a
                   href={telLink(site.contact.phoneE164)}
-                  className="group flex items-start gap-4 rounded-[2px] border border-rule bg-paper p-6 transition-all duration-400 hover:-translate-y-0.5 hover:border-ink hover:shadow-[var(--shadow-lift)]"
+                  className="group flex items-start gap-4 rounded-lg border border-rule bg-paper p-6 transition-all duration-400 hover:-translate-y-0.5 hover:border-ink hover:shadow-[var(--shadow-lift)]"
                 >
-                  <span className="grid size-11 shrink-0 place-items-center rounded-[2px] border border-rule text-ink transition-colors duration-400 group-hover:border-ink group-hover:bg-ink group-hover:text-bone">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-lg border border-rule text-ink transition-colors duration-400 group-hover:border-ink group-hover:bg-ink group-hover:text-bone">
                     <Phone className="size-[1.1rem]" strokeWidth={1.7} aria-hidden />
                   </span>
                   <div>
@@ -87,9 +87,9 @@ export default function ContactPage() {
                   href={whatsappLink(site.contact.whatsapp, waMessage)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-start gap-4 rounded-[2px] border border-verdant/30 bg-verdant-pale/50 p-6 transition-all duration-400 hover:-translate-y-0.5 hover:border-verdant hover:shadow-[var(--shadow-lift)]"
+                  className="group flex items-start gap-4 rounded-lg border border-verdant/30 bg-verdant-pale/50 p-6 transition-all duration-400 hover:-translate-y-0.5 hover:border-verdant hover:shadow-[var(--shadow-lift)]"
                 >
-                  <span className="grid size-11 shrink-0 place-items-center rounded-[2px] border border-verdant/40 text-verdant transition-colors duration-400 group-hover:bg-verdant group-hover:text-paper">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-lg border border-verdant/40 text-verdant transition-colors duration-400 group-hover:bg-verdant group-hover:text-paper">
                     <MessageCircle className="size-[1.1rem]" strokeWidth={1.7} aria-hidden />
                   </span>
                   <div>
@@ -105,9 +105,9 @@ export default function ContactPage() {
 
                 <a
                   href={`mailto:${site.contact.email}`}
-                  className="group flex items-start gap-4 rounded-[2px] border border-rule bg-paper p-6 transition-all duration-400 hover:-translate-y-0.5 hover:border-ink"
+                  className="group flex items-start gap-4 rounded-lg border border-rule bg-paper p-6 transition-all duration-400 hover:-translate-y-0.5 hover:border-ink"
                 >
-                  <span className="grid size-11 shrink-0 place-items-center rounded-[2px] border border-rule text-ink transition-colors duration-400 group-hover:border-ink group-hover:bg-ink group-hover:text-bone">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-lg border border-rule text-ink transition-colors duration-400 group-hover:border-ink group-hover:bg-ink group-hover:text-bone">
                     <Mail className="size-[1.1rem]" strokeWidth={1.7} aria-hidden />
                   </span>
                   <div>
@@ -120,8 +120,8 @@ export default function ContactPage() {
                   </div>
                 </a>
 
-                <div className="flex items-start gap-4 rounded-[2px] border border-rule bg-paper p-6">
-                  <span className="grid size-11 shrink-0 place-items-center rounded-[2px] border border-rule text-ink">
+                <div className="flex items-start gap-4 rounded-lg border border-rule bg-paper p-6">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-lg border border-rule text-ink">
                     <Clock className="size-[1.1rem]" strokeWidth={1.7} aria-hidden />
                   </span>
                   <div>
@@ -146,12 +146,11 @@ export default function ContactPage() {
               <div className="flex items-start gap-4">
                 <MapPin className="mt-1 size-5 shrink-0 text-brass" strokeWidth={1.7} aria-hidden />
                 <address className="text-[1.0625rem] leading-relaxed text-ink-soft not-italic">
-                  {site.office.line1}
-                  <br />
-                  {site.office.line2}
-                  <br />
-                  {site.office.locality}, {site.office.city} {site.office.postalCode}
-                  <br />
+                  {officeAddressLines().map((line, i) => (
+                    <span key={i} className="block">
+                      {line}
+                    </span>
+                  ))}
                   {site.office.state}, India
                 </address>
               </div>
@@ -181,7 +180,7 @@ export default function ContactPage() {
             </section>
 
             {/* ══ Compliance ════════════════════════════════════════════ */}
-            <section className="mt-12 rounded-[2px] border border-rule bg-sand p-6">
+            <section className="mt-12 rounded-lg border border-rule bg-sand p-6">
               <h2 className="eyebrow mb-4">Before you call anyone</h2>
               <p className="max-w-prose leading-relaxed text-ink-soft">
                 Check their RERA agent registration. Ours is{" "}

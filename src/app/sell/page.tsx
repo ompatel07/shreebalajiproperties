@@ -130,7 +130,7 @@ export default function SellPage() {
 
             {/* ── The honest bit ────────────────────────────────────────── */}
             <Reveal className="mt-14">
-              <aside className="relative overflow-hidden rounded-[2px] border border-brass/30 bg-brass-pale/40 p-7 lg:p-8">
+              <aside className="relative overflow-hidden rounded-lg border border-brass/30 bg-brass-pale/40 p-7 lg:p-8">
                 <p className="eyebrow text-brass-deep">Sometimes the answer is no</p>
                 <h2 className="mt-3 max-w-2xl font-display text-h3 leading-snug text-ink">
                   We will occasionally tell you not to sell.
@@ -148,7 +148,7 @@ export default function SellPage() {
 
             {/* ── Photo ─────────────────────────────────────────────────── */}
             <Reveal className="mt-14">
-              <figure className="relative aspect-[16/9] overflow-hidden rounded-[2px] border border-rule">
+              <figure className="relative aspect-[16/9] overflow-hidden rounded-lg border border-rule">
                 <Image
                   src={unsplash("1600566753086-00f18fb6b3ea", 1400)}
                   alt="A well-lit, professionally photographed living room"

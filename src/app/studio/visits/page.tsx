@@ -101,7 +101,7 @@ function VisitsView({
         </h2>
 
         {upcoming.length === 0 ? (
-          <div className="relative mt-5 overflow-hidden rounded-[2px] border border-rule bg-paper px-6 py-14 text-center">
+          <div className="relative mt-5 overflow-hidden rounded-lg border border-rule bg-paper px-6 py-14 text-center">
             <div className="jaali absolute inset-0" aria-hidden />
             <p className="relative font-display text-h4">Nothing booked</p>
           </div>
@@ -127,7 +127,7 @@ function VisitsView({
             {past.map((visit) => (
               <li
                 key={visit.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-[2px] border border-rule bg-bone px-4 py-3"
+                className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-rule bg-bone px-4 py-3"
               >
                 <div className="min-w-0">
                   <p className="text-[0.9375rem] font-semibold text-ink">
@@ -162,7 +162,7 @@ function VisitCard({
   const when = new Date(`${visit.slot_date}T00:00:00`);
 
   return (
-    <li className="rounded-[2px] border border-rule bg-paper p-5">
+    <li className="rounded-lg border border-rule bg-paper p-5">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
@@ -216,7 +216,7 @@ function VisitCard({
           )}
 
           {visit.notes && (
-            <p className="mt-3 max-w-2xl rounded-[2px] bg-sand px-3.5 py-3 text-caption leading-relaxed text-ink-soft">
+            <p className="mt-3 max-w-2xl rounded-lg bg-sand px-3.5 py-3 text-caption leading-relaxed text-ink-soft">
               {visit.notes}
             </p>
           )}

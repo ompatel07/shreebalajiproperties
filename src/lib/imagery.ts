@@ -23,6 +23,106 @@ import { hashString } from "@/lib/utils";
  *     anywhere the label is shown to a visitor.
  */
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   CURATED INDIAN LIBRARY — Oct 2026
+   ═══════════════════════════════════════════════════════════════════════════
+
+   Every id below was LOOKED AT, on a contact sheet, before it went in — not
+   just checked for HTTP 200. That is the difference from the older pools
+   further down, whose group names turned out to be unreliable (a "shop" that
+   was a living room, "land" that was a cottage in a forest).
+
+   They replace the Western stock that made the site read as a template: a
+   Mediterranean villa with a pool, North American suburbs. These are Indian
+   residential towers in the terracotta-and-grey cladding new Ahmedabad
+   projects actually use, Gujarati bungalows, Indian apartment interiors
+   (false ceilings, ceiling fans, a jaali screen and a mandir), and the Atal
+   Bridge on the Sabarmati riverfront — Ahmedabad's own landmark.
+
+   Still stock. The client's real project photography replaces all of it. */
+
+/** Residential towers and townships. */
+export const IN_TOWERS = [
+  "1779976955613-b74623824d1c", // terracotta-clad residential tower, clear sky
+  "1779976955617-23056bd0f82e", // same tower, balconies close-up
+  "1750715831822-b9156ee618a5", // residential towers above palms
+  "1751105723621-88018850a9ec", // tower rising above greenery
+  "1689574120966-c7b1e57a8cfe", // township towers, bright sky
+  "1689574666875-6c591bca0b32", // township from above
+] as const;
+
+/** Independent houses — the modern Gujarati bungalow. */
+export const IN_HOUSES = [
+  "1626249893783-cc4a9f66880a", // brick-and-white modern bungalow, lawn
+  "1626249893889-c044fd88e9f7", // two-storey bungalow, lawn
+  "1580892138193-0781eef7caf2", // villa township with landscaped lawns
+] as const;
+
+/** Indian apartment interiors. */
+export const IN_INTERIORS = [
+  "1745301558339-44eb3217d5da", // marble living room, jaali screen, mandir
+  "1745429523615-2a82c60bfc02", // open kitchen with screen partition
+  "1745429523617-0d837856ca35", // neutral living room
+  "1720247520862-7e4b14176fa8", // living room, false ceiling
+  "1713192706955-6ef5c71811bd", // sunlit living room
+  "1615529182904-14819c35db37", // warm living room, pendant lights
+] as const;
+
+/** Offices and commercial frontage. */
+export const IN_COMMERCIAL = [
+  "1594233666755-d1cb282abd25", // glass office blocks, Indian flag
+  "1743875781694-594be96b090b", // patterned commercial facade
+] as const;
+
+/** Construction in progress — honest imagery for under-construction stock. */
+export const IN_CONSTRUCTION = [
+  "1632398461186-37c76a70062f", // towers under construction, palms
+  "1630061712710-2539eb457c55", // structures rising, daylight
+] as const;
+
+/** Ahmedabad itself. */
+export const AHMEDABAD = {
+  atalBridge: "1774666011220-e1cc2b19ed79", // Atal Bridge over the Sabarmati
+  atalCanopy: "1704730827544-ad473ecae95d", // under the bridge canopy
+} as const;
+
+/* ── Second pool: listings and projects ONLY ─────────────────────────────
+   Disjoint from the library above, which the homepage sections use. With one
+   shared pool, a listing card could show the same building as the hero slide
+   above it — the repetition the client called out. Every id looked at. */
+
+/** Exteriors for listing cards. */
+export const LISTING_EXTERIORS = [
+  "1764996915324-91919cee14d3", // residential blocks among trees
+  "1630618468400-ac074bd3408f", // white towers, orange accent
+  "1600555179901-107bf80d25cf", // towers seen from a green balcony
+  "1636392881522-e1f0e14fcfe2", // blue tower, looking up
+  "1564486593523-38d62206e706", // beige tower, balconies
+  "1775582336512-8d79600fa7d5", // white apartment blocks above trees
+] as const;
+
+/** Interiors for listing cards. */
+export const LISTING_INTERIORS = [
+  "1750420556288-d0e32a6f517b", // bedroom, arched headboard wall
+  "1682662045846-77f6e1ce55b4", // modular kitchen, grey gloss
+  "1785232273548-4beae5334903", // bedroom, cove ceiling
+  "1785402231092-859d0a6c4397", // living and dining, marble floor
+  "1789121274503-0adf44908a2a", // bedroom, wood panelling
+  "1755771984341-546c2a04f236", // L-shaped modular kitchen
+  "1771328756144-02bde5549a9a", // bedroom, tufted headboard
+  "1641356916420-a4b06a824bb7", // living and dining, balcony doors
+  "1746004082380-9f50baddd58c", // white modular kitchen
+  "1682662045815-9016c6225dd3", // galley kitchen, dark units
+] as const;
+
+/** Exteriors for PROJECT cards — the four strongest single-tower shots. */
+export const PROJECT_EXTERIORS = [
+  "1787055482226-8544df1e754a", // tower at sunset above greenery
+  "1782544088839-0e293fc78470", // three slim towers, blue sky
+  "1773470920361-4f6cbb702ce0", // towers around a landscaped pool
+  "1706543308471-297210245ebc", // tower at dawn
+] as const;
+
 /** Exteriors, elevations, towers. */
 export const EXTERIORS = [
   "1600596542815-ffad4c1539a9",
@@ -86,9 +186,14 @@ export function unsplash(id: string, width = 1600, quality = 72): string {
  * Residential fallbacks: every exterior and interior except the one image
  * that is unmistakably a downtown office district.
  */
-const RESIDENTIAL = [...EXTERIORS, ...INTERIORS].filter(
-  (id) => id !== "1486406146926-c627a92ad1ab",
-);
+/** Residential listing fallbacks: exterior and interior interleaved, so
+ *  consecutive listings alternate, then the remaining interiors. */
+const RESIDENTIAL: readonly string[] = [
+  LISTING_EXTERIORS[0], LISTING_INTERIORS[0], LISTING_EXTERIORS[1], LISTING_INTERIORS[1],
+  LISTING_EXTERIORS[2], LISTING_INTERIORS[2], LISTING_EXTERIORS[3], LISTING_INTERIORS[3],
+  LISTING_EXTERIORS[4], LISTING_INTERIORS[4], LISTING_EXTERIORS[5], LISTING_INTERIORS[5],
+  LISTING_INTERIORS[6], LISTING_INTERIORS[7], LISTING_INTERIORS[8], LISTING_INTERIORS[9],
+];
 
 export function heroImageFor(
   row: {
@@ -102,7 +207,13 @@ export function heroImageFor(
   if (row.hero_image) return row.hero_image;
 
   const pool =
-    row.category === "commercial" ? COMMERCIAL : row.category === "land" ? LAND : RESIDENTIAL;
+    row.category === "commercial"
+      ? IN_COMMERCIAL
+      : row.category === "land"
+        ? IN_HOUSES
+        : RESIDENTIAL;
+  // (Commercial and land still draw on the section library — there are only a
+  // couple of such listings, and no further honest photos of either.)
 
   // ── Why ref_no and not a hash ─────────────────────────────────────────
   // Hashing the slug into a pool of ten guaranteed collisions with 17
@@ -123,21 +234,22 @@ export function heroImageFor(
  * same photo across renders and page views.
  */
 export function localityImage(slug: string, width = 700): string {
-  return unsplash(EXTERIORS[hashString(slug) % EXTERIORS.length]!, width, 74);
+  const pool = [...IN_TOWERS, ...IN_HOUSES];
+  return unsplash(pool[hashString(slug) % pool.length]!, width, 74);
 }
 
 /** A stable gallery for a listing that has no uploaded images yet. */
 export function galleryFor(slug: string, category: string | null, count = 6): string[] {
   const seed = hashString(slug);
-  const pool =
+  const pool: readonly string[] =
     category === "commercial"
-      ? [...COMMERCIAL, ...EXTERIORS]
+      ? [...IN_COMMERCIAL, ...IN_TOWERS]
       : category === "land"
-        ? [...LAND, ...EXTERIORS]
-        : [...INTERIORS, ...EXTERIORS];
+        ? [...IN_HOUSES, ...IN_TOWERS]
+        : [...LISTING_INTERIORS, ...LISTING_EXTERIORS];
 
   return Array.from({ length: Math.min(count, pool.length) }, (_, i) =>
-    unsplash(pool[(seed + i * 7) % pool.length]!, 1400),
+    unsplash(pool[(seed + i * 5) % pool.length]!, 1400),
   );
 }
 

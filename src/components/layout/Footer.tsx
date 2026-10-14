@@ -1,16 +1,17 @@
 import Link from "next/link";
-import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight, Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 
 import { Logo } from "@/components/ui/Logo";
 import {
   budgetBands,
   localities,
   propertyTypes,
+  officeAddressLines,
   site,
   zoneLabels,
   type Zone,
 } from "@/config/site";
-import { telLink } from "@/lib/utils";
+import { telLink, whatsappLink } from "@/lib/utils";
 
 /**
  * The footer does three jobs at once:
@@ -30,51 +31,66 @@ export function Footer() {
   const zones = Object.keys(zoneLabels) as Zone[];
 
   return (
-    <footer className="mt-px border-t border-rule bg-sand">
-      {/* ── Masthead ───────────────────────────────────────────────────── */}
+    <footer className="border-t border-rule bg-paper">
+      {/* ── Brand + contact ───────────────────────────────────────────────────── */}
       <div className="shell grid gap-12 py-16 lg:grid-cols-[1.1fr_2fr] lg:gap-20 lg:py-20">
         <div>
-          <Logo showTagline />
+          <Logo />
 
-          <p className="mt-7 max-w-sm text-[0.9375rem] leading-relaxed text-ink-muted">
-            {site.description}
+          {/* Written for the buyer reading it. The B2B pitch lives on
+              /for-builders; the remuneration disclosure stays in the legal
+              line below, where it belongs. */}
+          <p className="mt-6 max-w-sm text-[0.9375rem] leading-relaxed text-ink-muted">
+            Flats, villas, offices and plots across Ahmedabad and Gandhinagar —
+            checked before they are listed, shown by one advisor, and free for
+            buyers.
           </p>
 
-          <div className="mt-8 space-y-3.5 text-[0.9375rem]">
+          <div className="mt-7 flex flex-wrap gap-2.5">
+            <a
+              href={whatsappLink(site.contact.whatsapp, `Hi ${site.name}, I am looking for a property.`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-[0.875rem] font-bold text-white transition-colors hover:bg-brass-deep"
+            >
+              <MessageCircle className="size-4" strokeWidth={2.2} aria-hidden />
+              WhatsApp
+            </a>
             <a
               href={telLink(site.contact.phoneE164)}
-              className="group flex items-center gap-3 text-ink transition-colors hover:text-brass"
+              className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[0.875rem] font-bold text-ink ring-1 ring-rule-strong transition-colors hover:bg-sand"
             >
-              <Phone className="size-4 shrink-0 text-ink-faint" strokeWidth={1.6} aria-hidden />
-              <span className="link-draw">{site.contact.phoneDisplay}</span>
+              <Phone className="size-4" strokeWidth={2.2} aria-hidden />
+              {site.contact.phoneDisplay}
             </a>
+          </div>
 
+          <div className="mt-7 space-y-3 text-[0.875rem]">
             <a
               href={`mailto:${site.contact.email}`}
-              className="group flex items-center gap-3 text-ink transition-colors hover:text-brass"
+              className="flex items-center gap-3 font-semibold text-ink transition-colors hover:text-brass"
             >
-              <Mail className="size-4 shrink-0 text-ink-faint" strokeWidth={1.6} aria-hidden />
-              <span className="link-draw">{site.contact.email}</span>
+              <Mail className="size-4 shrink-0 text-brass" strokeWidth={2} aria-hidden />
+              {site.contact.email}
             </a>
-
             <p className="flex items-start gap-3 text-ink-muted">
-              <MapPin className="mt-1 size-4 shrink-0 text-ink-faint" strokeWidth={1.6} aria-hidden />
+              <MapPin className="mt-0.5 size-4 shrink-0 text-brass" strokeWidth={2} aria-hidden />
               <span>
-                {site.office.line1}
-                <br />
-                {site.office.line2}
-                <br />
-                {site.office.locality}, {site.office.city} {site.office.postalCode}
+                {officeAddressLines().map((line, i) => (
+                  <span key={i} className="block">
+                    {line}
+                  </span>
+                ))}
               </span>
+            </p>
+            <p className="flex items-center gap-3 text-ink-muted">
+              <Clock className="size-4 shrink-0 text-brass" strokeWidth={2} aria-hidden />
+              {site.office.hours}
             </p>
           </div>
 
-          <p className="mt-6 font-semibold text-micro tracking-[0.1em] text-ink-faint uppercase">
-            {site.office.hours}
-          </p>
-
           {/* Socials */}
-          <div className="mt-8 flex gap-2">
+          <div className="mt-7 flex gap-2">
             {Object.entries(site.social)
               .filter(([, url]) => Boolean(url))
               .map(([network, url]) => (
@@ -84,9 +100,9 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${site.name} on ${network}`}
-                  className="grid size-10 place-items-center rounded-[2px] border border-rule-strong text-ink-muted transition-all duration-300 hover:border-ink hover:bg-ink hover:text-bone"
+                  className="grid size-10 place-items-center rounded-full text-ink-muted ring-1 ring-rule-strong transition-all duration-300 hover:bg-ink hover:text-white hover:ring-ink"
                 >
-                  <span className="font-semibold text-[0.6875rem] uppercase">
+                  <span className="text-[0.6875rem] font-bold uppercase">
                     {network.slice(0, 2)}
                   </span>
                 </a>
@@ -96,7 +112,7 @@ export function Footer() {
 
         {/* ── Link matrix ─────────────────────────────────────────────── */}
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          <FooterColumn title="Property Types">
+          <FooterColumn title="Property types">
             {propertyTypes.slice(0, 8).map((t) => (
               <FooterLink key={t.slug} href={`/ahmedabad/${t.slug}`}>
                 {t.name} in Ahmedabad
@@ -104,17 +120,17 @@ export function Footer() {
             ))}
           </FooterColumn>
 
-          <FooterColumn title="By Budget">
+          <FooterColumn title="By budget">
             {budgetBands.map((b) => (
               <FooterLink key={b.slug} href={`/ahmedabad/${b.slug}`}>
                 {b.label}
               </FooterLink>
             ))}
-            <FooterLink href="/ahmedabad/ready-to-move">Ready to Move</FooterLink>
-            <FooterLink href="/ahmedabad/new-launch">New Launches</FooterLink>
+            <FooterLink href="/ahmedabad/ready-to-move">Ready to move</FooterLink>
+            <FooterLink href="/ahmedabad/new-launch">New launches</FooterLink>
           </FooterColumn>
 
-          <FooterColumn title="Localities">
+          <FooterColumn title="Popular areas">
             {zones.flatMap((zone) =>
               localities
                 .filter((l) => l.zone === zone && l.featured)
@@ -124,18 +140,19 @@ export function Footer() {
                   </FooterLink>
                 )),
             )}
-            <FooterLink href="/localities">All localities →</FooterLink>
+            <FooterLink href="/localities">All areas →</FooterLink>
           </FooterColumn>
 
           <FooterColumn title="Company">
-            <FooterLink href="/about">About Us</FooterLink>
-            <FooterLink href="/projects">Our Projects</FooterLink>
-            <FooterLink href="/sell">Sell With Us</FooterLink>
+            <FooterLink href="/about">About us</FooterLink>
+            <FooterLink href="/projects">New projects</FooterLink>
+            <FooterLink href="/sell">Sell your property</FooterLink>
             <FooterLink href="/contact">Contact</FooterLink>
-            <FooterLink href="/map">Map Search</FooterLink>
-            <FooterLink href="/calculators/home-loan-emi">EMI Calculator</FooterLink>
-            <FooterLink href="/calculators/stamp-duty">Stamp Duty</FooterLink>
-            <FooterLink href="/guides/rera-gujarat">Guides</FooterLink>
+            <FooterLink href="/map">Map search</FooterLink>
+            <FooterLink href="/calculators/home-loan-emi">EMI calculator</FooterLink>
+            <FooterLink href="/calculators/stamp-duty">Stamp duty</FooterLink>
+            <FooterLink href="/guides/rera-gujarat">Buyer guides</FooterLink>
+            <FooterLink href="/for-builders">For builders</FooterLink>
           </FooterColumn>
         </div>
       </div>
@@ -144,9 +161,9 @@ export function Footer() {
              an empty "RERA Agent:" label is worse than none, and these are
              still awaiting the client. ─────────────────────────────────── */}
       {(site.compliance.reraAgentId || site.compliance.gstin) && (
-        <div className="border-t border-rule-strong/60">
+        <div className="border-t border-rule">
           <div className="shell flex flex-col gap-4 py-6 lg:flex-row lg:items-center lg:justify-between">
-            <dl className="flex flex-wrap gap-x-8 gap-y-2 font-semibold text-micro tracking-[0.1em] uppercase">
+            <dl className="flex flex-wrap gap-x-8 gap-y-2 text-[0.8125rem] font-semibold">
               {site.compliance.reraAgentId && (
                 <div className="flex gap-2">
                   <dt className="text-ink-faint">RERA Agent</dt>
@@ -165,7 +182,7 @@ export function Footer() {
               href={site.compliance.reraPortalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-1.5 font-semibold text-micro tracking-[0.12em] text-brass uppercase"
+              className="group inline-flex items-center gap-1.5 text-[0.8125rem] font-bold text-brass"
             >
               Verify on GujRERA
               <ArrowUpRight
@@ -179,7 +196,7 @@ export function Footer() {
       )}
 
       {/* ── Legal ──────────────────────────────────────────────────────── */}
-      <div className="border-t border-rule-strong/60">
+      <div className="border-t border-rule">
         <div className="shell flex flex-col gap-5 py-7 lg:flex-row lg:items-start lg:justify-between">
           <p className="max-w-3xl text-caption leading-relaxed text-ink-faint">
             © {year} {site.legalName}. All rights reserved.{" "}
@@ -196,14 +213,14 @@ export function Footer() {
             impressions.
           </p>
 
-          <nav aria-label="Legal" className="flex shrink-0 gap-6 font-semibold text-micro tracking-[0.12em] uppercase">
-            <Link href="/privacy" className="link-draw text-ink-muted">
+          <nav aria-label="Legal" className="flex shrink-0 gap-6 text-[0.8125rem] font-semibold">
+            <Link href="/privacy" className="text-ink-muted transition-colors hover:text-ink">
               Privacy
             </Link>
-            <Link href="/terms" className="link-draw text-ink-muted">
+            <Link href="/terms" className="text-ink-muted transition-colors hover:text-ink">
               Terms
             </Link>
-            <Link href="/sitemap.xml" className="link-draw text-ink-muted">
+            <Link href="/sitemap.xml" className="text-ink-muted transition-colors hover:text-ink">
               Sitemap
             </Link>
           </nav>
@@ -222,7 +239,7 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <p className="eyebrow mb-4 border-b border-rule-strong/50 pb-3">{title}</p>
+      <p className="mb-4 text-[0.9375rem] font-bold text-ink">{title}</p>
       <ul className="space-y-2.5">{children}</ul>
     </div>
   );
@@ -233,7 +250,7 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
     <li>
       <Link
         href={href}
-        className="link-draw text-caption text-ink-muted transition-colors duration-250 hover:text-ink"
+        className="text-[0.875rem] text-ink-muted transition-colors duration-200 hover:text-brass"
       >
         {children}
       </Link>

@@ -248,6 +248,16 @@ export const portfolio = [
 export const FINANCE_DISCLAIMER =
   "Final loan approval remains subject to the respective financial institution's policies.";
 
+/** The office address as display lines, with blank fields dropped and the
+ *  locality left out when it merely repeats the city — so a half-filled
+ *  address never prints an empty line or "Ahmedabad, Ahmedabad". */
+export function officeAddressLines(office: typeof site.office = site.office): string[] {
+  const place = office.locality && office.locality !== office.city
+    ? `${office.locality}, ${office.city}`
+    : office.city;
+  return [office.line1, office.line2, `${place} ${office.postalCode}`.trim()].filter(Boolean);
+}
+
 /* ── Site origin ─────────────────────────────────────────────────────────── */
 
 export const siteUrl = (

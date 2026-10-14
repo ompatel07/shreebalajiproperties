@@ -136,7 +136,7 @@ function LeadsView({
               <Link
                 href={tab.value === "open" ? "/studio/leads" : `/studio/leads?status=${tab.value}`}
                 aria-current={active === tab.value ? "page" : undefined}
-                className={`inline-block rounded-[2px] px-3.5 py-2 font-semibold text-[0.6875rem] tracking-[0.1em] uppercase transition-colors ${
+                className={`inline-block rounded-lg px-3.5 py-2 font-semibold text-[0.6875rem] tracking-[0.1em] uppercase transition-colors ${
                   active === tab.value
                     ? "bg-ink text-bone"
                     : "border border-rule-strong text-ink-muted hover:border-ink hover:text-ink"
@@ -151,7 +151,7 @@ function LeadsView({
 
       {/* ── List ─────────────────────────────────────────────────────────── */}
       {error ? (
-        <div className="mt-8 rounded-[2px] border border-alert/30 bg-alert-pale p-6">
+        <div className="mt-8 rounded-lg border border-alert/30 bg-alert-pale p-6">
           <p className="font-semibold text-micro tracking-[0.12em] text-alert uppercase">
             Could not load leads
           </p>
@@ -160,7 +160,7 @@ function LeadsView({
           </p>
         </div>
       ) : leads.length === 0 ? (
-        <div className="relative mt-8 overflow-hidden rounded-[2px] border border-rule bg-paper px-6 py-20 text-center">
+        <div className="relative mt-8 overflow-hidden rounded-lg border border-rule bg-paper px-6 py-20 text-center">
           <div className="jaali absolute inset-0" aria-hidden />
           <div className="relative">
             <p className="eyebrow">Nothing in this view</p>
@@ -181,7 +181,7 @@ function LeadsView({
             return (
               <li
                 key={lead.id}
-                className="rounded-[2px] border border-rule bg-paper p-5 transition-colors hover:border-rule-strong"
+                className="rounded-lg border border-rule bg-paper p-5 transition-colors hover:border-rule-strong"
               >
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   {/* ── Identity ───────────────────────────────────────── */}
@@ -226,7 +226,7 @@ function LeadsView({
 
                     {/* What they asked for */}
                     {lead.message && (
-                      <p className="mt-3 max-w-2xl rounded-[2px] bg-sand px-3.5 py-3 text-caption leading-relaxed text-ink-soft">
+                      <p className="mt-3 max-w-2xl rounded-lg bg-sand px-3.5 py-3 text-caption leading-relaxed text-ink-soft">
                         {lead.message}
                       </p>
                     )}

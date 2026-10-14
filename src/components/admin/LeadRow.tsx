@@ -96,7 +96,7 @@ export function LeadRow({
         disabled={pending}
         aria-label="Lead status"
         className={cn(
-          "cursor-pointer rounded-[2px] border px-3 py-2 font-semibold text-[0.6875rem] tracking-[0.1em] uppercase focus:border-brass focus:outline-none",
+          "cursor-pointer rounded-lg border px-3 py-2 font-semibold text-[0.6875rem] tracking-[0.1em] uppercase focus:border-brass focus:outline-none",
           tone,
           pending && "opacity-60",
         )}
@@ -112,7 +112,7 @@ export function LeadRow({
         type="button"
         onClick={() => setShowNote((v) => !v)}
         aria-expanded={showNote}
-        className="inline-flex items-center justify-center gap-1.5 rounded-[2px] border border-rule px-3 py-2 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase hover:border-ink hover:text-ink"
+        className="inline-flex items-center justify-center gap-1.5 rounded-full border border-rule px-3 py-2 font-bold text-[0.875rem] text-ink-muted hover:border-ink hover:text-ink"
       >
         <StickyNote className="size-3" strokeWidth={1.9} aria-hidden />
         {notes ? "Note ·" : "Add note"}
@@ -120,7 +120,7 @@ export function LeadRow({
       </button>
 
       {showNote && (
-        <form action={save} className="space-y-2 rounded-[2px] border border-rule bg-sand p-3">
+        <form action={save} className="space-y-2 rounded-lg border border-rule bg-sand p-3">
           <input type="hidden" name="id" value={id} />
           <input type="hidden" name="status" value={current} />
 
@@ -134,7 +134,7 @@ export function LeadRow({
               defaultValue={notes ?? ""}
               maxLength={4000}
               placeholder="Called — wants Shela or South Bopal, loan pre-approved with HDFC."
-              className="mt-1 w-full rounded-[2px] border border-rule-strong bg-paper px-2.5 py-2 text-[0.8125rem] text-ink focus:border-brass focus:outline-none"
+              className="mt-1 w-full rounded-lg border border-rule-strong bg-paper px-2.5 py-2 text-[0.8125rem] text-ink focus:border-brass focus:outline-none"
             />
           </label>
 
@@ -148,14 +148,14 @@ export function LeadRow({
               // `datetime-local` wants `YYYY-MM-DDTHH:mm`, so trim the stored
               // ISO string rather than passing it whole.
               defaultValue={followUpAt ? followUpAt.slice(0, 16) : ""}
-              className="mt-1 w-full rounded-[2px] border border-rule-strong bg-paper px-2.5 py-2 text-[0.8125rem] text-ink focus:border-brass focus:outline-none"
+              className="mt-1 w-full rounded-lg border border-rule-strong bg-paper px-2.5 py-2 text-[0.8125rem] text-ink focus:border-brass focus:outline-none"
             />
           </label>
 
           <button
             type="submit"
             disabled={pending}
-            className="w-full rounded-[2px] bg-ink px-3 py-2 font-semibold text-[0.6875rem] tracking-[0.12em] text-bone uppercase hover:bg-brass-deep disabled:opacity-50"
+            className="w-full rounded-full bg-ink px-3 py-2 font-bold text-[0.875rem] text-white hover:bg-brass-deep disabled:opacity-50"
           >
             {pending ? "Saving…" : "Save note"}
           </button>

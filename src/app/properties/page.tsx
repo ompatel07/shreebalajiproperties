@@ -97,7 +97,7 @@ export default async function PropertiesPage({ searchParams }: Props) {
                 <input key={k} type="hidden" name={k} value={v} />
               ))}
 
-            <div className="flex items-center gap-3 rounded-[2px] border border-rule-strong bg-paper px-4 py-3 focus-within:border-brass">
+            <div className="flex items-center gap-3 rounded-lg border border-rule-strong bg-paper px-4 py-3 focus-within:border-brass">
               <Search className="size-[1.1rem] shrink-0 text-ink-faint" strokeWidth={1.7} aria-hidden />
               <input
                 type="search"
@@ -111,7 +111,7 @@ export default async function PropertiesPage({ searchParams }: Props) {
               />
               <button
                 type="submit"
-                className="shrink-0 rounded-[2px] bg-ink px-4 py-2 font-semibold text-micro tracking-[0.12em] text-bone uppercase transition-colors hover:bg-brass-deep"
+                className="shrink-0 rounded-full bg-ink px-4 py-2 font-bold text-[0.875rem] text-white transition-colors hover:bg-brass-deep"
               >
                 Search
               </button>
@@ -197,7 +197,7 @@ export default async function PropertiesPage({ searchParams }: Props) {
 
 function EmptySearch() {
   return (
-    <div className="relative overflow-hidden rounded-[2px] border border-rule bg-paper px-6 py-20 text-center">
+    <div className="relative overflow-hidden rounded-lg border border-rule bg-paper px-6 py-20 text-center">
       <div className="jaali absolute inset-0" aria-hidden />
       <div className="relative">
         <p className="eyebrow">No matches</p>

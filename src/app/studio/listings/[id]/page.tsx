@@ -71,7 +71,7 @@ function EditView({
     <div className="p-5 lg:p-10">
       <Link
         href="/studio/listings"
-        className="inline-flex items-center gap-1.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase hover:text-brass"
+        className="inline-flex items-center gap-1.5 font-bold text-[0.9375rem] text-ink-muted hover:text-brass"
       >
         <ChevronLeft className="size-3" strokeWidth={2.2} aria-hidden />
         Listings
@@ -99,7 +99,7 @@ function EditView({
             href={`/property/${row.slug}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex shrink-0 items-center gap-2 rounded-[2px] border border-rule-strong px-4 py-2.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink uppercase hover:border-ink hover:bg-ink hover:text-bone"
+            className="inline-flex shrink-0 items-center gap-2 rounded-full border border-rule-strong px-4 py-2.5 font-bold text-[0.875rem] text-ink hover:border-ink hover:bg-ink hover:text-white"
           >
             View live
             <ExternalLink className="size-3" strokeWidth={1.9} aria-hidden />

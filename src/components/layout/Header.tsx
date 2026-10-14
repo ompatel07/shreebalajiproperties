@@ -402,7 +402,7 @@ function ToolsPanel() {
         <p className="mb-5 font-display text-h4 leading-tight text-ink">
           Tell us the budget. We will tell you the honest options.
         </p>
-        <Link href="/contact" className="link-draw font-semibold text-micro tracking-[0.14em] text-brass uppercase">
+        <Link href="/contact" className="font-bold text-[0.9375rem] text-brass">
           Talk to an advisor →
         </Link>
       </div>
@@ -518,7 +518,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
         <div className="shrink-0 border-t border-rule p-5">
           <a
             href={telLink(site.contact.phoneE164)}
-            className="flex w-full items-center justify-center gap-2.5 rounded-[2px] bg-ink py-4 font-semibold text-micro tracking-[0.14em] text-bone uppercase"
+            className="flex w-full items-center justify-center gap-2.5 rounded-lg bg-ink py-4 font-semibold text-micro tracking-[0.14em] text-bone uppercase"
           >
             <Phone className="size-3.5" strokeWidth={1.8} aria-hidden />
             {site.contact.phoneDisplay}

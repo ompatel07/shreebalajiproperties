@@ -80,14 +80,13 @@ function ProjectsPageView({ projects }: { projects: Project[] }) {
             <Breadcrumbs trail={trail} />
 
             <h1 className="display-tight mt-6 max-w-4xl font-display text-h2 text-ink">
-              Developments we are{" "}
-              <em className="display-wonk text-brass">actively marketing.</em>
+              New projects in Ahmedabad
             </h1>
 
             <p className="mt-6 max-w-2xl text-lead text-ink-muted">
-              Each of these is a live engagement: positioning, promotion,
-              enquiry management, site-visit coordination and finance support,
-              run by our in-house team on the builder&rsquo;s behalf.
+              Launches and under-construction towers we sell directly for the
+              developer — so you get the builder&rsquo;s own price list, floor
+              plans and a site visit arranged by one advisor, at no charge.
             </p>
           </div>
         </header>
@@ -146,7 +145,7 @@ function ProjectsPageView({ projects }: { projects: Project[] }) {
 
         {projects.length === 0 && (
           <div className="shell py-20">
-            <div className="relative overflow-hidden rounded-[2px] border border-rule bg-paper px-6 py-20 text-center">
+            <div className="relative overflow-hidden rounded-lg border border-rule bg-paper px-6 py-20 text-center">
               <div className="jaali absolute inset-0" aria-hidden />
               <div className="relative">
                 <p className="eyebrow">Between launches</p>
@@ -188,7 +187,7 @@ function ProjectCard({
     <RevealItem as="article">
       <Link
         href={`/projects/${project.slug}`}
-        className={`group flex h-full flex-col overflow-hidden rounded-[2px] border bg-paper transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-[var(--shadow-raise)] ${
+        className={`group flex h-full flex-col overflow-hidden rounded-lg border bg-paper transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-[var(--shadow-raise)] ${
           highlight ? "border-brass/35" : "border-rule hover:border-rule-strong"
         }`}
       >

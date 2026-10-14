@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
-import { site } from "@/config/site";
+import { officeAddressLines, site } from "@/config/site";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
@@ -49,9 +49,8 @@ export default function PrivacyPage() {
           <Clause title="Who we are">
             <p>
               {site.legalName} ({site.name}) is a RERA-registered real-estate
-              agent with its registered office at {site.office.line1},{" "}
-              {site.office.line2}, {site.office.locality}, {site.office.city}{" "}
-              {site.office.postalCode}, Gujarat, India. For any question about
+              agent with its registered office at{" "}
+              {officeAddressLines().join(", ")}, Gujarat, India. For any question about
               this policy or your data, write to{" "}
               <a href={`mailto:${site.contact.email}`} className="link-draw text-brass">
                 {site.contact.email}

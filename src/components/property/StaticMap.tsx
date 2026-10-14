@@ -20,7 +20,7 @@ const PropertyMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="relative h-[24rem] w-full overflow-hidden rounded-[2px] border border-rule bg-sand">
+      <div className="relative h-[24rem] w-full overflow-hidden rounded-lg border border-rule bg-sand">
         <div className="jaali absolute inset-0" aria-hidden />
         <p className="absolute inset-0 grid place-items-center font-semibold text-micro tracking-[0.14em] text-ink-faint uppercase">
           Loading map…

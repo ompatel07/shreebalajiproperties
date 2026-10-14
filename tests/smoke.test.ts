@@ -124,10 +124,16 @@ describe("search actually filters", () => {
 });
 
 describe("content reaches the HTML", () => {
-  it("the homepage renders the search and real area counts", async () => {
+  it("the homepage renders its search, areas and property types", async () => {
     const { html } = await get("/");
-    assert.ok(/Search area or project|project name/i.test(html), "no search control");
-    assert.ok(/Where people are buying/i.test(html), "no area tiles");
+    // The tabbed search panel: its tabs and its submit.
+    assert.ok(/New Projects/.test(html) && /Commercial/.test(html), "no search tabs");
+    assert.ok(/aria-label="Location"/.test(html), "no location field in the search");
+    // Areas and property types are each offered exactly once now.
+    assert.ok(/Popular areas in Ahmedabad/.test(html), "no areas section");
+    assert.ok(/What are you looking for\?/.test(html), "no property-type section");
+    // The slideshow headline is a single, fixed h1.
+    assert.equal((html.match(/<h1[\s>]/g) ?? []).length, 1, "the homepage must have exactly one h1");
   });
 
   it("prices render as formatted rupees, never as raw integers or NaN", async () => {

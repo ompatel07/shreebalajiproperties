@@ -41,7 +41,7 @@ export function CompareTable() {
     return (
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[0, 1, 2].map((i) => (
-          <div key={i} className="shimmer h-80 rounded-[2px]" />
+          <div key={i} className="shimmer h-80 rounded-lg" />
         ))}
       </div>
     );
@@ -87,7 +87,7 @@ export function CompareTable() {
         <button
           type="button"
           onClick={clear}
-          className="font-semibold text-micro tracking-[0.12em] text-brass uppercase hover:underline"
+          className="font-bold text-[0.9375rem] text-brass hover:underline"
         >
           Clear all
         </button>
@@ -324,7 +324,7 @@ function Row({
     <tr>
       <th
         scope="row"
-        className="border-t border-rule bg-bone px-3 py-3.5 text-left align-top text-[0.6875rem] leading-snug tracking-[0.12em] font-normal text-ink-muted uppercase"
+        className="border-t border-rule bg-bone px-3 py-3.5 text-left align-top text-[0.875rem] leading-snug font-normal text-ink-muted rounded-full"
       >
         {label}
       </th>
@@ -341,7 +341,7 @@ function Row({
             {render(p)}
             {isWinner(p.id) && winnerNote && (
               <span
-                className="mt-0.5 inline-flex shrink-0 items-center gap-1 rounded-[2px] bg-brass px-1.5 py-0.5 font-semibold text-[0.6875rem] tracking-[0.08em] text-paper uppercase"
+                className="mt-0.5 inline-flex shrink-0 items-center gap-1 rounded-lg bg-brass px-1.5 py-0.5 font-semibold text-[0.6875rem] tracking-[0.08em] text-paper uppercase"
                 title={winnerNote}
               >
                 <Trophy className="size-2.5" strokeWidth={2.2} aria-hidden />
@@ -357,7 +357,7 @@ function Row({
 
 function EmptyCompare() {
   return (
-    <div className="relative overflow-hidden rounded-[2px] border border-rule bg-paper px-6 py-20 text-center">
+    <div className="relative overflow-hidden rounded-lg border border-rule bg-paper px-6 py-20 text-center">
       <div className="jaali absolute inset-0" aria-hidden />
       <div className="relative">
         <p className="eyebrow">Nothing to compare yet</p>

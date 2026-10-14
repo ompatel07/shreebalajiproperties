@@ -162,7 +162,7 @@ export function AffordabilityCalculator() {
 
         {/* The constraint, named. This is the insight the page exists for. */}
         <div
-          className={`rounded-[2px] border p-6 ${
+          className={`rounded-lg border p-6 ${
             cashConstrained
               ? "border-alert/25 bg-alert-pale"
               : "border-verdant/25 bg-verdant-pale"
@@ -206,7 +206,7 @@ export function AffordabilityCalculator() {
 
         <section
           aria-labelledby="funding"
-          className="rounded-[2px] border border-rule bg-paper p-6 lg:p-7"
+          className="rounded-lg border border-rule bg-paper p-6 lg:p-7"
         >
           <h2 id="funding" className="eyebrow mb-5">
             How a {formatPrice(Math.round(workingBudget))} purchase gets funded
@@ -225,7 +225,7 @@ export function AffordabilityCalculator() {
         {/* Turn the number into a next action. */}
         <section
           aria-labelledby="where"
-          className="rounded-[2px] border border-rule bg-sand p-6 lg:p-7"
+          className="rounded-lg border border-rule bg-sand p-6 lg:p-7"
         >
           <h2 id="where" className="eyebrow mb-2">
             Where that budget actually buys a 3 BHK
@@ -242,7 +242,7 @@ export function AffordabilityCalculator() {
                 <li key={l.slug}>
                   <Link
                     href={`/${l.city}/${l.slug}/3-bhk-flats`}
-                    className="group flex items-baseline justify-between gap-3 rounded-[2px] border border-rule bg-paper px-3.5 py-2.5 transition-colors hover:border-ink"
+                    className="group flex items-baseline justify-between gap-3 rounded-lg border border-rule bg-paper px-3.5 py-2.5 transition-colors hover:border-ink"
                   >
                     <span className="text-[0.9375rem] text-ink">{l.name}</span>
                     <span

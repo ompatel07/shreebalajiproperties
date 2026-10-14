@@ -202,7 +202,7 @@ function ListingsView({
                       : `/studio/listings?status=${tab.value}`
                   }
                   aria-current={activeStatus === tab.value ? "page" : undefined}
-                  className={`inline-block rounded-[2px] px-3.5 py-2 font-semibold text-[0.6875rem] tracking-[0.1em] uppercase transition-colors ${
+                  className={`inline-block rounded-lg px-3.5 py-2 font-semibold text-[0.6875rem] tracking-[0.1em] uppercase transition-colors ${
                     activeStatus === tab.value
                       ? "bg-ink text-bone"
                       : "border border-rule-strong text-ink-muted hover:border-ink hover:text-ink"
@@ -225,14 +225,14 @@ function ListingsView({
             defaultValue={q ?? ""}
             placeholder="SK number, title or area…"
             aria-label="Search listings by title"
-            className="w-48 rounded-[2px] border border-rule-strong bg-paper px-3 py-2 text-caption text-ink focus:border-brass focus:outline-none"
+            className="w-48 rounded-lg border border-rule-strong bg-paper px-3 py-2 text-caption text-ink focus:border-brass focus:outline-none"
           />
         </form>
       </div>
 
       {/* ── Table ────────────────────────────────────────────────────────── */}
       {error ? (
-        <div className="mt-8 rounded-[2px] border border-alert/30 bg-alert-pale p-6">
+        <div className="mt-8 rounded-lg border border-alert/30 bg-alert-pale p-6">
           <p className="font-semibold text-micro tracking-[0.12em] text-alert uppercase">
             Could not load listings
           </p>
@@ -242,7 +242,7 @@ function ListingsView({
           </p>
         </div>
       ) : listings.length === 0 ? (
-        <div className="relative mt-8 overflow-hidden rounded-[2px] border border-rule bg-paper px-6 py-20 text-center">
+        <div className="relative mt-8 overflow-hidden rounded-lg border border-rule bg-paper px-6 py-20 text-center">
           <div className="jaali absolute inset-0" aria-hidden />
           <div className="relative">
             <p className="eyebrow">Nothing here</p>
@@ -282,7 +282,7 @@ function ListingsView({
                 <div className="min-w-0 flex-1">
                   {p.ref_code && (
                     <span
-                      className="inline-block rounded-[2px] bg-sand-deep px-1.5 py-0.5 font-mono text-[0.6875rem] font-semibold text-ink-soft"
+                      className="inline-block rounded-lg bg-sand-deep px-1.5 py-0.5 font-mono text-[0.6875rem] font-semibold text-ink-soft"
                       data-numeric
                     >
                       {p.ref_code}
@@ -350,7 +350,7 @@ function ListingsView({
                   {/* Property */}
                   <td className="py-3 pr-4">
                     <div className="flex items-center gap-3">
-                      <div className="relative size-12 shrink-0 overflow-hidden rounded-[2px] bg-sand">
+                      <div className="relative size-12 shrink-0 overflow-hidden rounded-lg bg-sand">
                         <Image
                           src={heroImageFor(p, 120)}
                           alt=""
@@ -366,7 +366,7 @@ function ListingsView({
                         <div className="flex items-baseline gap-2">
                           {p.ref_code && (
                             <span
-                              className="shrink-0 rounded-[2px] bg-sand-deep px-1.5 py-0.5 font-mono text-[0.625rem] font-semibold text-ink-soft"
+                              className="shrink-0 rounded-lg bg-sand-deep px-1.5 py-0.5 font-mono text-[0.625rem] font-semibold text-ink-soft"
                               data-numeric
                             >
                               {p.ref_code}
@@ -439,14 +439,14 @@ function ListingsView({
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`View ${p.title} on the live site`}
-                          className="grid size-8 place-items-center rounded-[2px] text-ink-muted hover:bg-sand hover:text-ink"
+                          className="grid size-8 place-items-center rounded-lg text-ink-muted hover:bg-sand hover:text-ink"
                         >
                           <Eye className="size-3.5" strokeWidth={1.8} aria-hidden />
                         </Link>
                       )}
                       <Link
                         href={`/studio/listings/${p.id}`}
-                        className="rounded-[2px] border border-rule-strong px-3 py-1.5 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink uppercase hover:border-ink hover:bg-ink hover:text-bone"
+                        className="rounded-full border border-rule-strong px-3 py-1.5 font-bold text-[0.875rem] text-ink hover:border-ink hover:bg-ink hover:text-white"
                       >
                         Edit
                       </Link>

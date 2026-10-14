@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
-import { site } from "@/config/site";
+import { officeAddressLines, site } from "@/config/site";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({
@@ -170,10 +170,11 @@ export default function TermsPage() {
             <p>
               {site.legalName}
               <br />
-              {site.office.line1}, {site.office.line2}
-              <br />
-              {site.office.locality}, {site.office.city} {site.office.postalCode}
-              <br />
+              {officeAddressLines().map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
               {site.contact.phoneDisplay} ·{" "}
               <a href={`mailto:${site.contact.email}`} className="link-draw text-brass">
                 {site.contact.email}

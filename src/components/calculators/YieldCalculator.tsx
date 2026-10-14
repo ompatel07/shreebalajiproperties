@@ -150,7 +150,7 @@ export function YieldCalculator() {
 
         {/* The straight comparison. */}
         <div
-          className={`rounded-[2px] border p-6 ${
+          className={`rounded-lg border p-6 ${
             beatsFd ? "border-verdant/25 bg-verdant-pale" : "border-alert/25 bg-alert-pale"
           }`}
         >
@@ -176,7 +176,7 @@ export function YieldCalculator() {
 
         <section
           aria-labelledby="income"
-          className="rounded-[2px] border border-rule bg-paper p-6 lg:p-7"
+          className="rounded-lg border border-rule bg-paper p-6 lg:p-7"
         >
           <h2 id="income" className="eyebrow mb-5">
             Where the rent goes, each year
@@ -203,7 +203,7 @@ export function YieldCalculator() {
           />
         </section>
 
-        <section aria-labelledby="facts" className="rounded-[2px] border border-rule bg-sand p-6">
+        <section aria-labelledby="facts" className="rounded-lg border border-rule bg-sand p-6">
           <h2 id="facts" className="eyebrow mb-5">
             The numbers behind it
           </h2>

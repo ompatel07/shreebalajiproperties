@@ -143,7 +143,7 @@ export function PropertyMap({
       <div
         ref={containerRef}
         style={{ height }}
-        className="w-full overflow-hidden rounded-[2px] border border-rule bg-sand"
+        className="w-full overflow-hidden rounded-lg border border-rule bg-sand"
         role="application"
         aria-label={`Map showing ${properties.length} properties`}
       />
