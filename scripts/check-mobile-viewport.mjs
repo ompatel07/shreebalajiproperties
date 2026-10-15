@@ -93,6 +93,19 @@ const dynamic = (
   ])
 ).filter((h) => h && !STATIC_PAGES.includes(h));
 
+// /compare and /wishlist are empty states until a visitor saves something —
+// and the populated compare table is what overflowed (by 2px) once. Seed
+// both with two real listings so the pages are checked as they are used.
+await send("Page.navigate", { url: BASE + "/properties" });
+await new Promise((r) => setTimeout(r, 3000));
+await evaluate(`(() => {
+  const slugs = [...new Set([...document.querySelectorAll('a[href^="/property/"]')]
+    .map((a) => a.getAttribute("href").replace("/property/", "")))].slice(0, 2);
+  localStorage.setItem("sbp:shortlist:v1", JSON.stringify(slugs));
+  localStorage.setItem("sbp:compare:v1", JSON.stringify(slugs));
+  return slugs.length;
+})()`);
+
 const PAGES = [...STATIC_PAGES, ...dynamic];
 const failures = [];
 

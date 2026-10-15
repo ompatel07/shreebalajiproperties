@@ -78,7 +78,7 @@ export function CompareTable() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between gap-4">
-        <p className="font-semibold text-micro tracking-[0.1em] text-ink-muted uppercase">
+        <p className="font-semibold text-[0.8125rem] text-ink-muted">
           Comparing{" "}
           <span className="text-ink" data-numeric>
             {items.length}
@@ -94,7 +94,7 @@ export function CompareTable() {
       </div>
 
       {/* Horizontal scroll on narrow screens; the row labels stay stuck. */}
-      <div className="no-bar -mx-5 overflow-x-auto px-5 lg:mx-0 lg:px-0 relative">
+      <div className="no-bar relative -mx-[1.125rem] overflow-x-auto px-[1.125rem] sm:-mx-7 sm:px-7 lg:mx-0 lg:px-0">
         <table className="w-full min-w-[46rem] border-collapse">
           <caption className="sr-only">
             Side-by-side comparison of {items.length} shortlisted properties
@@ -139,7 +139,7 @@ export function CompareTable() {
                         </div>
 
                         <div className="p-3.5 text-left">
-                          <p className="font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase">
+                          <p className="font-semibold text-[0.8125rem] text-ink-muted">
                             {locality?.name ?? p.locality_slug}
                           </p>
                           <p className="mt-1 line-clamp-2 text-[0.9375rem] font-semibold leading-snug text-ink">
@@ -341,7 +341,7 @@ function Row({
             {render(p)}
             {isWinner(p.id) && winnerNote && (
               <span
-                className="mt-0.5 inline-flex shrink-0 items-center gap-1 rounded-lg bg-brass px-1.5 py-0.5 font-semibold text-[0.6875rem] tracking-[0.08em] text-paper uppercase"
+                className="mt-0.5 inline-flex shrink-0 items-center gap-1 rounded-lg bg-brass px-1.5 py-0.5 font-semibold text-[0.8125rem] text-paper"
                 title={winnerNote}
               >
                 <Trophy className="size-2.5" strokeWidth={2.2} aria-hidden />

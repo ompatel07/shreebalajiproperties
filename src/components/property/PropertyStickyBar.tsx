@@ -63,7 +63,7 @@ export function PropertyStickyBar({
         {/* ── Identity. Hidden on the narrowest screens, where the three
                actions need the whole width. ──────────────────────────── */}
         <div className="hidden min-w-0 flex-1 sm:block">
-          <p className="truncate font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+          <p className="truncate font-semibold text-[0.8125rem] text-ink-muted">
             {locality}
             {bhk ? ` · ${formatBhk(bhk)}` : ""}
           </p>

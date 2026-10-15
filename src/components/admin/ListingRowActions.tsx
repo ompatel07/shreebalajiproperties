@@ -277,7 +277,7 @@ export function ListingRowActions({
         <span
           role="status"
           className={cn(
-            "font-semibold text-[0.6875rem] tracking-[0.1em] uppercase",
+            "font-semibold text-[0.8125rem]",
             note.ok ? "text-verdant" : "text-alert",
           )}
         >

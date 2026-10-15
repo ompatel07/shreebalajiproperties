@@ -120,7 +120,7 @@ export default async function StudioLayout({
               <p className="text-[1.0625rem] font-semibold leading-none text-ink">
                 Studio
               </p>
-              <p className="mt-1 font-semibold text-[0.6875rem] tracking-[0.18em] text-ink-muted uppercase">
+              <p className="mt-1 font-semibold text-[0.8125rem] text-ink-muted">
                 {site.name}
               </p>
             </div>
@@ -133,7 +133,7 @@ export default async function StudioLayout({
             <p className="truncate text-[0.9375rem] font-semibold text-ink">
               {profile.full_name ?? profile.email}
             </p>
-            <p className="mt-0.5 truncate font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+            <p className="mt-0.5 truncate font-semibold text-[0.8125rem] text-ink-muted">
               {profile.role}
             </p>
 

@@ -147,7 +147,7 @@ function DashboardView({
         </div>
       ) : (
         <div className="mt-8 rounded-lg border border-alert/30 bg-alert-pale p-6">
-          <p className="font-semibold text-micro tracking-[0.12em] text-alert uppercase">
+          <p className="font-semibold text-[0.8125rem] text-alert">
             Could not load counters
           </p>
           <p className="mt-2 text-caption leading-relaxed text-ink-soft">
@@ -173,7 +173,7 @@ function DashboardView({
             </h2>
             <Link
               href="/studio/leads"
-              className="group inline-flex items-center gap-1.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-brass uppercase"
+              className="group inline-flex items-center gap-1.5 font-semibold text-[0.8125rem] text-brass"
             >
               <span className="link-draw">All leads</span>
               <ArrowUpRight className="size-2.5" strokeWidth={2.2} aria-hidden />
@@ -213,10 +213,10 @@ function DashboardView({
                     </div>
 
                     <div className="shrink-0 text-right">
-                      <p className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase">
+                      <p className="font-semibold text-[0.8125rem] text-ink-faint">
                         {formatRelative(lead.created_at)}
                       </p>
-                      <p className="mt-1 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
+                      <p className="mt-1 font-semibold text-[0.8125rem] text-ink-muted">
                         {lead.status.replace(/_/g, " ")}
                       </p>
                     </div>
@@ -237,7 +237,7 @@ function DashboardView({
               </h2>
               <Link
                 href="/studio/visits"
-                className="font-semibold text-[0.6875rem] tracking-[0.12em] text-brass uppercase"
+                className="font-semibold text-[0.8125rem] text-brass"
               >
                 All
               </Link>
@@ -287,7 +287,7 @@ function DashboardView({
               </h2>
               <Link
                 href="/studio/listings"
-                className="font-semibold text-[0.6875rem] tracking-[0.12em] text-brass uppercase"
+                className="font-semibold text-[0.8125rem] text-brass"
               >
                 All
               </Link>
@@ -305,7 +305,7 @@ function DashboardView({
                           <p className="truncate text-[0.9375rem] font-semibold text-ink group-hover:text-brass">
                             {p.title}
                           </p>
-                          <p className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
+                          <p className="font-semibold text-[0.8125rem] text-ink-muted">
                             {localityBySlug.get(p.locality_slug)?.name ?? p.locality_slug}
                             {p.price ? ` · ${formatPrice(p.price)}` : ""}
                           </p>
@@ -347,7 +347,7 @@ function Stat({
         tone === "brass" ? "bg-brass-pale/60" : "bg-paper"
       } ${href ? "hover:bg-sand" : ""}`}
     >
-      <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+      <p className="font-semibold text-[0.8125rem] text-ink-muted">
         {label}
       </p>
       <p className="mt-2 font-display text-h3 leading-none text-ink" data-numeric>

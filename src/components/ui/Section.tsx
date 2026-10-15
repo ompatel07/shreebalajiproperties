@@ -50,15 +50,11 @@ export function SectionHeading({
           <p
             className={cn(
               "eyebrow flex items-center gap-3",
-              inverse && "text-bone/60",
+              inverse && "text-brass-light",
             )}
           >
-            {index && (
-              <>
-                <span className={inverse ? "text-brass-light" : "text-brass"}>{index}</span>
-                <span className={cn("h-px w-8", inverse ? "bg-bone/30" : "bg-rule-strong")} aria-hidden />
-              </>
-            )}
+            {/* `index` is accepted but no longer drawn: numbered eyebrows were part
+                of the formula the client read as a template. */}
             {eyebrow}
           </p>
 

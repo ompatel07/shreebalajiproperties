@@ -248,7 +248,7 @@ export default async function PropertyPage({ params }: Props) {
                   </p>
 
                   {property.price && !property.price_on_request && (
-                    <p className="mt-2.5 font-semibold text-micro tracking-[0.08em] text-ink-muted uppercase">
+                    <p className="mt-2.5 font-semibold text-[0.8125rem] text-ink-muted">
                       {formatRupeesExact(property.price)}
                       {area ? ` · ${pricePerSqft(property.price, area)}` : ""}
                       {property.is_negotiable ? " · Negotiable" : ""}
@@ -463,7 +463,7 @@ export default async function PropertyPage({ params }: Props) {
                 ) : (
                   <div className="relative overflow-hidden rounded-lg border border-rule bg-sand p-12 text-center">
                     <div className="jaali absolute inset-0" aria-hidden />
-                    <p className="relative font-semibold text-micro tracking-[0.14em] text-ink-muted uppercase">
+                    <p className="relative font-semibold text-[0.8125rem] text-ink-muted">
                       Exact location shared on enquiry
                     </p>
                   </div>
@@ -475,7 +475,7 @@ export default async function PropertyPage({ params }: Props) {
                       <div key={place.name} className="flex items-baseline justify-between gap-3 rounded-xl bg-paper px-4 py-3.5 ring-1 ring-rule">
                         <div className="min-w-0">
                           <dt className="truncate text-[0.9375rem] font-semibold text-ink">{place.name}</dt>
-                          <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
+                          <p className="font-semibold text-[0.8125rem] text-ink-faint">
                             {place.type}
                           </p>
                         </div>
@@ -495,7 +495,7 @@ export default async function PropertyPage({ params }: Props) {
                     </p>
                     <Link
                       href={`/${locality.city}/${locality.slug}`}
-                      className="group mt-5 inline-flex items-center gap-2 font-semibold text-micro tracking-[0.14em] text-brass uppercase"
+                      className="group mt-5 inline-flex items-center gap-2 font-semibold text-[0.8125rem] text-brass"
                     >
                       <span className="link-draw">
                         Everything we have in {locality.name}
@@ -518,7 +518,7 @@ export default async function PropertyPage({ params }: Props) {
 
             {/* ── Provenance ───────────────────────────────────────────── */}
             <div className="mt-14 border-t border-rule pt-6">
-              <dl className="flex flex-wrap gap-x-8 gap-y-2 font-semibold text-micro tracking-[0.1em] text-ink-faint uppercase">
+              <dl className="flex flex-wrap gap-x-8 gap-y-2 font-semibold text-[0.8125rem] text-ink-faint">
                 <div className="flex gap-2">
                   <dt>Listed</dt>
                   <dd className="text-ink-muted">
@@ -605,14 +605,14 @@ function Spec({
 }) {
   return (
     <div className="rounded-xl bg-paper px-4 py-4 ring-1 ring-rule">
-      <dt className="flex items-center gap-2 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
+      <dt className="flex items-center gap-2 font-semibold text-[0.8125rem] text-ink-faint">
         <Icon className="size-3" strokeWidth={1.8} />
         {label}
       </dt>
       <dd className={`mt-1.5 text-[1.125rem] font-bold text-ink ${className ?? ""}`}>
         {value}
         {note && (
-          <span className="ml-1.5 font-semibold text-[0.6875rem] tracking-[0.1em] text-brass uppercase">
+          <span className="ml-1.5 font-semibold text-[0.8125rem] text-brass">
             {note}
           </span>
         )}
@@ -634,7 +634,7 @@ function AreaExplainer({ carpet }: { carpet: number }) {
 
   return (
     <div className="mt-5 rounded-lg border border-brass/25 bg-brass-pale/40 p-5">
-      <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-brass-deep uppercase">
+      <p className="font-semibold text-[0.8125rem] text-brass-deep">
         What the same flat would be advertised as
       </p>
       <dl className="mt-3 flex flex-wrap gap-x-8 gap-y-2">

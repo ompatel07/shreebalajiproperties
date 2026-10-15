@@ -43,7 +43,7 @@ export function CompareButton({
           onClick={onClick}
           aria-pressed={ready ? active : undefined}
           className={cn(
-            "inline-flex w-full items-center justify-center gap-2 rounded-lg border px-4 py-3 font-semibold text-micro tracking-[0.14em] uppercase transition-all duration-300",
+            "inline-flex w-full items-center justify-center gap-2 rounded-lg border px-4 py-3 font-semibold text-[0.8125rem] transition-all duration-300",
             active
               ? "border-brass bg-brass-pale text-brass-deep"
               : "border-rule-strong text-ink hover:border-ink hover:bg-ink hover:text-bone",

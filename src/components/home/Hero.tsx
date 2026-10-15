@@ -32,10 +32,8 @@ import { telLink } from "@/lib/utils";
  * the Atal Bridge — is a photograph of that place.
  */
 export function Hero({
-  liveCount,
   typeCounts,
 }: {
-  liveCount: number;
   /** property_type slug → live listings */
   typeCounts: Record<string, number>;
 }) {
@@ -83,7 +81,7 @@ export function Hero({
   ];
 
   // Promises rather than counts. A raw "16 homes live" undersold the firm
-  // to the client; the live count still appears in the hero subline.
+  // to the client. Live counts appear per category on the hero slides.
   const promises = [
     { icon: ShieldCheck, title: "RERA-registered", sub: "Every listing's RERA number checked" },
     { icon: MapPinned, title: `${localityCount} areas covered`, sub: "Ahmedabad and Gandhinagar" },
@@ -105,8 +103,8 @@ export function Hero({
           }
           subline={
             <>
-              {liveCount} verified homes across {localityCount} areas — flats,
-              villas, offices and plots. One advisor from first visit to keys.
+              Verified flats, villas, offices and plots across {localityCount} areas
+              of Ahmedabad and Gandhinagar. One advisor from first visit to keys.
             </>
           }
           phone={{ href: telLink(site.contact.phoneE164), label: site.contact.phoneDisplay }}

@@ -67,7 +67,7 @@ export function MapExplorer({ properties }: { properties: PropertyCard[] }) {
       <div className="flex flex-col border-r border-rule bg-bone lg:overflow-hidden">
         {/* Filters — one row, above the content. */}
         <div className="shrink-0 border-b border-rule px-5 py-4">
-          <p className="flex items-center gap-2 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+          <p className="flex items-center gap-2 font-semibold text-[0.8125rem] text-ink-muted">
             <SlidersHorizontal className="size-3" strokeWidth={2} aria-hidden />
             {filtered.length} of {properties.length} plotted
           </p>
@@ -144,7 +144,7 @@ export function MapExplorer({ properties }: { properties: PropertyCard[] }) {
                       </div>
 
                       <div className="min-w-0 flex-1">
-                        <p className="flex items-center gap-1.5 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase">
+                        <p className="flex items-center gap-1.5 font-semibold text-[0.8125rem] text-ink-muted">
                           <MapPin className="size-2.5" strokeWidth={2} aria-hidden />
                           {locality?.name ?? p.locality_slug}
                         </p>
@@ -197,7 +197,7 @@ function FilterSelect({
 }) {
   return (
     <label className="flex min-w-0 flex-col gap-1">
-      <span className="truncate font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
+      <span className="truncate font-semibold text-[0.8125rem] text-ink-faint">
         {label}
       </span>
       <select

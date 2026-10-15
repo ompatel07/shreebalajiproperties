@@ -59,7 +59,7 @@ export default function Error({
         </div>
 
         {error.digest && (
-          <p className="mt-10 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase">
+          <p className="mt-10 font-semibold text-[0.8125rem] text-ink-faint">
             Reference {error.digest}
           </p>
         )}

@@ -56,7 +56,7 @@ export default function AboutPage() {
 
             <h1 className="display-tight mt-6 max-w-4xl font-display text-h1 text-ink">
               You bring the project.{" "}
-              <em className="display-wonk text-brass">We bring the execution.</em>
+              <em className="display-wonk">We bring the execution.</em>
             </h1>
 
             <p className="mt-7 max-w-2xl text-lead text-ink-muted">
@@ -67,7 +67,7 @@ export default function AboutPage() {
               a sales desk and lost in between.
             </p>
 
-            <p className="mt-6 font-semibold text-micro tracking-[0.14em] text-brass uppercase">
+            <p className="mt-6 font-semibold text-[0.8125rem] text-brass">
               {site.strapline}
             </p>
           </div>
@@ -87,7 +87,7 @@ export default function AboutPage() {
                     {stat.prefix ? <span className="text-brass">{stat.prefix}</span> : null}
                     <Counter value={stat.value} suffix={stat.suffix} />
                   </p>
-                  <p className="mt-3 font-semibold text-micro tracking-[0.14em] text-ink-muted uppercase">
+                  <p className="mt-3 font-semibold text-[0.8125rem] text-ink-muted">
                     {stat.label}
                   </p>
                 </div>
@@ -105,7 +105,7 @@ export default function AboutPage() {
               title={
                 <>
                   Questions worth asking —{" "}
-                  <em className="display-wonk text-brass">and our answers.</em>
+                  <em className="display-wonk">and our answers.</em>
                 </>
               }
               lede="If a marketing partner will not answer these directly, that is itself the answer."
@@ -129,7 +129,7 @@ export default function AboutPage() {
                   />
 
                   <figcaption className="absolute inset-x-0 bottom-0 p-7">
-                    <p className="font-semibold text-micro tracking-[0.14em] text-brass-light uppercase">
+                    <p className="font-semibold text-[0.8125rem] text-brass-light">
                       Projects marketed
                     </p>
                     <ul className="mt-3 space-y-1">

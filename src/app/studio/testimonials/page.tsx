@@ -51,7 +51,7 @@ function TestimonialsView({
         <h1 className="mt-2 font-display text-h3 text-ink">
           Testimonials
           {pending > 0 && (
-            <span className="ml-3 font-semibold text-micro tracking-[0.12em] text-brass uppercase">
+            <span className="ml-3 font-semibold text-[0.8125rem] text-brass">
               {pending} awaiting review
             </span>
           )}
@@ -67,7 +67,7 @@ function TestimonialsView({
 
       {error ? (
         <div className="mt-8 rounded-lg border border-alert/30 bg-alert-pale p-6">
-          <p className="font-semibold text-micro tracking-[0.12em] text-alert uppercase">
+          <p className="font-semibold text-[0.8125rem] text-alert">
             Could not load testimonials
           </p>
         </div>
@@ -103,7 +103,7 @@ function TestimonialsView({
                   <div className="min-w-0">
                     <p className="truncate text-[1.0625rem] font-semibold text-ink">{t.author}</p>
                     {t.role && (
-                      <p className="truncate font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
+                      <p className="truncate font-semibold text-[0.8125rem] text-ink-muted">
                         {t.role}
                       </p>
                     )}
@@ -125,7 +125,7 @@ function TestimonialsView({
               </blockquote>
 
               <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-rule pt-4">
-                <p className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase">
+                <p className="font-semibold text-[0.8125rem] text-ink-faint">
                   {formatDate(t.created_at)}
                   {t.locality ? ` · ${t.locality}` : ""}
                 </p>

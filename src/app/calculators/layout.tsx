@@ -53,7 +53,7 @@ export default function CalculatorsLayout({
           <p className="eyebrow mb-6 text-bone/55">Numbers are the easy part</p>
           <h2 className="display-tight font-display text-h2 text-bone">
             A calculator cannot tell you whether the{" "}
-            <em className="display-wonk text-brass-light">builder delivers on time.</em>
+            <em className="display-wonk">builder delivers on time.</em>
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lead text-bone/70">
             We keep the delivery record of every developer we deal with — promised
@@ -76,7 +76,7 @@ export default function CalculatorsLayout({
             </ButtonLink>
           </div>
 
-          <p className="mt-8 font-semibold text-micro tracking-[0.12em] text-bone/40 uppercase">
+          <p className="mt-8 font-semibold text-[0.8125rem] text-bone/40">
             {site.office.hours}
           </p>
         </div>

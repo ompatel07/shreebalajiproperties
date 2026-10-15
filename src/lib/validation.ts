@@ -49,6 +49,18 @@ const localitySlugSchema = z
 
 /* ── Public enquiry ──────────────────────────────────────────────────────── */
 
+/**
+ * An optional form field that the visitor left blank.
+ *
+ * HTML sends an untouched `<select>` or empty `<input>` as "", not as
+ * missing. Without this, `z.coerce.number()` turns "" into 0 — saving a
+ * budget of ₹0, or failing a `min(50)` carpet area the seller never typed —
+ * and `z.enum()` rejects "" outright, which blocked every contact-page
+ * enquiry that skipped the optional "when are you buying" question.
+ */
+const blank = <T extends z.ZodTypeAny>(schema: T) =>
+  z.preprocess((v) => (v === "" || v === null ? undefined : v), schema.optional());
+
 export const enquirySchema = z.object({
   name: nameSchema,
   phone: phoneSchema,
@@ -58,11 +70,11 @@ export const enquirySchema = z.object({
   propertyId: z.string().uuid().optional(),
   projectId: z.string().uuid().optional(),
 
-  budgetMin: z.coerce.number().int().min(0).max(100_000_000_000).optional(),
-  budgetMax: z.coerce.number().int().min(0).max(100_000_000_000).optional(),
-  preferredBhk: z.coerce.number().min(0).max(20).optional(),
+  budgetMin: blank(z.coerce.number().int().min(0).max(100_000_000_000)),
+  budgetMax: blank(z.coerce.number().int().min(0).max(100_000_000_000)),
+  preferredBhk: blank(z.coerce.number().min(0).max(20)),
   preferredLocalities: z.array(localitySlugSchema).max(10).optional(),
-  timeline: z.enum(["immediate", "3m", "6m", "exploring"]).optional(),
+  timeline: blank(z.enum(["immediate", "3m", "6m", "exploring"])),
 
   source: z
     .enum(["property_enquiry", "contact_form", "sell_request", "calculator", "site_visit"])
@@ -105,7 +117,7 @@ export const siteVisitSchema = z.object({
       return d >= today && d <= ninety;
     }, "Pick a date within the next 90 days"),
   slotTime: z.string().regex(/^(1[0-9]|20):(00|30)$/, "Pick a slot between 10:00 and 20:00"),
-  partySize: z.coerce.number().int().min(1).max(20).default(1),
+  partySize: z.preprocess((v) => (v === "" || v == null ? undefined : v), z.coerce.number().int().min(1).max(20).default(1)),
   message: z.string().trim().max(1000).optional(),
   botField: z.string().max(0).optional(),
 });
@@ -120,9 +132,9 @@ export const sellRequestSchema = z.object({
   propertyType: z
     .string()
     .refine((v) => propertyTypes.some((t) => t.slug === v), "Pick a property type"),
-  bhk: z.coerce.number().min(0).max(20).optional(),
-  carpetSqft: z.coerce.number().int().min(50).max(200_000).optional(),
-  expectedPrice: z.coerce.number().int().min(100_000).max(100_000_000_000).optional(),
+  bhk: blank(z.coerce.number().min(0).max(20)),
+  carpetSqft: blank(z.coerce.number().int().min(50).max(200_000)),
+  expectedPrice: blank(z.coerce.number().int().min(100_000).max(100_000_000_000)),
   message: z.string().trim().max(2000).optional(),
   botField: z.string().max(0).optional(),
   elapsedMs: z.coerce.number().int().min(0).optional(),

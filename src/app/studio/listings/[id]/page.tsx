@@ -88,7 +88,7 @@ function EditView({
 
           <h1 className="mt-2 font-display text-h3 text-ink">{row.title}</h1>
 
-          <p className="mt-2 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
+          <p className="mt-2 font-semibold text-[0.8125rem] text-ink-muted">
             {row.view_count} views · {row.enquiry_count} enquiries · updated{" "}
             {formatRelative(row.updated_at)}
           </p>

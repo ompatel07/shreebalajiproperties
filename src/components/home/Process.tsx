@@ -117,7 +117,7 @@ export function Process() {
             <p className="eyebrow mb-4">03 — The engagement</p>
             <h2 className="display-tight font-display text-h2">
               From project launch to{" "}
-              <em className="display-wonk text-brass">customer conversion support.</em>
+              <em className="display-wonk">customer conversion support.</em>
             </h2>
             <p className="mt-5 text-lead text-ink-muted">
               Six stages, run by one team. The handover points between
@@ -239,7 +239,7 @@ export function Process() {
               Every marketing activity should contribute to moving the
               customer one step closer to a decision.
             </p>
-            <footer className="mt-4 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+            <footer className="mt-4 font-semibold text-[0.8125rem] text-ink-muted">
               How we judge the work
             </footer>
           </blockquote>

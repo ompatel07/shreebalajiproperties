@@ -518,7 +518,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
         <div className="shrink-0 border-t border-rule p-5">
           <a
             href={telLink(site.contact.phoneE164)}
-            className="flex w-full items-center justify-center gap-2.5 rounded-lg bg-ink py-4 font-semibold text-micro tracking-[0.14em] text-bone uppercase"
+            className="flex w-full items-center justify-center gap-2.5 rounded-lg bg-ink py-4 font-semibold text-[0.8125rem] text-bone"
           >
             <Phone className="size-3.5" strokeWidth={1.8} aria-hidden />
             {site.contact.phoneDisplay}

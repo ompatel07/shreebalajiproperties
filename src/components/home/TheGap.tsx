@@ -28,7 +28,7 @@ export function TheGap() {
             <p className="eyebrow mb-4">01 — Where projects stall</p>
             <h2 className="display-tight font-display text-h2">
               A great project can still struggle without a{" "}
-              <em className="display-wonk text-brass">strong demand engine.</em>
+              <em className="display-wonk">strong demand engine.</em>
             </h2>
             <p className="mt-5 text-lead text-ink-muted">
               Not because the building is wrong. Because marketing and sales
@@ -52,7 +52,7 @@ export function TheGap() {
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+                <p className="font-semibold text-[0.8125rem] text-ink-muted">
                   {point.stage}
                 </p>
               </div>
@@ -74,7 +74,7 @@ export function TheGap() {
         <Reveal className="mt-12">
           <p className="max-w-3xl font-display text-h3 leading-snug text-ink">
             The challenge isn&rsquo;t simply getting attention.{" "}
-            <em className="display-wonk text-brass">
+            <em className="display-wonk">
               The challenge is moving prospects forward.
             </em>
           </p>

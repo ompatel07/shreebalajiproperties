@@ -50,7 +50,7 @@ export function StampDutyCalculator({ initialPrice }: { initialPrice?: number })
         />
 
         <div className="rounded-lg border border-rule bg-sand p-5">
-          <p className="flex items-center gap-2 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+          <p className="flex items-center gap-2 font-semibold text-[0.8125rem] text-ink-muted">
             <Info className="size-3" strokeWidth={2} aria-hidden />
             Rates applied
           </p>
@@ -76,7 +76,7 @@ export function StampDutyCalculator({ initialPrice }: { initialPrice?: number })
               </dd>
             </div>
           </dl>
-          <p className="mt-3 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase">
+          <p className="mt-3 font-semibold text-[0.8125rem] text-ink-faint">
             Per {GUJARAT_RATES.asOf}
           </p>
         </div>
@@ -111,7 +111,7 @@ export function StampDutyCalculator({ initialPrice }: { initialPrice?: number })
             money and most buyers do not know it exists. */}
         {result.savingsVsMale > 0 && (
           <div className="rounded-lg border border-verdant/30 bg-verdant-pale p-6">
-            <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-verdant uppercase">
+            <p className="font-semibold text-[0.8125rem] text-verdant">
               Saving available
             </p>
             <p className="mt-2 font-display text-h3 text-ink" data-numeric>

@@ -46,7 +46,7 @@ export function TestimonialToggle({
         disabled={pending}
         aria-pressed={current}
         className={cn(
-          "inline-flex items-center gap-2 rounded-lg border px-3.5 py-2 font-semibold text-[0.6875rem] tracking-[0.1em] uppercase transition-colors disabled:opacity-50",
+          "inline-flex items-center gap-2 rounded-lg border px-3.5 py-2 font-semibold text-[0.8125rem] transition-colors disabled:opacity-50",
           current
             ? "border-verdant/40 bg-verdant-pale text-verdant hover:bg-verdant hover:text-paper"
             : "border-rule-strong text-ink-muted hover:border-ink hover:bg-ink hover:text-bone",

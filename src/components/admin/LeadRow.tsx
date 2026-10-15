@@ -96,7 +96,7 @@ export function LeadRow({
         disabled={pending}
         aria-label="Lead status"
         className={cn(
-          "cursor-pointer rounded-lg border px-3 py-2 font-semibold text-[0.6875rem] tracking-[0.1em] uppercase focus:border-brass focus:outline-none",
+          "cursor-pointer rounded-lg border px-3 py-2 font-semibold text-[0.8125rem] focus:border-brass focus:outline-none",
           tone,
           pending && "opacity-60",
         )}
@@ -125,7 +125,7 @@ export function LeadRow({
           <input type="hidden" name="status" value={current} />
 
           <label className="block">
-            <span className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+            <span className="font-semibold text-[0.8125rem] text-ink-muted">
               Internal note
             </span>
             <textarea
@@ -139,7 +139,7 @@ export function LeadRow({
           </label>
 
           <label className="block">
-            <span className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+            <span className="font-semibold text-[0.8125rem] text-ink-muted">
               Follow up
             </span>
             <input
@@ -165,7 +165,7 @@ export function LeadRow({
       {saved && (
         <p
           role="status"
-          className="inline-flex items-center justify-center gap-1 font-semibold text-[0.6875rem] tracking-[0.12em] text-verdant uppercase"
+          className="inline-flex items-center justify-center gap-1 font-semibold text-[0.8125rem] text-verdant"
         >
           <Check className="size-2.5" strokeWidth={3} aria-hidden />
           Saved

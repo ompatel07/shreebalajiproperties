@@ -49,16 +49,16 @@ export function AreaSpotlight({ counts }: { counts: Record<string, number> }) {
             className="group relative isolate flex min-h-[15rem] overflow-hidden rounded-2xl bg-ink lg:col-span-5 lg:min-h-0"
           >
             <Image
-              src={unsplash(AHMEDABAD.atalCanopy, 1100, 76)}
-              alt="Under the canopy of the Atal Bridge, Sabarmati riverfront, Ahmedabad"
+              src={unsplash(AHMEDABAD.cityAerial, 1100, 76)}
+              alt="Aerial view over a city of residential neighbourhoods"
               fill
               sizes="(min-width: 1024px) 40vw, 100vw"
               className="-z-10 object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/90 via-black/45 to-black/5" aria-hidden />
             <div className="mt-auto p-6 lg:p-8">
-              <p className="text-[0.8125rem] font-semibold text-brass-light">Ahmedabad &amp; Gandhinagar</p>
-              <p className="mt-1 text-[1.5rem] leading-tight font-extrabold tracking-[-0.02em] text-white lg:text-[1.875rem]">
+              <p className="inline-flex w-fit rounded-full bg-black/40 px-3 py-1 text-[0.8125rem] font-semibold text-white">Ahmedabad &amp; Gandhinagar</p>
+              <p className="mt-2.5 text-[1.5rem] leading-tight font-extrabold tracking-[-0.02em] text-white lg:text-[1.875rem]">
                 {localityCount} areas, one team that knows them
               </p>
               <span className="mt-4 inline-flex items-center gap-1.5 text-[0.9375rem] font-bold text-white">

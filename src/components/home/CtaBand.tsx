@@ -43,7 +43,7 @@ export function CtaBand() {
             <h2 className="display-tight font-display text-h2 text-bone">
               Tell us the budget and the commute.
               <br />
-              <em className="display-wonk text-brass-light">We will tell you the truth</em>{" "}
+              <em className="display-wonk">We will tell you the truth</em>{" "}
               about what it buys.
             </h2>
 
@@ -77,7 +77,7 @@ export function CtaBand() {
               </ButtonLink>
             </div>
 
-            <p className="mt-9 font-semibold text-micro tracking-[0.12em] text-bone/45 uppercase">
+            <p className="mt-9 font-semibold text-[0.8125rem] text-bone/45">
               {site.office.hours} · Replies within the working day
             </p>
           </div>

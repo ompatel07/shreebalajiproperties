@@ -54,7 +54,7 @@ export function WishlistView() {
   return (
     <div>
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-rule pb-5">
-        <p className="font-semibold text-micro tracking-[0.1em] text-ink-muted uppercase">
+        <p className="font-semibold text-[0.8125rem] text-ink-muted">
           <span className="text-ink" data-numeric>
             {items.length}
           </span>{" "}

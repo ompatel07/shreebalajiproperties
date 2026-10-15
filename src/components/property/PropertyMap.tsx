@@ -215,18 +215,18 @@ function popupHtml(p: PropertyCard): string {
 
   return `
     <div style="font-family: var(--font-sans), sans-serif; padding: 0.9rem 1rem;">
-      <p style="margin:0;font-family:var(--font-semibold),monospace;font-size:0.5625rem;letter-spacing:0.14em;text-transform:uppercase;color:#6e685c;">
+      <p style="margin:0;font-size:0.75rem;font-weight:700;text-transform:capitalize;color:#6b5115;">
         ${escapeHtml(p.locality_slug.replace(/-/g, " "))}
       </p>
-      <p style="margin:0.4rem 0 0;font-family:var(--font-display),serif;font-size:1rem;line-height:1.3;color:#16150f;">
+      <p style="margin:0.3rem 0 0;font-size:0.9375rem;font-weight:700;line-height:1.3;color:#121110;">
         ${escapeHtml(p.title)}
       </p>
-      <p style="margin:0.5rem 0 0;font-family:var(--font-display),serif;font-size:1.0625rem;color:#a3762c;">
+      <p style="margin:0.45rem 0 0;font-size:1.125rem;font-weight:800;letter-spacing:-0.02em;color:#121110;">
         ${escapeHtml(price)}
       </p>
-      ${bits ? `<p style="margin:0.25rem 0 0;font-size:0.75rem;color:#6e685c;">${escapeHtml(bits)}</p>` : ""}
+      ${bits ? `<p style="margin:0.25rem 0 0;font-size:0.75rem;color:#625e56;">${escapeHtml(bits)}</p>` : ""}
       <a href="/property/${encodeURIComponent(p.slug)}"
-         style="display:inline-block;margin-top:0.75rem;font-family:var(--font-semibold),monospace;font-size:0.5625rem;letter-spacing:0.14em;text-transform:uppercase;color:#16150f;border-bottom:1px solid #a3762c;padding-bottom:1px;">
+         style="display:inline-block;margin-top:0.75rem;padding:0.45rem 0.9rem;border-radius:999px;background:#121110;color:#fff;font-size:0.8125rem;font-weight:700;text-decoration:none;">
         View details
       </a>
     </div>

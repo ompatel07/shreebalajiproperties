@@ -84,7 +84,7 @@ function VisitsView({
         <p className="eyebrow">Schedule</p>
         <h1 className="mt-2 font-display text-h3 text-ink">
           Site visits
-          <span className="ml-3 font-semibold text-micro tracking-[0.12em] text-ink-muted uppercase">
+          <span className="ml-3 font-semibold text-[0.8125rem] text-ink-muted">
             {upcoming.length} upcoming
           </span>
         </h1>
@@ -133,7 +133,7 @@ function VisitsView({
                   <p className="text-[0.9375rem] font-semibold text-ink">
                     {visit.visitor_name}
                   </p>
-                  <p className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
+                  <p className="font-semibold text-[0.8125rem] text-ink-muted">
                     {visit.slot_date} · {visit.slot_time}
                     {visit.property_id && titles.get(visit.property_id)
                       ? ` · ${titles.get(visit.property_id)!.title}`
@@ -202,7 +202,7 @@ function VisitCard({
           </div>
 
           {linked && (
-            <p className="mt-3 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
+            <p className="mt-3 font-semibold text-[0.8125rem] text-ink-muted">
               Listing ·{" "}
               <Link
                 href={`/property/${linked.slug}`}
@@ -221,7 +221,7 @@ function VisitCard({
             </p>
           )}
 
-          <p className="mt-2 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase">
+          <p className="mt-2 font-semibold text-[0.8125rem] text-ink-faint">
             Requested {formatRelative(visit.created_at)}
           </p>
         </div>

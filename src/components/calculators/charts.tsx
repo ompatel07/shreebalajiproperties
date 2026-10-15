@@ -55,7 +55,7 @@ export function StatTile({
 
   return (
     <div className={cn("rounded-lg border p-5", tones[tone])}>
-      <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+      <p className="font-semibold text-[0.8125rem] text-ink-muted">
         {label}
       </p>
       <p
@@ -171,13 +171,13 @@ export function CompositionBar({
           <caption className="sr-only">Breakdown by component</caption>
           <thead>
             <tr className="border-b border-rule text-left">
-              <th scope="col" className="py-2 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase">
+              <th scope="col" className="py-2 font-semibold text-[0.8125rem] text-ink-muted">
                 Component
               </th>
-              <th scope="col" className="py-2 text-right font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase">
+              <th scope="col" className="py-2 text-right font-semibold text-[0.8125rem] text-ink-muted">
                 Amount
               </th>
-              <th scope="col" className="py-2 text-right font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase">
+              <th scope="col" className="py-2 text-right font-semibold text-[0.8125rem] text-ink-muted">
                 Share
               </th>
             </tr>
@@ -246,7 +246,7 @@ export function AmortisationChart({ rows }: { rows: AmortPoint[] }) {
           one line, and a non-wrapping row pushed the legend 4px past the
           screen edge — enough to widen the whole page on a phone. */}
       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-        <figcaption className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+        <figcaption className="font-semibold text-[0.8125rem] text-ink-muted">
           Where each year&rsquo;s instalments go
         </figcaption>
 
@@ -262,7 +262,7 @@ export function AmortisationChart({ rows }: { rows: AmortPoint[] }) {
                 className="size-2.5 rounded-[1px]"
                 style={{ backgroundColor: `var(--color-series-${s.slot})` }}
               />
-              <span className="font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
+              <span className="font-semibold text-[0.8125rem] text-ink-muted">
                 {s.label}
               </span>
             </li>
@@ -359,7 +359,7 @@ export function AmortisationChart({ rows }: { rows: AmortPoint[] }) {
             cursor, so it never covers the bar being inspected. */}
         {active && (
           <div className="pointer-events-none absolute -top-2 left-1/2 z-10 -translate-x-1/2 -translate-y-full rounded-lg border border-rule bg-paper px-4 py-3 shadow-[var(--shadow-float)]">
-            <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+            <p className="font-semibold text-[0.8125rem] text-ink-muted">
               Year {active.year}
             </p>
             <dl className="mt-2 space-y-1">
@@ -389,7 +389,7 @@ export function AmortisationChart({ rows }: { rows: AmortPoint[] }) {
                     key={h}
                     scope="col"
                     className={cn(
-                      "py-2 font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-muted uppercase",
+                      "py-2 font-semibold text-[0.8125rem] text-ink-muted",
                       i > 0 && "text-right",
                     )}
                   >

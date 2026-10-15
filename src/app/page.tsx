@@ -69,7 +69,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero liveCount={facts.live} typeCounts={facts.typeCounts} />
+      <Hero typeCounts={facts.typeCounts} />
       <CategoryBento counts={facts.typeCounts} />
       <FeaturedListings listings={featured} bandCounts={facts.bandCounts} total={facts.live} />
       <AreaSpotlight counts={facts.localityCounts} />

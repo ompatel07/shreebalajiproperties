@@ -7,6 +7,8 @@ import {
   emailSchema,
   enquirySchema,
   searchParamsSchema,
+  sellRequestSchema,
+  siteVisitSchema,
 } from "@/lib/validation";
 
 /**
@@ -105,6 +107,40 @@ describe("enquirySchema", () => {
   test("requires name and phone", () => {
     assert.throws(() => enquirySchema.parse({ phone: "9016506054" }));
     assert.throws(() => enquirySchema.parse({ name: "Om Patel" }));
+  });
+});
+
+describe("blank optional fields, as a real form submits them", () => {
+  // An untouched <select> or empty <input> arrives as "", not as missing.
+  test("contact enquiry with every optional field left blank is accepted", () => {
+    const r = enquirySchema.safeParse({
+      name: "Rahul Shah", phone: "9016506054", source: "contact_form",
+      email: "", message: "", budgetMax: "", timeline: "", preferredBhk: "",
+    });
+    assert.ok(r.success, JSON.stringify(r.error?.issues));
+    assert.equal(r.data!.timeline, undefined);
+    assert.equal(r.data!.budgetMax, undefined, "blank budget must not become ₹0");
+  });
+
+  test("sell request without carpet area or price is accepted", () => {
+    const r = sellRequestSchema.safeParse({
+      name: "Rahul Shah", phone: "9016506054", locality: "shela", propertyType: "flats",
+      bhk: "", carpetSqft: "", expectedPrice: "", email: "",
+    });
+    assert.ok(r.success, JSON.stringify(r.error?.issues));
+    assert.equal(r.data!.carpetSqft, undefined);
+  });
+
+  test("site visit with blank party size defaults to 1", () => {
+    const d = new Date(Date.now() + 2 * 864e5).toISOString().slice(0, 10);
+    const r = siteVisitSchema.safeParse({ name: "Rahul Shah", phone: "9016506054", slotDate: d, slotTime: "11:00", partySize: "" });
+    assert.ok(r.success, JSON.stringify(r.error?.issues));
+    assert.equal(r.data!.partySize, 1);
+  });
+
+  test("a filled optional field is still validated", () => {
+    assert.equal(enquirySchema.safeParse({ name: "Rahul Shah", phone: "9016506054", source: "contact_form", timeline: "someday" }).success, false);
+    assert.equal(sellRequestSchema.safeParse({ name: "Rahul Shah", phone: "9016506054", locality: "shela", propertyType: "flats", carpetSqft: "10" }).success, false);
   });
 });
 

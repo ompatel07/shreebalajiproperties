@@ -158,7 +158,7 @@ export default async function ProjectPage({ params }: Props) {
               </p>
 
               <div className="mt-8 border-y border-rule py-7">
-                <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+                <p className="font-semibold text-[0.8125rem] text-ink-muted">
                   Price range
                 </p>
                 <p className="mt-2 font-display text-h2 leading-none text-ink" data-numeric>
@@ -171,7 +171,7 @@ export default async function ProjectPage({ params }: Props) {
             {project.is_partnered && (
               <Reveal className="mt-10">
                 <aside className="rounded-lg border border-brass/30 bg-brass-pale/40 p-6 lg:p-7">
-                  <p className="flex items-center gap-2.5 font-semibold text-micro tracking-[0.14em] text-brass-deep uppercase">
+                  <p className="flex items-center gap-2.5 font-semibold text-[0.8125rem] text-brass-deep">
                     <Handshake className="size-3.5" strokeWidth={2} aria-hidden />
                     Who you are dealing with
                   </p>
@@ -269,8 +269,7 @@ export default async function ProjectPage({ params }: Props) {
                             <th
                               key={h}
                               scope="col"
-                              className={`pb-3 text-[0.6875rem] tracking-[0.12em] font-normal text-ink-muted uppercase ${
-                                i > 0 ? "text-right" : ""
+                              className={`pb-3 text-[0.8125rem] font-normal text-ink-muted ${ i > 0 ?"text-right" : ""
                               }`}
                             >
                               {h}
@@ -342,7 +341,7 @@ export default async function ProjectPage({ params }: Props) {
                   <dl className="grid gap-px bg-rule sm:grid-cols-2">
                     {Object.entries(specs).map(([key, value]) => (
                       <div key={key} className="bg-paper px-4 py-3.5">
-                        <dt className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
+                        <dt className="font-semibold text-[0.8125rem] text-ink-faint">
                           {key.replace(/_/g, " ")}
                         </dt>
                         <dd className="mt-1 text-[0.9375rem] text-ink-soft">
@@ -422,7 +421,7 @@ function Fact({
 }) {
   return (
     <div className="bg-paper px-4 py-4">
-      <dt className="flex items-center gap-2 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
+      <dt className="flex items-center gap-2 font-semibold text-[0.8125rem] text-ink-faint">
         <Icon className="size-3" strokeWidth={1.8} />
         {label}
       </dt>

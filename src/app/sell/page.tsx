@@ -72,7 +72,7 @@ export default function SellPage() {
 
             <h1 className="display-tight mt-6 max-w-4xl font-display text-h1 text-ink">
               We will not flatter your price to{" "}
-              <em className="display-wonk text-brass">win the mandate.</em>
+              <em className="display-wonk">win the mandate.</em>
             </h1>
 
             <p className="mt-7 max-w-2xl text-lead text-ink-muted">
@@ -159,7 +159,7 @@ export default function SellPage() {
                   className="photo-warm object-cover"
                 />
                 <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/85 to-transparent p-6">
-                  <p className="font-semibold text-micro tracking-[0.12em] text-brass-light uppercase">
+                  <p className="font-semibold text-[0.8125rem] text-brass-light">
                     Included, at no cost
                   </p>
                   <p className="mt-2 max-w-md text-caption leading-relaxed text-bone/80">

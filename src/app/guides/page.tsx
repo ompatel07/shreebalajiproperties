@@ -44,7 +44,7 @@ export default function GuidesPage() {
 
             <h1 className="display-tight mt-6 max-w-4xl font-display text-h1 text-ink">
               The things we end up{" "}
-              <em className="display-wonk text-brass">explaining on every call.</em>
+              <em className="display-wonk">explaining on every call.</em>
             </h1>
 
             <p className="mt-7 max-w-2xl text-lead text-ink-muted">
@@ -62,7 +62,7 @@ export default function GuidesPage() {
                   href={`/guides/${guide.slug}`}
                   className="group flex h-full flex-col rounded-lg border border-rule bg-paper p-7 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:border-rule-strong hover:shadow-[var(--shadow-raise)] lg:p-8"
                 >
-                  <p className="flex flex-wrap items-center gap-x-4 gap-y-1.5 font-semibold text-[0.6875rem] tracking-[0.14em] uppercase">
+                  <p className="flex flex-wrap items-center gap-x-4 gap-y-1.5 font-semibold text-[0.8125rem]">
                     <span className="text-brass">{guide.category}</span>
                     <span className="flex items-center gap-1.5 text-ink-faint">
                       <Clock className="size-2.5" strokeWidth={2.2} aria-hidden />
@@ -79,7 +79,7 @@ export default function GuidesPage() {
                   </p>
 
                   <div className="mt-7 flex items-center justify-between gap-3 border-t border-rule pt-5">
-                    <span className="font-semibold text-[0.6875rem] tracking-[0.12em] text-ink-faint uppercase">
+                    <span className="font-semibold text-[0.8125rem] text-ink-faint">
                       Updated {formatDate(guide.updated)}
                     </span>
                     <span className="grid size-9 place-items-center rounded-full border border-rule-strong text-ink-muted transition-all duration-400 group-hover:border-brass group-hover:bg-brass group-hover:text-paper">

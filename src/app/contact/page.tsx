@@ -71,7 +71,7 @@ export default function ContactPage() {
                     <Phone className="size-[1.1rem]" strokeWidth={1.7} aria-hidden />
                   </span>
                   <div>
-                    <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+                    <p className="font-semibold text-[0.8125rem] text-ink-muted">
                       Call
                     </p>
                     <p className="mt-1.5 font-display text-h4 text-ink">
@@ -93,7 +93,7 @@ export default function ContactPage() {
                     <MessageCircle className="size-[1.1rem]" strokeWidth={1.7} aria-hidden />
                   </span>
                   <div>
-                    <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-verdant uppercase">
+                    <p className="font-semibold text-[0.8125rem] text-verdant">
                       WhatsApp
                     </p>
                     <p className="mt-1.5 font-display text-h4 text-ink">Message us</p>
@@ -111,7 +111,7 @@ export default function ContactPage() {
                     <Mail className="size-[1.1rem]" strokeWidth={1.7} aria-hidden />
                   </span>
                   <div>
-                    <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+                    <p className="font-semibold text-[0.8125rem] text-ink-muted">
                       Email
                     </p>
                     <p className="mt-1.5 text-[0.9375rem] break-all text-ink">
@@ -125,7 +125,7 @@ export default function ContactPage() {
                     <Clock className="size-[1.1rem]" strokeWidth={1.7} aria-hidden />
                   </span>
                   <div>
-                    <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+                    <p className="font-semibold text-[0.8125rem] text-ink-muted">
                       Hours
                     </p>
                     <p className="mt-1.5 text-[0.9375rem] text-ink">{site.office.hours}</p>

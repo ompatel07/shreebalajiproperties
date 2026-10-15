@@ -91,8 +91,8 @@
   --text-h3--line-height: 1.16;
   --text-h2: clamp(1.875rem, 1.3rem + 2.7vw, 3.75rem);
   --text-h2--line-height: 1.04;
-  --text-h1: clamp(2.5rem, 1.35rem + 5vw, 6.5rem);
-  --text-h1--line-height: 0.94;
+  --text-h1: clamp(2.25rem, 1.4rem + 3.4vw, 4.5rem);
+  --text-h1--line-height: 1.02;
   /* Poster scale. Used once or twice per page, never for body hierarchy. */
   --text-mega: clamp(3rem, 0.9rem + 9.2vw, 11rem);
   --text-mega--line-height: 0.86;
@@ -117,6 +117,11 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @layer base {
+  [class~="font-display"] {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
   *,
   *::before,
   *::after {
@@ -277,13 +282,16 @@
      brutalist-portfolio signal, and it appeared ~40 times across the site —
      the single loudest reason the pages read as a template. The sans at 600
      with open tracking says the same thing and looks bought, not built. */
+  /* Was 11px letter-spaced capitals — the loudest "template" tell left on
+     the inner pages. Now the same sentence-case brass label the homepage
+     uses. Source strings are already sentence case. */
   .eyebrow {
     font-family: var(--font-sans);
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-brass-deep);
   }
 
   /* Mono is now reserved for what it is actually good at: figures, codes
@@ -539,6 +547,11 @@
     );
     background-size: 200% 100%;
     animation: shimmer 1.6s ease-in-out infinite;
+  }
+
+  .thin-bar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-rule-strong) transparent;
   }
 
   .no-bar {

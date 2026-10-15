@@ -145,7 +145,7 @@ export function EnquiryForm({
 
       <div className="my-6 flex items-center gap-3">
         <span className="h-px flex-1 bg-rule" aria-hidden />
-        <span className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-faint uppercase">
+        <span className="font-semibold text-[0.8125rem] text-ink-faint">
           or send a brief
         </span>
         <span className="h-px flex-1 bg-rule" aria-hidden />

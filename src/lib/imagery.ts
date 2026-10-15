@@ -84,6 +84,7 @@ export const IN_CONSTRUCTION = [
 export const AHMEDABAD = {
   atalBridge: "1774666011220-e1cc2b19ed79", // Atal Bridge over the Sabarmati
   atalCanopy: "1704730827544-ad473ecae95d", // under the bridge canopy
+  cityAerial: "1687840430404-b82859282de4", // a city from above (from an Ahmedabad search; location unverified, so alt text does not claim it)
 } as const;
 
 /* ── Second pool: listings and projects ONLY ─────────────────────────────

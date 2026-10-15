@@ -258,7 +258,7 @@ export function PropertyForm({
                     aria-selected={tab === t.key}
                     onClick={() => setTab(t.key)}
                     className={cn(
-                      "relative shrink-0 px-4 py-3 font-semibold text-[0.6875rem] tracking-[0.12em] uppercase transition-colors",
+                      "relative shrink-0 px-4 py-3 font-semibold text-[0.8125rem] transition-colors",
                       tab === t.key
                         ? "text-ink"
                         : "text-ink-faint hover:text-ink-muted",
@@ -653,7 +653,7 @@ export function PropertyForm({
             {/* Amenities */}
             <div className="mt-8">
               <div className="flex items-baseline justify-between gap-4 border-b border-rule pb-3">
-                <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+                <p className="font-semibold text-[0.8125rem] text-ink-muted">
                   Amenities
                 </p>
                 <div className="flex items-center gap-3">
@@ -764,7 +764,7 @@ export function PropertyForm({
         <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-3.5 lg:px-10">
           <div className="flex items-center gap-3">
             <label className="flex items-center gap-2">
-              <span className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+              <span className="font-semibold text-[0.8125rem] text-ink-muted">
                 Status
               </span>
               <select
@@ -784,7 +784,7 @@ export function PropertyForm({
             </label>
 
             {blockers > 0 && (
-              <span className="hidden items-center gap-1.5 font-semibold text-[0.6875rem] tracking-[0.1em] text-alert uppercase sm:flex">
+              <span className="hidden items-center gap-1.5 font-semibold text-[0.8125rem] text-alert sm:flex">
                 <AlertTriangle className="size-3" strokeWidth={2.2} aria-hidden />
                 {blockers} blocker{blockers === 1 ? "" : "s"}
               </span>
@@ -792,7 +792,7 @@ export function PropertyForm({
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="hidden font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-faint uppercase md:inline">
+            <span className="hidden font-semibold text-[0.8125rem] text-ink-faint md:inline">
               ⌘S to save
             </span>
             <Button type="button" variant="ghost" onClick={() => router.push("/studio/listings")}>
@@ -866,7 +866,7 @@ function LivePreview({ draft }: { draft: ListingDraft }) {
         </div>
 
         <div className="mt-3 border-t border-rule pt-3">
-          <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+          <p className="font-semibold text-[0.8125rem] text-ink-muted">
             {locality?.name ?? "No locality"}
           </p>
           <p className="mt-1.5 line-clamp-2 text-[1.0625rem] font-semibold leading-snug text-ink">
@@ -924,7 +924,7 @@ function ReadinessPanel({
   return (
     <div className={cn("border", tone)}>
       <div className="border-b border-ink/10 px-5 py-3.5">
-        <p className="font-semibold text-[0.6875rem] tracking-[0.14em] uppercase">
+        <p className="font-semibold text-[0.8125rem]">
           {blockers > 0 ? (
             <span className="text-alert">
               {blockers} blocker{blockers === 1 ? "" : "s"} before publishing
@@ -1020,7 +1020,7 @@ function Field({
 }) {
   return (
     <div className={cn("flex flex-col", span2 && "sm:col-span-2")}>
-      <label className="mb-1.5 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+      <label className="mb-1.5 font-semibold text-[0.8125rem] text-ink-muted">
         {label}
         {required && <span className="ml-1 text-brass" aria-hidden>*</span>}
       </label>

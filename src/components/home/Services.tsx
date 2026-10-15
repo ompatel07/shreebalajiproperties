@@ -28,7 +28,7 @@ export function Services() {
               <p className="eyebrow mb-4">02 — What we run</p>
               <h2 className="display-tight font-display text-h2">
                 One partner.{" "}
-                <em className="display-wonk text-brass">Six growth functions.</em>
+                <em className="display-wonk">Six growth functions.</em>
               </h2>
             </div>
 
@@ -78,7 +78,7 @@ export function Services() {
               <p className="eyebrow mb-4">The difference</p>
               <h3 className="display-tight font-display text-h3">
                 Not just an agency.{" "}
-                <em className="display-wonk text-brass">A project marketing partner.</em>
+                <em className="display-wonk">A project marketing partner.</em>
               </h3>
             </div>
           </Reveal>
@@ -95,13 +95,13 @@ export function Services() {
                   <tr className="border-b border-rule-strong text-left">
                     <th
                       scope="col"
-                      className="w-1/2 pb-3 text-[0.6875rem] tracking-[0.14em] font-normal text-ink-faint uppercase"
+                      className="w-1/2 pb-3 text-[0.8125rem] font-normal text-ink-faint"
                     >
                       Conventional approach
                     </th>
                     <th
                       scope="col"
-                      className="w-1/2 pb-3 pl-6 text-[0.6875rem] tracking-[0.14em] font-normal text-brass uppercase"
+                      className="w-1/2 pb-3 pl-6 text-[0.8125rem] font-normal text-brass"
                     >
                       With us
                     </th>
@@ -187,7 +187,7 @@ export function Services() {
         <Reveal className="mt-12">
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2 font-semibold text-micro tracking-[0.14em] text-brass uppercase"
+            className="group inline-flex items-center gap-2 font-semibold text-[0.8125rem] text-brass"
           >
             <span className="link-draw">Talk to us about your project</span>
             <ArrowUpRight

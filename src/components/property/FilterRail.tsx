@@ -108,7 +108,7 @@ export function FilterRail({
         {/* The result count used to live here. It now leads the results
             column as a removable-chip bar, so repeating it in the rail only
             invited a double-take about which number was authoritative. */}
-        <p className="font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+        <p className="font-semibold text-[0.8125rem] text-ink-muted">
           Narrow it down
         </p>
 
@@ -331,7 +331,7 @@ export function FilterRail({
     <>
       {/* ── Desktop ──────────────────────────────────────────────────── */}
       <div className="hidden lg:block">
-        <div className="sticky top-24 max-h-[calc(100svh-8rem)] overflow-y-auto pr-2">
+        <div className="thin-bar sticky top-24 max-h-[calc(100svh-8rem)] overflow-y-auto pr-2">
           {body}
         </div>
       </div>
@@ -413,7 +413,7 @@ function FilterGroup({
           type="button"
           onClick={() => setOpen(!open)}
           aria-expanded={open}
-          className="mb-3 flex w-full items-center justify-between font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase"
+          className="mb-3 flex w-full items-center justify-between font-semibold text-[0.8125rem] text-ink-muted"
         >
           {label}
           <span className={cn("transition-transform duration-300", open && "rotate-45")} aria-hidden>
@@ -421,7 +421,7 @@ function FilterGroup({
           </span>
         </button>
       ) : (
-        <p className="mb-3 font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase">
+        <p className="mb-3 font-semibold text-[0.8125rem] text-ink-muted">
           {label}
         </p>
       )}
@@ -452,7 +452,7 @@ export function SortBar({ total }: { total: number }) {
     <div className="flex items-center gap-3">
       <label
         htmlFor="sort"
-        className="hidden font-semibold text-[0.6875rem] tracking-[0.14em] text-ink-muted uppercase sm:block"
+        className="hidden font-semibold text-[0.8125rem] text-ink-muted sm:block"
       >
         Sort
       </label>

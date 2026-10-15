@@ -66,7 +66,7 @@ export default async function PropertiesPage({ searchParams }: Props) {
                 {query.q ? (
                   <>
                     Results for{" "}
-                    <em className="display-wonk text-brass">“{query.q}”</em>
+                    <em className="display-wonk">“{query.q}”</em>
                   </>
                 ) : (
                   "Search properties"
@@ -231,7 +231,7 @@ function QuickColumn({
 }) {
   return (
     <div>
-      <p className="mb-4 font-semibold text-micro tracking-[0.12em] text-brass uppercase">
+      <p className="mb-4 font-semibold text-[0.8125rem] text-brass">
         {title}
       </p>
       <ul className="space-y-2.5">

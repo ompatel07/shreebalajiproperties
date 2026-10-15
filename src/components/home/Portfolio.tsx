@@ -42,7 +42,7 @@ export function Portfolio() {
                 </p>
                 <h2 className="display-tight font-display text-h2 text-bone">
                   Experience across multiple{" "}
-                  <em className="display-wonk text-brass-light">
+                  <em className="display-wonk">
                     residential developments.
                   </em>
                 </h2>
@@ -78,7 +78,7 @@ export function Portfolio() {
                   {project.name}
                 </h3>
 
-                <p className="mt-5 border-t border-bone/12 pt-4 font-semibold text-[0.6875rem] tracking-[0.14em] text-bone/40 uppercase">
+                <p className="mt-5 border-t border-bone/12 pt-4 font-semibold text-[0.8125rem] text-bone/40">
                   Residential · Marketed
                 </p>
               </article>
@@ -91,7 +91,7 @@ export function Portfolio() {
           <Reveal>
             <h3 className="display-tight max-w-3xl font-display text-h3 text-bone">
               Why project owners prefer a partner who{" "}
-              <em className="display-wonk text-brass-light">understands execution.</em>
+              <em className="display-wonk">understands execution.</em>
             </h3>
           </Reveal>
 
@@ -125,7 +125,7 @@ export function Portfolio() {
               <dl className="mt-8 grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
                 {teamPillars.map((pillar) => (
                   <div key={pillar.title} className="border-t border-bone/15 pt-4">
-                    <dt className="font-semibold text-[0.6875rem] tracking-[0.14em] text-brass-light uppercase">
+                    <dt className="font-semibold text-[0.8125rem] text-brass-light">
                       {pillar.title}
                     </dt>
                     <dd className="mt-2.5 text-caption leading-relaxed text-bone/65">
@@ -145,7 +145,7 @@ export function Portfolio() {
         <div className="shell mt-10">
           <Link
             href="/about"
-            className="group inline-flex items-center gap-2 font-semibold text-micro tracking-[0.14em] text-brass-light uppercase"
+            className="group inline-flex items-center gap-2 font-semibold text-[0.8125rem] text-brass-light"
           >
             <span className="link-draw">How we work</span>
             <ArrowUpRight

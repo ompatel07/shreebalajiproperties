@@ -116,7 +116,7 @@ function LeadsView({
         <h1 className="mt-2 font-display text-h3 text-ink">
           Leads
           {count !== null && (
-            <span className="ml-3 font-semibold text-micro tracking-[0.12em] text-ink-muted uppercase">
+            <span className="ml-3 font-semibold text-[0.8125rem] text-ink-muted">
               {count} {active === "open" ? "open" : ""}
             </span>
           )}
@@ -136,9 +136,7 @@ function LeadsView({
               <Link
                 href={tab.value === "open" ? "/studio/leads" : `/studio/leads?status=${tab.value}`}
                 aria-current={active === tab.value ? "page" : undefined}
-                className={`inline-block rounded-lg px-3.5 py-2 font-semibold text-[0.6875rem] tracking-[0.1em] uppercase transition-colors ${
-                  active === tab.value
-                    ? "bg-ink text-bone"
+                className={`inline-block rounded-lg px-3.5 py-2 font-semibold text-[0.8125rem] transition-colors ${ active === tab.value ?"bg-ink text-bone"
                     : "border border-rule-strong text-ink-muted hover:border-ink hover:text-ink"
                 }`}
               >
@@ -152,7 +150,7 @@ function LeadsView({
       {/* ── List ─────────────────────────────────────────────────────────── */}
       {error ? (
         <div className="mt-8 rounded-lg border border-alert/30 bg-alert-pale p-6">
-          <p className="font-semibold text-micro tracking-[0.12em] text-alert uppercase">
+          <p className="font-semibold text-[0.8125rem] text-alert">
             Could not load leads
           </p>
           <p className="mt-2 text-caption text-ink-soft">
@@ -231,7 +229,7 @@ function LeadsView({
                       </p>
                     )}
 
-                    <dl className="mt-3 flex flex-wrap gap-x-6 gap-y-1.5 font-semibold text-[0.6875rem] tracking-[0.1em] text-ink-muted uppercase">
+                    <dl className="mt-3 flex flex-wrap gap-x-6 gap-y-1.5 font-semibold text-[0.8125rem] text-ink-muted">
                       {lead.budget_max ? (
                         <div className="flex gap-2">
                           <dt className="text-ink-faint">Budget</dt>

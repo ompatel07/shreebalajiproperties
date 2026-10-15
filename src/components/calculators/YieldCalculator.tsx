@@ -154,7 +154,7 @@ export function YieldCalculator() {
             beatsFd ? "border-verdant/25 bg-verdant-pale" : "border-alert/25 bg-alert-pale"
           }`}
         >
-          <p className="font-semibold text-[0.6875rem] tracking-[0.14em] uppercase">
+          <p className="font-semibold text-[0.8125rem]">
             Against a fixed deposit at 7%
           </p>
           <p className="mt-3 max-w-prose leading-relaxed text-ink-soft">
