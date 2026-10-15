@@ -32,6 +32,7 @@ export function EnquiryForm({
   projectId,
   source = "property_enquiry",
   compact = false,
+  audience = "buyer",
   className,
 }: {
   propertyId?: string;
@@ -39,8 +40,11 @@ export function EnquiryForm({
   projectId?: string;
   source?: "property_enquiry" | "contact_form" | "calculator";
   compact?: boolean;
+  /** "builder" re-words the form for a developer discussing a project. */
+  audience?: "buyer" | "builder";
   className?: string;
 }) {
+  const builder = audience === "builder";
   const [result, setResult] = useState<ActionResult | null>(null);
   const [pending, startTransition] = useTransition();
   const mountedAt = useRef<number>(Date.now());
@@ -50,13 +54,18 @@ export function EnquiryForm({
     mountedAt.current = Date.now();
   }, []);
 
-  const waMessage = propertyTitle
-    ? `Hi ${site.name}, I am interested in "${propertyTitle}". Could you share more details?`
-    : `Hi ${site.name}, I would like help finding a property in Ahmedabad.`;
+  const waMessage = builder
+    ? `Hi ${site.name}, I am a builder / developer and would like to discuss marketing for my project.`
+    : propertyTitle
+      ? `Hi ${site.name}, I am interested in "${propertyTitle}". Could you share more details?`
+      : `Hi ${site.name}, I would like help finding a property in Ahmedabad.`;
 
   function onSubmit(formData: FormData) {
     // Time-on-form, read by the bot heuristic in the action.
     formData.set("elapsedMs", String(Date.now() - mountedAt.current));
+    // Builder leads share the contact_form source; tag them so they stand
+    // out in the studio's lead list without a schema change.
+    if (builder) formData.set("message", `[Builder enquiry] ${String(formData.get("message") ?? "")}`.trim());
 
     startTransition(async () => {
       const res = await submitEnquiry(formData);
@@ -114,13 +123,18 @@ export function EnquiryForm({
         className,
       )}
     >
-      <p className="eyebrow">Talk to an advisor</p>
+      <p className="eyebrow">{builder ? "Discuss your project" : "Talk to an advisor"}</p>
       <h3 className="mt-2.5 font-display text-h4 leading-snug text-ink">
-        {propertyTitle ? "Interested in this one?" : "Tell us what you are looking for"}
+        {builder
+          ? "Tell us about your project"
+          : propertyTitle
+            ? "Interested in this one?"
+            : "Tell us what you are looking for"}
       </h3>
       <p className="mt-2 text-caption leading-relaxed text-ink-muted">
-        No automated calls, no selling your number on. One advisor, one
-        conversation.
+        {builder
+          ? "A short call with the team that would run it. No obligation, no pitch deck."
+          : "No automated calls, no selling your number on. One advisor, one conversation."}
       </p>
 
       {/* Direct channels, deliberately above the form. */}
@@ -233,7 +247,7 @@ export function EnquiryForm({
           </>
         )}
 
-        <Field label="Anything specific?" error={errors.message}>
+        <Field label={builder ? "About the project" : "Anything specific?"} error={errors.message}>
           {(p) => (
             <TextArea
               {...p}
@@ -241,9 +255,11 @@ export function EnquiryForm({
               rows={compact ? 2 : 3}
               maxLength={2000}
               placeholder={
-                propertyTitle
-                  ? "Floor preference, possession date, loan help…"
-                  : "Locality, configuration, school nearby, possession…"
+                builder
+                  ? "Project name, location, number of units, launch stage…"
+                  : propertyTitle
+                    ? "Floor preference, possession date, loan help…"
+                    : "Locality, configuration, school nearby, possession…"
               }
             />
           )}
