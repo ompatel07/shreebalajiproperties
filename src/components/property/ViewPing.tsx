@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 import { isDemoMode } from "@/lib/demo-data";
-import { createClient } from "@/lib/supabase/client";
+import { rpc } from "@/lib/supabase/rest";
 
 /**
  * Increments a listing's view counter, once per session per listing.
@@ -41,12 +41,7 @@ export function ViewPing({ slug }: { slug: string }) {
         /* ignore */
       }
 
-      void createClient()
-        .rpc("bump_property_view", { p_slug: slug })
-        .then(
-          () => undefined,
-          () => undefined,
-        );
+      void rpc("bump_property_view", { p_slug: slug });
     }, 1200);
 
     return () => clearTimeout(timer);

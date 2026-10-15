@@ -78,7 +78,7 @@ export function ProjectsBand({ projects }: { projects: PartneredProjectCard[] })
 
                 <div className="flex flex-1 flex-col p-4">
                   {project.builder?.name && (
-                    <p className="mb-1 truncate text-[0.6875rem] font-semibold tracking-[0.1em] text-ink-faint uppercase">
+                    <p className="mb-1 truncate text-[0.8125rem] font-semibold text-brass">
                       {project.builder.name}
                     </p>
                   )}

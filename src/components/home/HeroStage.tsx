@@ -41,8 +41,8 @@ const INTERVAL_MS = 6500;
  *   the tab is hidden — and never starts for visitors who prefer reduced
  *   motion. There is also an explicit pause button (WCAG 2.2.2).
  * • Only the slides already shown, plus the next one, have their image in
- *   the DOM. Five full-width photographs up front would cost the first paint
- *   for slides most visitors never reach.
+ *   the DOM — and the next one is only added once the page has loaded, so on
+ *   a slow phone connection it never competes with the first photo.
  * • The photos are shown in full colour. A gradient sits only under the
  *   text, on the left; the right of the frame stays bright.
  */
@@ -62,7 +62,7 @@ export function HeroStage({
   const [hovering, setHovering] = useState(false);
   const [focused, setFocused] = useState(false);
   const [reduced, setReduced] = useState(false);
-  const [loaded, setLoaded] = useState<Set<number>>(() => new Set([0, 1]));
+  const [loaded, setLoaded] = useState<Set<number>>(() => new Set([0]));
   const stageRef = useRef<HTMLDivElement>(null);
 
   const go = useCallback(
@@ -74,6 +74,14 @@ export function HeroStage({
     },
     [slides.length],
   );
+
+  // Queue slide 2 after the load event; the first rotation is 6.5s away.
+  useEffect(() => {
+    const queue = () => setLoaded((s) => new Set(s).add(1 % slides.length));
+    if (document.readyState === "complete") queue();
+    else window.addEventListener("load", queue, { once: true });
+    return () => window.removeEventListener("load", queue);
+  }, [slides.length]);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -144,7 +152,7 @@ export function HeroStage({
 
       {/* ── Legibility: under the text only, never a full-frame wash ───── */}
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent lg:via-black/15"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.72)_0%,rgba(0,0,0,0.45)_45%,rgba(0,0,0,0.08)_100%)] lg:bg-[linear-gradient(90deg,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.55)_34%,rgba(0,0,0,0.1)_62%,transparent_80%)]"
         aria-hidden
       />
       <div
@@ -184,7 +192,7 @@ export function HeroStage({
 
       {/* ── The promise ──────────────────────────────────────────────── */}
       <div className="absolute inset-x-0 bottom-0 z-10 px-5 pb-24 sm:px-8 lg:inset-y-0 lg:flex lg:max-w-[54rem] lg:flex-col lg:justify-center lg:px-14 lg:pb-20">
-        <p className="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-white/15 px-3.5 py-1.5 text-[0.75rem] font-semibold text-white ring-1 ring-white/25 backdrop-blur-md">
+        <p className="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-black/35 px-3.5 py-1.5 text-[0.75rem] font-semibold text-white ring-1 ring-white/25">
           <span className="size-1.5 rounded-full bg-brass-light" aria-hidden />
           RERA-registered channel partner · Ahmedabad
         </p>
@@ -211,7 +219,7 @@ export function HeroStage({
           </Link>
           <a
             href={phone.href}
-            className="inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-3.5 text-[0.9375rem] font-semibold text-white ring-1 ring-white/30 backdrop-blur-md transition-colors hover:bg-white hover:text-ink"
+            className="inline-flex items-center gap-2 rounded-full bg-black/30 px-5 py-3.5 text-[0.9375rem] font-semibold text-white ring-1 ring-white/35 transition-colors hover:bg-white hover:text-ink"
           >
             <Phone className="size-4" strokeWidth={2.2} aria-hidden />
             {phone.label}
@@ -223,10 +231,11 @@ export function HeroStage({
       <div className="absolute right-8 bottom-28 z-10 hidden w-[23rem] lg:block">
         <div
           key={active}
-          className="animate-[hero-caption_700ms_var(--ease-editorial)_both] rounded-2xl bg-white/12 p-5 text-white ring-1 ring-white/25 backdrop-blur-xl"
+          className="animate-[hero-caption_700ms_var(--ease-editorial)_both] rounded-2xl bg-black/55 p-5 text-white ring-1 ring-white/20"
         >
           <div className="flex items-center justify-between gap-3">
-            <p className="text-[0.75rem] font-bold tracking-wide text-brass-light uppercase">
+            <p className="inline-flex items-center gap-2 text-[0.8125rem] font-bold text-white">
+              <span className="size-1.5 rounded-full bg-brass-light" aria-hidden />
               {slide.label}
             </p>
             {typeof slide.count === "number" && slide.count > 0 && (
@@ -287,7 +296,7 @@ export function HeroStage({
       {/* Mobile: what this slide is, small, top-left under the progress. */}
       <Link
         href={slide.cta.href}
-        className="absolute top-12 left-5 z-10 inline-flex items-center gap-1.5 rounded-full bg-black/35 px-3 py-1.5 text-[0.75rem] font-semibold text-white backdrop-blur-md lg:hidden"
+        className="absolute top-12 left-5 z-10 inline-flex items-center gap-1.5 rounded-full bg-black/35 px-3 py-1.5 text-[0.75rem] font-semibold text-white lg:hidden"
       >
         {slide.label}
         {typeof slide.count === "number" && slide.count > 0 && (
@@ -320,7 +329,7 @@ function CtrlButton({
       onClick={onClick}
       aria-label={label}
       className={cn(
-        "grid place-items-center rounded-full bg-white/15 text-white ring-1 ring-white/25 backdrop-blur-md transition-colors hover:bg-white hover:text-ink",
+        "grid place-items-center rounded-full bg-black/35 text-white ring-1 ring-white/30 transition-colors hover:bg-white hover:text-ink",
         small ? "size-8" : "size-10",
       )}
     >

@@ -49,7 +49,7 @@ export function SectionHeader({
           href={action.href}
           className={cn(
             "group inline-flex shrink-0 items-center gap-1.5 text-[0.9375rem] font-bold",
-            dark ? "text-brass-light hover:text-white" : "text-brass hover:text-brass-deep",
+            dark ? "text-brass-light hover:text-white" : "text-brass-deep hover:text-ink",
           )}
         >
           {action.label}

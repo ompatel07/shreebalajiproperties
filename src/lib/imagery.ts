@@ -99,6 +99,14 @@ export const LISTING_EXTERIORS = [
   "1636392881522-e1f0e14fcfe2", // blue tower, looking up
   "1564486593523-38d62206e706", // beige tower, balconies
   "1775582336512-8d79600fa7d5", // white apartment blocks above trees
+  "1549499090-c9203d2b20ad", // white residential block, balconies
+  "1663985139222-6af2f8646104", // white tower over a landscaped drive
+  "1719139834652-11a5fb80cba5", // apartments behind bougainvillea
+  "1711089654306-0ac17363dd8e", // twin towers at sunset
+  "1661188136450-4d6afd17abe2", // brown tower, balconies
+  "1562602136-b64ddd991ea2", // white tower, stacked balconies
+  "1714983007778-b370188238b8", // glass-and-white tower through trees
+  "1681057969807-61048ecb91e6", // towers above greenery
 ] as const;
 
 /** Interiors for listing cards. */
@@ -179,22 +187,30 @@ export function unsplash(id: string, width = 1600, quality = 72): string {
 }
 
 /**
+ * Residential card photos: the building first, as a buyer expects, with one
+ * interior every few cards for variety. Exactly one kitchen, and never two
+ * near-identical rooms — the grey kitchens at LISTING_INTERIORS[1], [5] and
+ * [9] read as the same photo when they landed side by side. With 18 entries
+ * and sequential ref_nos, the first 18 listings all get different photos.
+ */
+const CARD_INTERIORS = [
+  LISTING_INTERIORS[3], // living room, gallery wall
+  LISTING_INTERIORS[4], // bedroom, wood panelling
+  LISTING_INTERIORS[7], // living-dining, warm light
+  LISTING_INTERIORS[8], // light kitchen
+] as const;
+
+const RESIDENTIAL: readonly string[] = [
+  ...LISTING_EXTERIORS.slice(0, 3), CARD_INTERIORS[0],
+  ...LISTING_EXTERIORS.slice(3, 7), CARD_INTERIORS[1],
+  ...LISTING_EXTERIORS.slice(7, 10), CARD_INTERIORS[2],
+  ...LISTING_EXTERIORS.slice(10, 14), CARD_INTERIORS[3],
+];
+
+/**
  * Deterministic photo for a listing, so a card never swaps image between
  * server render and hydration, or between two page views.
  */
-/**
- * Residential fallbacks: every exterior and interior except the one image
- * that is unmistakably a downtown office district.
- */
-/** Residential listing fallbacks: exterior and interior interleaved, so
- *  consecutive listings alternate, then the remaining interiors. */
-const RESIDENTIAL: readonly string[] = [
-  LISTING_EXTERIORS[0], LISTING_INTERIORS[0], LISTING_EXTERIORS[1], LISTING_INTERIORS[1],
-  LISTING_EXTERIORS[2], LISTING_INTERIORS[2], LISTING_EXTERIORS[3], LISTING_INTERIORS[3],
-  LISTING_EXTERIORS[4], LISTING_INTERIORS[4], LISTING_EXTERIORS[5], LISTING_INTERIORS[5],
-  LISTING_INTERIORS[6], LISTING_INTERIORS[7], LISTING_INTERIORS[8], LISTING_INTERIORS[9],
-];
-
 export function heroImageFor(
   row: {
     hero_image?: string | null;
@@ -226,13 +242,6 @@ export function heroImageFor(
   return unsplash(pool[index % pool.length]!, width);
 }
 
-/**
- * A stable photo for an AREA tile on the homepage.
- *
- * Exteriors only — an area tile is about a place, and a living room says
- * nothing about Shela. Seeded off the slug so the same area always shows the
- * same photo across renders and page views.
- */
 export function localityImage(slug: string, width = 700): string {
   const pool = [...IN_TOWERS, ...IN_HOUSES];
   return unsplash(pool[hashString(slug) % pool.length]!, width, 74);

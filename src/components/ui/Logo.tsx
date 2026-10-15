@@ -90,6 +90,7 @@ export function Logo({
           width={350}
           height={160}
           priority
+          sizes="80px"
           className="h-7 w-auto object-contain lg:h-8"
         />
       </span>

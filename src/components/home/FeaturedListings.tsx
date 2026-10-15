@@ -90,9 +90,9 @@ export function FeaturedListings({
               className={cn(RAIL, RAIL_TO_GRID, "mt-7 pb-1 md:grid-cols-2 md:gap-x-5 md:gap-y-9 md:pb-0 lg:grid-cols-3")}
               stagger={0.06}
             >
-              {listings.slice(0, 6).map((p, i) => (
+              {listings.slice(0, 6).map((p) => (
                 <div key={p.id} className={cn(RAIL_ITEM, "w-[80vw] max-w-sm")}>
-                  <PropertyCard property={p} priority={i < 3} />
+                  <PropertyCard property={p} />
                 </div>
               ))}
             </RevealGroup>

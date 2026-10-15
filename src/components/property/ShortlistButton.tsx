@@ -50,11 +50,11 @@ export function ShortlistButton({
       }
       aria-pressed={ready ? saved : undefined}
       className={cn(
-        "relative z-20 grid shrink-0 place-items-center rounded-full border backdrop-blur-md transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-90",
+        "relative z-20 grid shrink-0 place-items-center rounded-full border transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] active:scale-90",
         size === "lg" ? "size-11" : "size-9",
         saved
           ? "border-brass bg-brass text-paper"
-          : "border-paper/45 bg-ink/25 text-paper hover:border-paper hover:bg-paper hover:text-ink",
+          : "border-paper/45 bg-ink/35 text-paper hover:border-paper hover:bg-paper hover:text-ink",
       )}
     >
       <Heart

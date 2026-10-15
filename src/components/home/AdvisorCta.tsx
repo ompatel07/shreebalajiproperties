@@ -51,21 +51,21 @@ export function AdvisorCta() {
                 href={whatsappLink(site.contact.whatsapp, message)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2.5 rounded-full bg-[#25D366] px-6 py-4 text-[1rem] font-bold text-ink transition-transform hover:-translate-y-0.5"
+                className="flex items-center justify-center gap-2.5 rounded-full bg-white px-6 py-4 text-[1rem] font-bold text-ink transition-colors hover:bg-brass-pale"
               >
-                <MessageCircle className="size-5" strokeWidth={2.2} aria-hidden />
+                <MessageCircle className="size-5 text-[#1a9e4b]" strokeWidth={2.2} aria-hidden />
                 WhatsApp us
               </a>
               <a
                 href={telLink(site.contact.phoneE164)}
-                className="flex items-center justify-center gap-2.5 rounded-full bg-brass-light px-6 py-4 text-[1rem] font-bold text-ink transition-colors hover:bg-white"
+                className="flex items-center justify-center gap-2.5 rounded-full px-6 py-4 text-[1rem] font-bold text-white ring-1 ring-white/30 transition-colors hover:bg-white/10"
               >
-                <Phone className="size-5" strokeWidth={2.2} aria-hidden />
+                <Phone className="size-5 text-brass-light" strokeWidth={2.2} aria-hidden />
                 Call {site.contact.phoneDisplay}
               </a>
               <Link
                 href="/contact"
-                className="group flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[0.9375rem] font-semibold text-white ring-1 ring-white/25 transition-colors hover:bg-white/10"
+                className="group flex items-center justify-center gap-2 px-6 py-2 text-[0.9375rem] font-semibold text-white/75 transition-colors hover:text-white"
               >
                 Send a written brief
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.2} aria-hidden />

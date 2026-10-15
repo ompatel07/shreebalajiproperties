@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { demoProperties, isDemoMode } from "@/lib/demo-data";
-import { createClient } from "@/lib/supabase/client";
+import { inList, select } from "@/lib/supabase/rest";
 import type { PropertyCard } from "@/types/db";
 
 /**
@@ -55,27 +55,25 @@ export function usePropertiesBySlug(slugs: string[], ready: boolean) {
     setLoading(true);
 
     void (async () => {
-      const { data, error: queryError } = await createClient()
-        .from("properties")
-        .select(
-          `id, slug, title, city, locality_slug, category, property_type,
+      let rows: PropertyCard[];
+      try {
+        rows = await select<PropertyCard>(
+          "properties",
+          `id, slug, ref_no, title, city, locality_slug, category, property_type,
            transaction, status, bhk, bathrooms, carpet_sqft, super_sqft,
            plot_sqft, price, price_on_request, possession, possession_date,
            rera_verified, hero_image, is_featured, is_exclusive, lat, lng,
            view_count`,
-        )
-        .in("slug", list.slice(0, 50))
-        .in("status", ["published", "under_offer"]);
-
-      if (cancelled) return;
-
-      if (queryError) {
+          { slug: inList(list.slice(0, 50)), status: inList(["published", "under_offer"]) },
+        );
+      } catch {
+        if (cancelled) return;
         setError("We could not load your saved homes just now.");
         setLoading(false);
         return;
       }
 
-      const rows = (data ?? []) as unknown as PropertyCard[];
+      if (cancelled) return;
       const bySlug = new Map(rows.map((r) => [r.slug, r]));
 
       // Preserve the visitor's own ordering.

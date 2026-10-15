@@ -112,7 +112,7 @@ function TestimonialsView({
 
                 <div className="flex shrink-0 items-center gap-2">
                   {t.is_featured && <Badge tone="brass">Featured</Badge>}
-                  <div className="flex gap-0.5" aria-label={`${t.rating} out of 5`}>
+                  <div className="flex gap-0.5" role="img" aria-label={`${t.rating} out of 5`}>
                     {Array.from({ length: t.rating }, (_, i) => (
                       <Star key={i} className="size-3 fill-brass text-brass" aria-hidden />
                     ))}

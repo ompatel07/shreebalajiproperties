@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BadgeIndianRupee, CalendarCheck, MapPinned, ShieldCheck } from "lucide-react";
 
 import { HeroStage, type HeroSlide } from "@/components/home/HeroStage";
 import { SearchPanel } from "@/components/home/SearchPanel";
@@ -81,11 +82,13 @@ export function Hero({
     },
   ];
 
-  const stats = [
-    { value: String(liveCount), label: "Verified homes live" },
-    { value: String(localityCount), label: "Areas across the city" },
-    { value: "6+", label: "Projects marketed" },
-    { value: "₹0", label: "Charged to buyers" },
+  // Promises rather than counts. A raw "16 homes live" undersold the firm
+  // to the client; the live count still appears in the hero subline.
+  const promises = [
+    { icon: ShieldCheck, title: "RERA-registered", sub: "Every listing's RERA number checked" },
+    { icon: MapPinned, title: `${localityCount} areas covered`, sub: "Ahmedabad and Gandhinagar" },
+    { icon: BadgeIndianRupee, title: "₹0 for buyers", sub: "The builder pays us, not you" },
+    { icon: CalendarCheck, title: "Site visits arranged", sub: "We book them and come with you" },
   ];
 
   return (
@@ -135,23 +138,24 @@ export function Hero({
         </div>
       </div>
 
-      {/* ── The numbers ─────────────────────────────────────────────────── */}
-      <div className="shell pt-10 pb-12 lg:pt-14 lg:pb-16">
-        <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-rule ring-1 ring-rule lg:grid-cols-4">
-          {stats.map((s) => (
-            <div key={s.label} className="flex flex-col-reverse bg-paper px-5 py-6 lg:px-8 lg:py-8">
-              <dt className="mt-1.5 text-[0.8125rem] font-medium text-ink-muted lg:text-[0.875rem]">
-                {s.label}
-              </dt>
-              <dd
-                className="text-[clamp(1.875rem,3.6vw,2.75rem)] leading-none font-extrabold tracking-[-0.04em] text-ink"
-                data-numeric
-              >
-                {s.value}
-              </dd>
-            </div>
+      {/* ── Promises ────────────────────────────────────────────────────── */}
+      <div className="shell pt-8 pb-12 lg:pt-12 lg:pb-16">
+        <ul className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
+          {promises.map(({ icon: Icon, title, sub }) => (
+            <li
+              key={title}
+              className="flex flex-col gap-3 rounded-2xl bg-paper p-4 ring-1 ring-rule sm:flex-row sm:items-center lg:p-5"
+            >
+              <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-ink text-brass-light">
+                <Icon className="size-5" strokeWidth={2} aria-hidden />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[0.9375rem] leading-tight font-bold text-ink">{title}</span>
+                <span className="mt-0.5 block text-[0.8125rem] leading-snug text-ink-muted">{sub}</span>
+              </span>
+            </li>
           ))}
-        </dl>
+        </ul>
       </div>
     </section>
   );

@@ -232,7 +232,7 @@ function NavLink({
     <Link
       href={href}
       onMouseEnter={onHover}
-      className="link-draw shrink-0 px-3 py-2 text-[0.875rem] font-medium whitespace-nowrap text-ink-soft transition-colors duration-300 hover:text-ink"
+      className="link-draw shrink-0 px-3 py-2 text-[0.9375rem] font-semibold whitespace-nowrap text-ink-soft transition-colors duration-300 hover:text-ink"
     >
       {children}
     </Link>
@@ -255,7 +255,7 @@ function NavTrigger({
       onFocus={onOpen}
       onClick={onOpen}
       aria-expanded={active}
-      className="relative shrink-0 px-3 py-2 text-[0.875rem] font-medium whitespace-nowrap text-ink transition-colors duration-300 hover:text-brass"
+      className="relative shrink-0 px-3 py-2 text-[0.9375rem] font-semibold whitespace-nowrap text-ink transition-colors duration-300 hover:text-brass"
     >
       {label}
       <span

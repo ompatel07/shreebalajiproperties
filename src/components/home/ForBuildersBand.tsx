@@ -1,93 +1,95 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  Building2,
+  CalendarCheck,
+  Crosshair,
+  Inbox,
+  Landmark,
+  Megaphone,
+  PhoneCall,
+} from "lucide-react";
 
-import { Reveal } from "@/components/motion/Reveal";
 import { portfolio, services } from "@/config/site";
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════
- * FOR BUILDERS — compact band
+ * FOR BUILDERS — the door to /for-builders
  * ═══════════════════════════════════════════════════════════════════════════
  *
- * The other half of the business, in one screen-width strip rather than four
- * homepage sections.
+ * The other half of the business, kept to one light card. A developer
+ * evaluating a marketing partner is a small, high-intent audience who will
+ * follow a clear link; a buyer scrolling past a services pitch just leaves.
  *
- * ── Why it is this small ────────────────────────────────────────────────
- * The full builder pitch used to occupy most of the homepage, which buried
- * the thing most visitors came for. A developer evaluating a marketing
- * partner is a small, high-intent audience who will gladly follow a clear
- * link; a home buyer scrolling past a services pitch just leaves. So the
- * whole argument moved to /for-builders and this band is the door to it.
- *
- * It still does real work: it names the six services and the six projects,
- * so a builder who lands on the homepage immediately knows this firm does
- * their side of the market too.
+ * Light, not the full-width black band it used to be: the advisor panel above
+ * is already dark, two in a row read as one heavy block, and the client wants
+ * the site bright. The services are icon tiles rather than a numbered
+ * monospace list, which was the last of the old template formula.
  */
+const ICONS: Record<string, typeof Megaphone> = {
+  "project-positioning": Crosshair,
+  "lead-generation": Megaphone,
+  "enquiry-management": Inbox,
+  "site-visit-coordination": CalendarCheck,
+  "customer-follow-up": PhoneCall,
+  "finance-coordination": Landmark,
+};
+
 export function ForBuildersBand() {
   return (
-    <section className="relative overflow-hidden bg-ink py-14 lg:py-18">
-      <div className="pointer-events-none absolute inset-0 opacity-[0.06]" aria-hidden>
-        <div className="jaali size-full" />
-      </div>
+    <section className="bg-paper pb-14 lg:pb-20">
+      <div className="shell">
+        <div className="grid gap-8 rounded-3xl bg-sand p-6 ring-1 ring-rule sm:p-10 lg:grid-cols-12 lg:items-center lg:gap-12 lg:p-12">
+          <div className="lg:col-span-5">
+            <p className="inline-flex items-center gap-2 rounded-full bg-paper px-3 py-1.5 text-[0.8125rem] font-semibold text-brass-deep ring-1 ring-rule">
+              <Building2 className="size-4" strokeWidth={2} aria-hidden />
+              For builders &amp; developers
+            </p>
 
-      <div className="shell relative">
-        <Reveal>
-          <div className="grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-12">
-            {/* ── The pitch ───────────────────────────────────────────── */}
-            <div className="lg:col-span-7">
-              <p className="eyebrow mb-4 text-brass-light">For builders &amp; developers</p>
+            <h2 className="mt-4 text-[clamp(1.625rem,3vw,2.375rem)] leading-[1.1] font-extrabold tracking-[-0.03em] text-ink">
+              Launching a project? We sell it for you.
+            </h2>
 
-              <h2 className="display-tight font-display text-h2 text-bone">
-                Marketing a project?{" "}
-                <em className="display-wonk text-brass-light">
-                  We do that side too.
-                </em>
-              </h2>
+            <p className="mt-4 max-w-md text-[0.9375rem] leading-relaxed text-ink-muted">
+              One in-house team from positioning to possession, so no enquiry is
+              lost between an agency and a sales desk.
+            </p>
 
-              <p className="mt-5 max-w-xl text-bone/70">
-                Positioning, lead generation, enquiry management, site visits,
-                follow-up and finance coordination — run by one in-house team,
-                so nothing is lost between an agency and a sales desk.
-              </p>
+            <Link
+              href="/for-builders"
+              className="group mt-6 inline-flex h-12 items-center gap-2 rounded-full bg-ink px-6 text-[0.9375rem] font-bold text-white transition-colors hover:bg-brass-deep"
+            >
+              See what we do for builders
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" strokeWidth={2.2} aria-hidden />
+            </Link>
+          </div>
 
-              <Link
-                href="/for-builders"
-                className="group mt-7 inline-flex h-13 items-center gap-2.5 bg-brass px-7 font-bold text-[0.875rem] text-paper transition-colors duration-300 hover:bg-bone hover:text-ink rounded-full"
-              >
-                See what we do for builders
-                <ArrowRight
-                  className="size-4 transition-transform duration-300 group-hover:translate-x-1"
-                  strokeWidth={2}
-                  aria-hidden
-                />
-              </Link>
-            </div>
-
-            {/* ── Proof: the six services and the six projects ─────────── */}
-            <div className="lg:col-span-5">
-              <ul className="grid grid-cols-2 gap-x-5 gap-y-2.5 border-t border-bone/15 pt-6">
-                {services.map((service, i) => (
+          <div className="lg:col-span-7">
+            <ul className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+              {services.map((service) => {
+                const Icon = ICONS[service.slug] ?? Megaphone;
+                return (
                   <li
                     key={service.slug}
-                    className="flex items-baseline gap-2 text-[0.8125rem] text-bone/75"
+                    className="flex items-center gap-3 rounded-2xl bg-paper p-3.5 ring-1 ring-rule"
                   >
-                    <span
-                      className="font-mono text-[0.5625rem] text-brass-light tabular-nums"
-                      data-numeric
-                    >
-                      {String(i + 1).padStart(2, "0")}
+                    <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-brass-pale text-brass-deep">
+                      <Icon className="size-4" strokeWidth={2} aria-hidden />
                     </span>
-                    {service.title}
+                    <span className="text-[0.8125rem] leading-snug font-semibold text-ink">
+                      {service.title}
+                    </span>
                   </li>
-                ))}
-              </ul>
+                );
+              })}
+            </ul>
 
-              <p className="mt-6 border-t border-bone/15 pt-4 font-semibold text-[0.6875rem] leading-relaxed tracking-[0.12em] text-bone/45 uppercase">
-                Marketed · {portfolio.map((p) => p.name).join(" · ")}
-              </p>
-            </div>
+            <p className="mt-5 text-[0.8125rem] leading-relaxed text-ink-muted">
+              <span className="font-semibold text-ink">Projects we have marketed:</span>{" "}
+              {portfolio.map((p) => p.name).join(" · ")}
+            </p>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );

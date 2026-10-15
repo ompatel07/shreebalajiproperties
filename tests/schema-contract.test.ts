@@ -118,6 +118,17 @@ function collectSelects(): SelectSite[] {
   for (const file of walk(path.join(ROOT, "src"))) {
     const src = readFileSync(file, "utf8");
 
+    // The SDK-free REST helper (`src/lib/supabase/rest.ts`) names the table
+    // and columns in one call — `select<Row>("properties", `...`, …)` — with
+    // no `.from()`, so it gets its own pattern.
+    const restRe = /\bselect(?:<[^>]*>)?\(\s*["']([a-z_][a-z0-9_]*)["']\s*,\s*(`[^`]*`|"[^"]*"|'[^']*')/g;
+    let r: RegExpExecArray | null;
+    while ((r = restRe.exec(src))) {
+      const columns = r[2]!.slice(1, -1);
+      if (columns.includes("${")) continue;
+      sites.push({ file: path.relative(ROOT, file) + " (rest)", table: r[1]!, columns });
+    }
+
     // Every `.from("x")` with its offset, so a select can be matched to the
     // nearest one above it.
     const froms: { table: string; at: number }[] = [];
