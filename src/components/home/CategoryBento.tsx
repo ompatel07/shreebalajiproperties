@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Sofa } from "lucide-react";
 
 import { SectionHeader } from "@/components/home/SectionHeader";
+import { furnitureOffer } from "@/config/site";
 import { IN_COMMERCIAL, IN_HOUSES, IN_INTERIORS, IN_TOWERS, unsplash } from "@/lib/imagery";
 import { cn } from "@/lib/utils";
 
@@ -87,6 +88,13 @@ export function CategoryBento({ counts }: { counts: Record<string, number> }) {
                 className="-z-10 object-cover transition-transform duration-700 ease-[var(--ease-editorial)] group-hover:scale-105"
               />
               <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/75 via-black/15 to-transparent" aria-hidden />
+
+              {t.big && furnitureOffer.enabled && (
+                <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-brass-light px-3 py-1.5 text-[0.8125rem] font-bold text-ink shadow-sm lg:top-6 lg:left-6">
+                  <Sofa className="size-4" strokeWidth={2.2} aria-hidden />
+                  {furnitureOffer.title}
+                </span>
+              )}
 
               <div className="flex h-full flex-col justify-end p-4 lg:p-6">
                 <div className="flex items-end justify-between gap-3">

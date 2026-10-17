@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowRight, ChevronLeft, ChevronRight, Pause, Phone, Play } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Pause, Phone, Play, Sofa } from "lucide-react";
 
+import { furnitureOffer } from "@/config/offers";
 import { cn } from "@/lib/utils";
 
 export interface HeroSlide {
@@ -192,10 +193,26 @@ export function HeroStage({
 
       {/* ── The promise ──────────────────────────────────────────────── */}
       <div className="absolute inset-x-0 bottom-0 z-10 px-5 pb-24 sm:px-8 lg:inset-y-0 lg:flex lg:max-w-[54rem] lg:flex-col lg:justify-center lg:px-14 lg:pb-20">
-        <p className="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-black/35 px-3.5 py-1.5 text-[0.75rem] font-semibold text-white ring-1 ring-white/25">
-          <span className="size-1.5 rounded-full bg-brass-light" aria-hidden />
-          RERA-registered channel partner · Ahmedabad
-        </p>
+        {/* The client's headline offer takes the badge slot — the first thing
+            read in the hero. RERA status is still stated in the promise
+            tiles directly below. */}
+        {furnitureOffer.enabled ? (
+          <Link
+            href="/ahmedabad/flats"
+            className="group mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-brass-light py-1.5 pr-3.5 pl-1.5 text-[0.8125rem] font-bold text-ink shadow-[0_8px_24px_-8px_rgba(212,172,69,0.7)] transition-colors hover:bg-white"
+          >
+            <span className="grid size-6 place-items-center rounded-full bg-ink text-brass-light">
+              <Sofa className="size-3.5" strokeWidth={2.2} aria-hidden />
+            </span>
+            {furnitureOffer.title}
+            <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" strokeWidth={2.4} aria-hidden />
+          </Link>
+        ) : (
+          <p className="mb-4 inline-flex w-fit items-center gap-2 rounded-full bg-black/35 px-3.5 py-1.5 text-[0.75rem] font-semibold text-white ring-1 ring-white/25">
+            <span className="size-1.5 rounded-full bg-brass-light" aria-hidden />
+            RERA-registered channel partner · Ahmedabad
+          </p>
+        )}
 
         <h1 className="text-[clamp(2.25rem,4.7vw,4.125rem)] leading-[1.03] font-extrabold tracking-[-0.035em] text-white">
           {headline}

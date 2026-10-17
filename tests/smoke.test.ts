@@ -132,6 +132,7 @@ describe("content reaches the HTML", () => {
     // Areas and property types are each offered exactly once now.
     assert.ok(/Popular areas in Ahmedabad/.test(html), "no areas section");
     assert.ok(/What are you looking for\?/.test(html), "no property-type section");
+    assert.ok(/Free furniture with every flat/.test(html), "furniture offer not shown on the homepage");
     // The slideshow headline is a single, fixed h1.
     assert.equal((html.match(/<h1[\s>]/g) ?? []).length, 1, "the homepage must have exactly one h1");
   });

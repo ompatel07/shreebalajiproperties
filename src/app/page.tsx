@@ -6,6 +6,7 @@ import { CategoryBento } from "@/components/home/CategoryBento";
 import { FeaturedListings } from "@/components/home/FeaturedListings";
 import { ForBuildersBand } from "@/components/home/ForBuildersBand";
 import { Hero } from "@/components/home/Hero";
+import { OfferBand } from "@/components/home/OfferBand";
 import { ProjectsBand } from "@/components/home/ProjectsBand";
 import { Reviews } from "@/components/home/Reviews";
 import { ToolsGrid } from "@/components/home/ToolsGrid";
@@ -70,6 +71,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero typeCounts={facts.typeCounts} />
+      <OfferBand />
       <CategoryBento counts={facts.typeCounts} />
       <FeaturedListings listings={featured} bandCounts={facts.bandCounts} total={facts.live} />
       <AreaSpotlight counts={facts.localityCounts} />

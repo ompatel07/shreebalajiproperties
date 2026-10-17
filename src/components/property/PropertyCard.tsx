@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Bath, BedDouble, CalendarClock, MapPin, Maximize2 } from "lucide-react";
+import { Bath, BedDouble, CalendarClock, MapPin, Maximize2, Sofa } from "lucide-react";
 
 import { ShortlistButton } from "@/components/property/ShortlistButton";
-import { localityBySlug } from "@/config/site";
+import { furnitureOffer, hasFurnitureOffer, localityBySlug } from "@/config/site";
 import { formatArea, formatBhk, formatPossession, formatPrice, pricePerSqft } from "@/lib/format";
 import { blurPlaceholder, heroImageFor } from "@/lib/imagery";
 import { listingAlt } from "@/lib/seo";
@@ -86,6 +86,13 @@ export function PropertyCard({
           <CalendarClock className="size-3.5 text-brass" strokeWidth={2.2} aria-hidden />
           {formatPossession(property.possession, property.possession_date)}
         </span>
+
+        {hasFurnitureOffer(property.property_type) && (
+          <span className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-full bg-brass-light px-2.5 py-1 text-[0.75rem] font-bold text-ink shadow-sm">
+            <Sofa className="size-3.5" strokeWidth={2.2} aria-hidden />
+            {furnitureOffer.short}
+          </span>
+        )}
       </div>
 
       {/* ── Details ────────────────────────────────────────────────────── */}

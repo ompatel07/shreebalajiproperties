@@ -27,7 +27,7 @@ import { StaticMap } from "@/components/property/StaticMap";
 import { ViewPing } from "@/components/property/ViewPing";
 import { Badge, ReraBadge } from "@/components/ui/Badge";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
-import { localityBySlug, propertyTypes, site } from "@/config/site";
+import { furnitureOffer, hasFurnitureOffer, localityBySlug, propertyTypes, site } from "@/config/site";
 import {
   formatArea,
   formatBhk,
@@ -267,6 +267,21 @@ export default async function PropertyPage({ params }: Props) {
                   <CompareButton slug={property.slug} />
                 </div>
               </div>
+
+              {/* The client's flat offer, right under the price it adds value to. */}
+              {hasFurnitureOffer(property.property_type) && (
+                <div className="mt-6 flex items-center gap-4 rounded-2xl bg-gradient-to-r from-brass-light to-[#e2bd5c] p-4 sm:p-5">
+                  <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-ink text-brass-light">
+                    <Sofa className="size-6" strokeWidth={2} aria-hidden />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-[1.0625rem] font-extrabold text-ink">{furnitureOffer.title}</p>
+                    <p className="mt-0.5 text-[0.8125rem] leading-snug text-ink/75">
+                      This flat qualifies. {furnitureOffer.terms}
+                    </p>
+                  </div>
+                </div>
+              )}
             </header>
 
             {/* ── Spec grid ────────────────────────────────────────────── */}
@@ -310,14 +325,18 @@ export default async function PropertyPage({ params }: Props) {
                   {property.facing && (
                     <Spec icon={Compass} label="Facing" value={property.facing} />
                   )}
-                  {property.furnishing && (
+                  {/* An "Unfurnished" cell under a "Free furniture" banner reads
+                      as a contradiction; for offer flats the offer is the answer. */}
+                  {hasFurnitureOffer(property.property_type) && property.furnishing !== "furnished" ? (
+                    <Spec icon={Sofa} label="Furnishing" value="Free furniture" note="Offer" />
+                  ) : property.furnishing ? (
                     <Spec
                       icon={Sofa}
                       label="Furnishing"
                       value={property.furnishing.replace("-", " ")}
                       className="capitalize"
                     />
-                  )}
+                  ) : null}
                   <Spec
                     icon={Calendar}
                     label="Possession"

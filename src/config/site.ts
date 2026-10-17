@@ -15,6 +15,7 @@
  */
 
 export * from "@/config/identity";
+export * from "@/config/offers";
 export * from "@/config/localities";
 
 /* ═══════════════════════════════════════════════════════════════════════════
