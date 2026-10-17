@@ -1,4 +1,6 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
+
+import { SESSION_COOKIE_OPTIONS, capSessionCookie } from "@/lib/supabase/cookie-options";
 import { cookies } from "next/headers";
 
 /**
@@ -61,6 +63,7 @@ export async function createClient() {
   const cookieStore = await cookies();
 
   return createServerClient(CONFIG.url, CONFIG.key, {
+    cookieOptions: SESSION_COOKIE_OPTIONS,
     cookies: {
       getAll() {
         return cookieStore.getAll();
@@ -68,7 +71,7 @@ export async function createClient() {
       setAll(cookiesToSet: { name: string; value: string; options?: CookieOptions }[]) {
         try {
           for (const { name, value, options } of cookiesToSet) {
-            cookieStore.set(name, value, options);
+            cookieStore.set(name, value, capSessionCookie(options));
           }
         } catch {
           // Called from a Server Component, where cookies are read-only.

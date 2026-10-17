@@ -2,20 +2,12 @@ import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 
 import { PropertyForm } from "@/components/admin/PropertyForm";
-import { demoBuilders, demoProjects, isDemoMode } from "@/lib/demo-data";
 import { createClient } from "@/lib/supabase/server";
 import type { Builder, Project } from "@/types/db";
 
 export default async function NewListingPage() {
-  const demo = isDemoMode();
-
   // Fetched for the relation dropdowns. Staff session, so RLS allows drafts.
-  const [builders, projects] = demo
-    ? [
-        demoBuilders.map((b) => ({ id: b.id, name: b.name })),
-        demoProjects.map((p) => ({ id: p.id, name: p.name })),
-      ]
-    : await (async () => {
+  const [builders, projects] = await (async () => {
         const supabase = await createClient();
         const [{ data: b }, { data: pr }] = await Promise.all([
           supabase.from("builders").select("id, name").order("name"),

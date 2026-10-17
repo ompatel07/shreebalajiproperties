@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/Badge";
 import { localityBySlug } from "@/config/site";
 import { formatPossession, formatPriceRange, formatRelative } from "@/lib/format";
 import { blurPlaceholder, heroImageFor } from "@/lib/imagery";
-import { demoProjectDetail, demoProjects, isDemoMode } from "@/lib/demo-data";
 import { createClient } from "@/lib/supabase/server";
 import type { Project } from "@/types/db";
 
@@ -25,13 +24,6 @@ import type { Project } from "@/types/db";
  * the "skin in the game" section on the homepage.
  */
 export default async function ProjectsPage() {
-  if (isDemoMode()) {
-    const rows = demoProjects
-      .map((p) => demoProjectDetail(p.slug))
-      .filter(Boolean) as unknown as Project[];
-    return <ProjectsView projects={rows.map((p) => ({ ...p, is_partnered: true }))} error={null} />;
-  }
-
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -39,6 +31,7 @@ export default async function ProjectsPage() {
     .select("*")
     .order("is_partnered", { ascending: false })
     .order("updated_at", { ascending: false })
+    .order("id", { ascending: true }) // deterministic: ties must not shuffle rows between refreshes
     .limit(100);
 
   return <ProjectsView projects={(data ?? []) as Project[]} error={error ? "load" : null} />;

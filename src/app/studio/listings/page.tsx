@@ -15,8 +15,6 @@ import { ButtonLink } from "@/components/ui/Button";
 import { localityBySlug, propertyTypes } from "@/config/site";
 import { formatArea, formatBhk, formatPrice, formatRelative } from "@/lib/format";
 import { blurPlaceholder, heroImageFor } from "@/lib/imagery";
-import { isDemoMode } from "@/lib/demo-data";
-import { demoAdminProperties } from "@/lib/demo-studio";
 import { createClient } from "@/lib/supabase/server";
 import type { ListingStatus, Property } from "@/types/db";
 
@@ -46,29 +44,6 @@ interface Props {
 
 export default async function ListingsPage({ searchParams }: Props) {
   const { status, q } = await searchParams;
-  const demo = isDemoMode();
-
-  if (demo) {
-    const activeStatus = STATUS_TABS.some((t) => t.value === status) ? status : "all";
-    let items = demoAdminProperties();
-    if (activeStatus && activeStatus !== "all") {
-      items = items.filter((p) => p.status === activeStatus);
-    }
-    if (q) {
-      const needle = q.toLowerCase();
-      items = items.filter((p) => p.title.toLowerCase().includes(needle));
-    }
-    return (
-      <ListingsView
-        listings={items}
-        count={items.length}
-        activeStatus={activeStatus ?? "all"}
-        q={q}
-        error={null}
-      />
-    );
-  }
-
   const supabase = await createClient();
 
   const BASE_COLUMNS = `id, slug, title, status, city, locality_slug, property_type, category,
@@ -77,7 +52,10 @@ export default async function ListingsPage({ searchParams }: Props) {
        possession, possession_date, view_count, enquiry_count, updated_at`;
 
   const activeStatus = STATUS_TABS.some((t) => t.value === status) ? status : "all";
-  const needle = q ? q.replace(/[%_]/g, "") : "";
+  // Wildcards and the quote/backslash that would end a quoted PostgREST value
+  // are removed; everything else is kept and the value is quoted below, so a
+  // search like "Shela, 3 BHK" no longer breaks the filter (it returned 400).
+  const needle = q ? q.replace(/[%_"\\]/g, "").trim().slice(0, 80) : "";
 
   /**
    * One query, built twice.
@@ -97,6 +75,7 @@ export default async function ListingsPage({ searchParams }: Props) {
         count: "exact",
       })
       .order(withRef ? "ref_no" : "updated_at", { ascending: false })
+      .order("id", { ascending: true }) // deterministic: ties must not shuffle rows between refreshes
       .limit(100);
 
     if (activeStatus && activeStatus !== "all") query = query.eq("status", activeStatus);
@@ -106,7 +85,7 @@ export default async function ListingsPage({ searchParams }: Props) {
       // stemmed relevance — so `ilike`, not the tsvector index. Searching the
       // reference as well is the point of having one: type "42" or "SK-0042"
       // and land on the listing.
-      const pattern = `%${needle}%`;
+      const pattern = `"%${needle}%"`;
       query = withRef
         ? query.or(`title.ilike.${pattern},ref_code.ilike.${pattern},locality_slug.ilike.${pattern}`)
         : query.or(`title.ilike.${pattern},locality_slug.ilike.${pattern}`);

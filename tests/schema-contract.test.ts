@@ -256,3 +256,29 @@ describe("every .select() in src/ matches the schema", () => {
     });
   }
 });
+
+/**
+ * Duplicating a listing copies a `select *` row. Any column Postgres
+ * computes itself (GENERATED, or a unique sequence) must be stripped first,
+ * or the insert is refused — which is exactly how "Duplicate" was broken in
+ * production ("cannot insert a non-DEFAULT value into column search_doc").
+ */
+describe("duplicateProperty strips every database-computed column", () => {
+  const generated = [...SCHEMA.matchAll(/^\s*(?:add column\s+)?([a-z_]+)\s+[a-z_]+(?:\([^)]*\))?\s*\n?\s*generated always as/gim)]
+    .map((m) => m[1]!)
+    .filter((c) => c !== "column");
+  const computed = [...new Set([...generated, "ref_no"])];
+  const actions = readFileSync(path.join(ROOT, "src/app/studio/actions.ts"), "utf8");
+  const body = actions.slice(actions.indexOf("export async function duplicateProperty"));
+  const fn = body.slice(0, body.indexOf("\nexport async function", 10) > 0 ? body.indexOf("\nexport async function", 10) : undefined);
+
+  test("found the computed columns in the schema", () => {
+    for (const c of ["search_doc", "ref_code", "ref_no"]) assert.ok(computed.includes(c), `${c} not detected: ${computed.join(",")}`);
+  });
+
+  for (const col of computed) {
+    test(`${col} is not copied`, () => {
+      assert.ok(new RegExp(`\\b${col}\\s*:\\s*_`).test(fn), `duplicateProperty must destructure ${col} away`);
+    });
+  }
+});

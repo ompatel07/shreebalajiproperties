@@ -5,9 +5,7 @@ import { SignOutButton } from "@/components/admin/SignOutButton";
 import { StudioNav, type StudioNavItem } from "@/components/admin/StudioNav";
 import { Monogram } from "@/components/ui/Logo";
 import { site } from "@/config/site";
-import { isDemoMode } from "@/lib/demo-data";
 import type { AdminStats } from "@/types/db";
-import { demoAdminStats, demoProfile } from "@/lib/demo-studio";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -33,8 +31,7 @@ export const metadata: Metadata = {
  * shell rather than one per badge. A failure here must never take the panel
  * down — the nav simply renders without badges.
  */
-async function navCounts(demo: boolean): Promise<AdminStats | null> {
-  if (demo) return demoAdminStats();
+async function navCounts(): Promise<AdminStats | null> {
   try {
     const supabase = await createClient();
     const { data } = await supabase.rpc("admin_stats");
@@ -79,21 +76,17 @@ export default async function StudioLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const demo = isDemoMode();
-  const navItems = buildNav(await navCounts(demo));
+  const navItems = buildNav(await navCounts());
 
-  // Skip the auth round trip entirely when there is no Supabase to ask.
-  const supabase = demo ? null : await createClient();
-  const user = supabase ? (await supabase.auth.getUser()).data.user : null;
+  const supabase = await createClient();
+  const user = (await supabase.auth.getUser()).data.user;
 
   // Named type, rather than `typeof profile` inside the branch — the latter
   // reads the already-narrowed type and collapses to `never`.
   type StaffProfile = { full_name: string | null; email: string; role: string };
   let profile: StaffProfile | null = null;
 
-  if (demo) {
-    profile = demoProfile as StaffProfile;
-  } else if (user && supabase) {
+  if (user) {
     const { data } = await supabase
       .from("profiles")
       .select("full_name, email, role")
@@ -171,30 +164,9 @@ export default async function StudioLayout({
           />
         </div>
 
-        {demo && <DemoStudioNotice />}
-
         {children}
       </div>
     </div>
   );
 }
 
-/**
- * Unmissable while the studio is open without authentication. It should be
- * impossible to look at this panel and think it is a live, secured session.
- */
-function DemoStudioNotice() {
-  return (
-    <div className="border-b border-brass/40 bg-brass-pale px-5 py-3 lg:px-10">
-      <p className="text-[0.75rem] leading-snug text-brass-deep">
-        <strong className="font-medium">
-          Demo mode — sign-in is bypassed and all records below are fictional.
-        </strong>{" "}
-        Supabase is not connected, so there is no session to establish and no
-        real data to protect. Editing is disabled. Add your Supabase
-        credentials to <code className="font-mono text-[0.6875rem]">.env.local</code>{" "}
-        and this panel immediately requires a real staff login.
-      </p>
-    </div>
-  );
-}

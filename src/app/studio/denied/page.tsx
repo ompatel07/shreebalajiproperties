@@ -72,11 +72,8 @@ export default async function DeniedPage({
         <h1 className="mt-6 font-display text-h3 text-ink">Not authorised</h1>
 
         <p className="mt-4 leading-relaxed text-ink-muted">
-          You are signed in, but this account is not on the studio allow-list.
-          Access requires both a staff <code className="font-mono text-[0.8125rem]">profiles</code>{" "}
-          row with the role <code className="font-mono text-[0.8125rem]">admin</code> or{" "}
-          <code className="font-mono text-[0.8125rem]">agent</code>, and the
-          email listed in <code className="font-mono text-[0.8125rem]">ADMIN_EMAILS</code>.
+          This account does not have access to the studio. Please sign out
+          and use the administrator account.
         </p>
 
         <div className="mt-8 flex flex-col items-center gap-4">

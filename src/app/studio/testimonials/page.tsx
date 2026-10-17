@@ -3,7 +3,6 @@ import { Star } from "lucide-react";
 import { TestimonialToggle } from "@/components/admin/TestimonialToggle";
 import { Badge } from "@/components/ui/Badge";
 import { formatDate, initials } from "@/lib/format";
-import { demoTestimonials, isDemoMode } from "@/lib/demo-data";
 import { createClient } from "@/lib/supabase/server";
 import type { Testimonial } from "@/types/db";
 
@@ -19,17 +18,16 @@ import type { Testimonial } from "@/types/db";
  * table from becoming a spam target.
  */
 export default async function TestimonialsPage() {
-  if (isDemoMode()) {
-    return <TestimonialsView testimonials={demoTestimonials} error={null} />;
-  }
-
   const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("testimonials")
     .select("*")
-    .order("is_published", { ascending: true })
+    // Stable order only. Sorting hidden-first made a row jump to the top the
+    // moment it was toggled, so a second click at the same spot hit a
+    // different testimonial (found in the admin audit).
     .order("created_at", { ascending: false })
+    .order("id", { ascending: true }) // deterministic: ties must not shuffle rows between refreshes
     .limit(100);
 
   return <TestimonialsView testimonials={(data ?? []) as Testimonial[]} error={error ? "load" : null} />;

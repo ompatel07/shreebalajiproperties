@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { safeNext as safeNextPath } from "@/lib/admin-access";
+
 import { LoginForm } from "@/components/admin/LoginForm";
 import { Monogram } from "@/components/ui/Logo";
 import { site } from "@/config/site";
@@ -17,10 +19,10 @@ interface Props {
 export default async function LoginPage({ searchParams }: Props) {
   const { next } = await searchParams;
 
-  // Only ever accept a same-site path, so `?next=` cannot be used as an
-  // open-redirect into an attacker's page after a successful login.
-  const safeNext =
-    next && next.startsWith("/") && !next.startsWith("//") ? next : "/studio";
+  // Only a studio path is accepted, so `?next=` cannot be used as an open
+  // redirect after sign-in ("/\evil.com" slipped past the old "//" check).
+  // The sign-in action applies the same rule again server-side.
+  const safeNext = safeNextPath(next);
 
   return (
     <div className="relative grid min-h-dvh place-items-center overflow-hidden px-5 py-16">
@@ -38,10 +40,7 @@ export default async function LoginPage({ searchParams }: Props) {
         <LoginForm next={safeNext} />
 
         <p className="mt-8 text-center text-[0.75rem] leading-relaxed text-ink-faint">
-          There is no self-service signup. Accounts are created by an
-          administrator in Supabase and must carry a staff profile row — see
-          the bootstrap notes at the end of{" "}
-          <code className="font-mono text-[0.6875rem]">supabase/schema.sql</code>.
+          Staff access only. There is no sign-up.
         </p>
 
         <p className="mt-6 text-center">

@@ -4,8 +4,6 @@ import { MessageCircle, Phone } from "lucide-react";
 import { VisitActions } from "@/components/admin/VisitActions";
 import { Badge } from "@/components/ui/Badge";
 import { formatRelative } from "@/lib/format";
-import { isDemoMode } from "@/lib/demo-data";
-import { demoVisits, demoAdminProperties } from "@/lib/demo-studio";
 import { createClient } from "@/lib/supabase/server";
 import type { SiteVisit } from "@/types/db";
 
@@ -19,19 +17,6 @@ import type { SiteVisit } from "@/types/db";
 export default async function VisitsPage() {
   const today = new Date().toISOString().slice(0, 10);
 
-  if (isDemoMode()) {
-    const titles = new Map(
-      demoAdminProperties().map((p) => [p.id, { title: p.title, slug: p.slug }]),
-    );
-    return (
-      <VisitsView
-        upcoming={demoVisits.filter((v) => v.slot_date >= today)}
-        past={demoVisits.filter((v) => v.slot_date < today)}
-        titles={titles}
-      />
-    );
-  }
-
   const supabase = await createClient();
 
   const [{ data: upcomingData }, { data: pastData }] = await Promise.all([
@@ -41,12 +26,14 @@ export default async function VisitsPage() {
       .gte("slot_date", today)
       .order("slot_date", { ascending: true })
       .order("slot_time", { ascending: true })
+      .order("id", { ascending: true }) // deterministic: ties must not shuffle rows between refreshes
       .limit(100),
     supabase
       .from("site_visits")
       .select("*")
       .lt("slot_date", today)
       .order("slot_date", { ascending: false })
+      .order("id", { ascending: true }) // deterministic: ties must not shuffle rows between refreshes
       .limit(40),
   ]);
 

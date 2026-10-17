@@ -5,7 +5,8 @@ import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { z } from "zod";
 
-import { isDemoMode } from "@/lib/demo-data";
+import { isAdminEmail, safeNext } from "@/lib/admin-access";
+import { isDemoMode as isUnconfigured } from "@/lib/demo-data";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { LIMITS, clientIp, tokenBucket } from "@/lib/rate-limit";
@@ -41,14 +42,14 @@ export interface AdminResult {
 }
 
 /**
- * In demo mode there is no database to write to. Rather than letting every
- * action fail against a dead host, each one short-circuits with an honest
- * message — so the panel stays fully browsable and obviously read-only.
+ * Without a configured database there is nothing to write to. The
+ * middleware already keeps /studio locked in that state; this is the
+ * second refusal, so an action can never run against a missing backend.
  */
-const DEMO_READONLY: AdminResult = {
+const NOT_CONFIGURED: AdminResult = {
   ok: false,
   message:
-    "Read-only demo. Connect Supabase in .env.local to enable editing — every control here works against a real database.",
+    "The database is not configured, so nothing can be saved.",
 };
 
 /**
@@ -75,7 +76,8 @@ async function assertStaff() {
 
   const row = profile as { id: string; email: string; role: string; full_name: string | null } | null;
 
-  if (!row || !["admin", "agent"].includes(row.role)) {
+  // Both must hold: a staff profile AND an allow-listed email.
+  if (!row || !["admin", "agent"].includes(row.role) || !isAdminEmail(user.email)) {
     redirect("/studio/denied");
   }
 
@@ -112,15 +114,17 @@ async function audit(
 const credentialsSchema = z.object({
   email: z.string().trim().toLowerCase().email("Enter a valid email"),
   password: z.string().min(8, "Password must be at least 8 characters").max(200),
-  next: z.string().startsWith("/").max(300).optional(),
+  // Validated separately by safeNext(): a bad value falls back to the
+  // dashboard instead of failing the sign-in.
+  next: z.string().max(2000).optional(),
 });
 
 export async function signIn(formData: FormData): Promise<AdminResult> {
-  if (isDemoMode()) {
+  if (isUnconfigured()) {
     return {
       ok: false,
       message:
-        "Demo mode — there is no auth backend to sign in against. The studio is already open; browse it directly at /studio.",
+        "Sign-in is unavailable: the database is not configured.",
     };
   }
 
@@ -167,7 +171,7 @@ export async function signIn(formData: FormData): Promise<AdminResult> {
 
   const role = (profile as { role?: string } | null)?.role;
 
-  if (!role || !["admin", "agent"].includes(role)) {
+  if (!role || !["admin", "agent"].includes(role) || !isAdminEmail(data.user.email)) {
     await supabase.auth.signOut();
     return {
       ok: false,
@@ -175,7 +179,7 @@ export async function signIn(formData: FormData): Promise<AdminResult> {
     };
   }
 
-  redirect(parsed.data.next ?? "/studio");
+  redirect(safeNext(parsed.data.next));
 }
 
 export async function signOut() {
@@ -189,7 +193,7 @@ export async function signOut() {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 export async function upsertProperty(formData: FormData): Promise<AdminResult> {
-  if (isDemoMode()) return DEMO_READONLY;
+  if (isUnconfigured()) return NOT_CONFIGURED;
 
   const { supabase, profile } = await assertStaff();
 
@@ -347,7 +351,7 @@ export async function setPropertyStatus(
   id: string,
   status: "draft" | "published" | "under_offer" | "sold" | "rented" | "archived",
 ): Promise<AdminResult> {
-  if (isDemoMode()) return DEMO_READONLY;
+  if (isUnconfigured()) return NOT_CONFIGURED;
 
   const { supabase, profile } = await assertStaff();
 
@@ -425,7 +429,7 @@ export async function deleteProperty(
   id: string,
   confirmation: string,
 ): Promise<AdminResult> {
-  if (isDemoMode()) return DEMO_READONLY;
+  if (isUnconfigured()) return NOT_CONFIGURED;
 
   const { supabase, profile } = await assertStaff();
 
@@ -485,7 +489,7 @@ export async function deleteProperty(
  * slug, so it can never accidentally go live as a duplicate of a real page.
  */
 export async function duplicateProperty(id: string): Promise<AdminResult> {
-  if (isDemoMode()) return DEMO_READONLY;
+  if (isUnconfigured()) return NOT_CONFIGURED;
 
   const { supabase, profile } = await assertStaff();
 
@@ -506,7 +510,10 @@ export async function duplicateProperty(id: string): Promise<AdminResult> {
   const row = source as Property;
 
   // Strip the identity, telemetry and publication fields — a copy starts
-  // fresh on all of them.
+  // fresh on all of them — and every column the database computes itself.
+  // Sending `search_doc` / `ref_code` (generated) or the source's `ref_no`
+  // (unique) made every duplicate fail: "cannot insert a non-DEFAULT value
+  // into column search_doc". The copy gets its own SK number by default.
   const {
     id: _id,
     created_at: _created,
@@ -514,8 +521,14 @@ export async function duplicateProperty(id: string): Promise<AdminResult> {
     published_at: _published,
     view_count: _views,
     enquiry_count: _enquiries,
-    ...rest
+    ref_no: _refNo,
+    ...withDerived
   } = row;
+  const {
+    search_doc: _searchDoc,
+    ref_code: _refCode,
+    ...rest
+  } = withDerived as typeof withDerived & { search_doc?: unknown; ref_code?: unknown };
 
   // A short random suffix avoids a collision if the same listing is copied
   // twice in a row.
@@ -557,7 +570,7 @@ export async function updatePropertyPrice(
   id: string,
   price: number | null,
 ): Promise<AdminResult> {
-  if (isDemoMode()) return DEMO_READONLY;
+  if (isUnconfigured()) return NOT_CONFIGURED;
 
   const { supabase, profile } = await assertStaff();
 
@@ -601,7 +614,7 @@ export async function updatePropertyPrice(
    ═══════════════════════════════════════════════════════════════════════════ */
 
 export async function updateLead(formData: FormData): Promise<AdminResult> {
-  if (isDemoMode()) return DEMO_READONLY;
+  if (isUnconfigured()) return NOT_CONFIGURED;
 
   const { supabase, profile } = await assertStaff();
 
@@ -656,7 +669,7 @@ export async function updateVisitStatus(
   id: string,
   status: "requested" | "confirmed" | "completed" | "no_show" | "cancelled",
 ): Promise<AdminResult> {
-  if (isDemoMode()) return DEMO_READONLY;
+  if (isUnconfigured()) return NOT_CONFIGURED;
 
   const { supabase, profile } = await assertStaff();
 
@@ -685,7 +698,7 @@ export async function setTestimonialPublished(
   id: string,
   published: boolean,
 ): Promise<AdminResult> {
-  if (isDemoMode()) return DEMO_READONLY;
+  if (isUnconfigured()) return NOT_CONFIGURED;
 
   const { supabase, profile } = await assertStaff();
 

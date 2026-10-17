@@ -5,8 +5,6 @@ import { LeadRow } from "@/components/admin/LeadRow";
 import { Badge } from "@/components/ui/Badge";
 import { localityBySlug } from "@/config/site";
 import { formatPrice, formatRelative } from "@/lib/format";
-import { isDemoMode } from "@/lib/demo-data";
-import { demoLeads, demoAdminProperties } from "@/lib/demo-studio";
 import { createClient } from "@/lib/supabase/server";
 import type { Lead, LeadStatus } from "@/types/db";
 
@@ -43,22 +41,6 @@ export default async function LeadsPage({ searchParams }: Props) {
   const { status } = await searchParams;
   const active = STATUS_TABS.some((t) => t.value === status) ? status! : "open";
 
-  if (isDemoMode()) {
-    let items = [...demoLeads];
-    if (active === "open") {
-      items = items.filter((l) => !l.status.startsWith("closed"));
-    } else if (active !== "all") {
-      items = items.filter((l) => l.status === active);
-    }
-    items.sort((a, b) => b.score - a.score);
-
-    const titles = new Map(
-      demoAdminProperties().map((p) => [p.id, { title: p.title, slug: p.slug }]),
-    );
-
-    return <LeadsView leads={items} count={items.length} active={active} titles={titles} error={null} />;
-  }
-
   const supabase = await createClient();
 
   let query = supabase
@@ -66,6 +48,7 @@ export default async function LeadsPage({ searchParams }: Props) {
     .select("*", { count: "exact" })
     .order("score", { ascending: false })
     .order("created_at", { ascending: false })
+    .order("id", { ascending: true }) // deterministic: ties must not shuffle rows between refreshes
     .limit(200);
 
   if (active === "open") {

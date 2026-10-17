@@ -5,8 +5,6 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { localityBySlug } from "@/config/site";
 import { formatPrice, formatRelative, groupIndian } from "@/lib/format";
-import { isDemoMode } from "@/lib/demo-data";
-import { demoAdminProperties, demoAdminStats, demoLeads, demoVisits } from "@/lib/demo-studio";
 import { createClient } from "@/lib/supabase/server";
 import type { AdminStats, Lead, Property, SiteVisit } from "@/types/db";
 
@@ -21,17 +19,6 @@ import type { AdminStats, Lead, Property, SiteVisit } from "@/types/db";
  * a single round trip and re-checks `is_staff()` server-side.
  */
 export default async function StudioDashboard() {
-  if (isDemoMode()) {
-    return (
-      <DashboardView
-        stats={demoAdminStats()}
-        leads={demoLeads.slice(0, 8)}
-        visits={demoVisits.filter((v) => v.status === "requested" || v.status === "confirmed")}
-        drafts={demoAdminProperties().filter((p) => p.status === "draft")}
-      />
-    );
-  }
-
   const supabase = await createClient();
 
   const [{ data: statsData }, { data: leadsData }, { data: visitsData }, { data: draftsData }] =
@@ -41,6 +28,7 @@ export default async function StudioDashboard() {
         .from("leads")
         .select("id, name, phone, email, message, source, status, score, created_at, property_id")
         .order("created_at", { ascending: false })
+        .order("id", { ascending: true }) // deterministic: ties must not shuffle rows between refreshes
         .limit(8),
       supabase
         .from("site_visits")
@@ -48,12 +36,14 @@ export default async function StudioDashboard() {
         .gte("slot_date", new Date().toISOString().slice(0, 10))
         .in("status", ["requested", "confirmed"])
         .order("slot_date", { ascending: true })
+        .order("id", { ascending: true }) // deterministic: ties must not shuffle rows between refreshes
         .limit(6),
       supabase
         .from("properties")
         .select("id, slug, title, status, locality_slug, price, updated_at")
         .in("status", ["draft", "under_offer"])
         .order("updated_at", { ascending: false })
+        .order("id", { ascending: true }) // deterministic: ties must not shuffle rows between refreshes
         .limit(6),
     ]);
 

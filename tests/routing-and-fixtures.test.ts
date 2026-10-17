@@ -2,7 +2,6 @@ import { test, describe } from "node:test";
 import assert from "node:assert/strict";
 
 import { resolveFacets, buildPath, allFacetPaths, isKnownCity } from "@/lib/slugs";
-import { demoAdminProperties } from "@/lib/demo-studio";
 import { demoProperties } from "@/lib/demo-data";
 import { localities, localityCount, featuredLocalities } from "@/config/site";
 
@@ -116,34 +115,6 @@ describe("locality config", () => {
 });
 
 describe("demo fixtures satisfy the shapes the UI reads", () => {
-  const ADMIN_REQUIRED = [
-    "id", "slug", "title", "status", "city", "locality_slug", "property_type",
-    "category", "price_on_request", "is_featured", "is_exclusive",
-    "rera_verified", "view_count", "enquiry_count", "updated_at",
-  ] as const;
-
-  test("every admin row defines every column the table renders", () => {
-    const rows = demoAdminProperties();
-    assert.ok(rows.length > 0, "no demo admin rows");
-
-    const missing: string[] = [];
-    for (const row of rows) {
-      for (const key of ADMIN_REQUIRED) {
-        if ((row as Record<string, unknown>)[key] === undefined) {
-          missing.push(`${row.slug}.${key}`);
-        }
-      }
-    }
-    assert.deepEqual(missing, [], `undefined admin fields:\n${missing.join("\n")}`);
-  });
-
-  test("admin rows include a draft, so the empty-state is not the only state", () => {
-    assert.ok(
-      demoAdminProperties().some((p) => p.status === "draft"),
-      "no draft fixture — the dashboard 'needs attention' panel would always be empty",
-    );
-  });
-
   test("every demo listing points at a locality that exists", () => {
     const known = new Set(localities.map((l) => l.slug));
     const orphans = demoProperties

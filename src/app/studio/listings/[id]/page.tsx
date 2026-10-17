@@ -5,8 +5,6 @@ import { ChevronLeft, ExternalLink } from "lucide-react";
 import { PropertyForm } from "@/components/admin/PropertyForm";
 import { Badge } from "@/components/ui/Badge";
 import { formatRelative } from "@/lib/format";
-import { demoBuilders, demoProjects, demoPropertyDetail, isDemoMode } from "@/lib/demo-data";
-import { demoAdminProperties } from "@/lib/demo-studio";
 import { createClient } from "@/lib/supabase/server";
 import type { Builder, Project, Property } from "@/types/db";
 
@@ -16,27 +14,6 @@ interface Props {
 
 export default async function EditListingPage({ params }: Props) {
   const { id } = await params;
-
-  if (isDemoMode()) {
-    const card = demoAdminProperties().find((p) => p.id === id);
-    if (!card) notFound();
-
-    const row = (demoPropertyDetail(card.slug) ?? {
-      ...card,
-      description: null,
-      highlights: [],
-      amenities: [],
-      nearby: [],
-    }) as unknown as Property;
-
-    return (
-      <EditView
-        row={{ ...row, id: card.id, status: card.status, title: card.title }}
-        builders={demoBuilders.map((b) => ({ id: b.id, name: b.name }))}
-        projects={demoProjects.map((p) => ({ id: p.id, name: p.name }))}
-      />
-    );
-  }
 
   const supabase = await createClient();
 

@@ -1,4 +1,6 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { isAdminEmail } from "@/lib/admin-access";
+import { SESSION_COOKIE_OPTIONS, capSessionCookie } from "@/lib/supabase/cookie-options";
 import { NextResponse, type NextRequest } from "next/server";
 
 /**
@@ -28,29 +30,12 @@ async function handle(request: NextRequest) {
   const demoMode = !supabaseUrl || supabaseUrl.includes("placeholder") || supabaseUrl.includes("xxxx");
 
   /**
-   * ── Why the demo bypass is restricted to localhost ──────────────────────
-   *
-   * This used to open `/studio` whenever Supabase was unconfigured, reasoning
-   * that with no database there is no session to establish and no real data
-   * to protect. That is true of the data and false of the exposure, and it
-   * failed in the obvious way: `NEXT_PUBLIC_*` values are inlined at BUILD
-   * time, so adding them in Vercel after a build leaves the deployed bundle
-   * in demo mode. The production URL served an admin panel with sign-in
-   * bypassed to anyone who typed /studio.
-   *
-   * A missing environment variable must never be the thing standing between
-   * the public and the admin panel. The bypass now requires a local host, so
-   * the convenience survives where it is useful and the failure mode on a
-   * public deployment is "locked", not "open".
+   * There is no demo bypass. The admin panel opens for one thing only: a
+   * verified Supabase session whose email is on ADMIN_EMAILS. Without a
+   * configured database it is locked on every host, localhost included —
+   * an earlier localhost-only bypass was removed at the client's request so
+   * that no path into /studio exists except the real sign-in.
    */
-  const hostname = request.nextUrl.hostname;
-  const isLocalHost =
-    hostname === "localhost" ||
-    hostname === "127.0.0.1" ||
-    hostname === "[::1]" ||
-    hostname.endsWith(".local");
-
-  const demoBypass = demoMode && isLocalHost;
 
   /**
    * ── Why the script policy differs by surface ──────────────────────────
@@ -141,6 +126,7 @@ async function handle(request: NextRequest) {
       supabaseUrl,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
       {
+        cookieOptions: SESSION_COOKIE_OPTIONS,
         cookies: {
           getAll() {
             return request.cookies.getAll();
@@ -151,7 +137,7 @@ async function handle(request: NextRequest) {
             }
             response = NextResponse.next({ request: { headers: requestHeaders } });
             for (const { name, value, options } of cookiesToSet) {
-              response.cookies.set(name, value, options);
+              response.cookies.set(name, value, capSessionCookie(options));
             }
           },
         },
@@ -181,14 +167,14 @@ async function handle(request: NextRequest) {
 
   // Unconfigured AND public: say so plainly rather than bouncing the visitor
   // around a login form that cannot possibly succeed.
-  if (isStudio && demoMode && !isLocalHost && pathname !== "/studio/denied") {
+  if (isStudio && demoMode && pathname !== "/studio/denied") {
     const url = request.nextUrl.clone();
     url.pathname = "/studio/denied";
     url.search = "?reason=unconfigured";
     return NextResponse.redirect(url);
   }
 
-  if (isStudio && !isLogin && !demoBypass) {
+  if (isStudio && !isLogin && pathname !== "/studio/denied") {
     if (!user) {
       const url = request.nextUrl.clone();
       url.pathname = "/studio/login";
@@ -199,12 +185,10 @@ async function handle(request: NextRequest) {
     // Second, independent check. RLS enforces this again at the database
     // level via the `profiles` table — this is belt as well as braces, so
     // that a misconfigured profile row alone cannot open the panel.
-    const allowed = (process.env.ADMIN_EMAILS ?? "")
-      .split(",")
-      .map((e) => e.trim().toLowerCase())
-      .filter(Boolean);
-
-    if (allowed.length > 0 && !allowed.includes((user.email ?? "").toLowerCase())) {
+    // Fail closed: an empty or missing ADMIN_EMAILS admits nobody. It used
+    // to admit any signed-in user, leaving the profiles table as the only
+    // check — one misconfigured env var away from an open panel.
+    if (!isAdminEmail(user.email)) {
       const url = request.nextUrl.clone();
       url.pathname = "/studio/denied";
       url.search = "";
@@ -213,7 +197,7 @@ async function handle(request: NextRequest) {
   }
 
   // Already signed in and sitting on the login page → go to the dashboard.
-  if (isLogin && (user || demoBypass)) {
+  if (isLogin && user) {
     const url = request.nextUrl.clone();
     url.pathname = "/studio";
     url.search = "";
