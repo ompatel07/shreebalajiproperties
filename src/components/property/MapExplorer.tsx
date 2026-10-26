@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { MapPin, SlidersHorizontal } from "lucide-react";
 
 import { SearchMap } from "@/components/property/StaticMap";
@@ -54,17 +54,26 @@ export function MapExplorer({ properties }: { properties: PropertyCard[] }) {
     });
   }, [properties, zone, type, band]);
 
-  /** Pin click → scroll the matching card into view and highlight it. */
-  const onSelect = (slug: string) => {
+  /**
+   * Pin tap → highlight the matching card. Only on desktop, where the list
+   * sits beside the map in its own scroller, is it scrolled into view; on a
+   * phone the list is below the map, and scrolling there carried the page
+   * away from the popup the visitor had just opened.
+   */
+  const onSelect = useCallback((slug: string) => {
     setSelected(slug);
+    if (!window.matchMedia("(min-width: 1024px)").matches) return;
     const node = listRef.current?.querySelector<HTMLElement>(`[data-slug="${slug}"]`);
-    node?.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
+    node?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }, []);
 
   return (
-    <div className="lg:grid lg:h-[calc(100svh-4.75rem)] lg:grid-cols-[26rem_1fr] xl:grid-cols-[30rem_1fr]">
-      {/* ══ List panel ══════════════════════════════════════════════════ */}
-      <div className="flex flex-col border-r border-rule bg-bone lg:overflow-hidden">
+    <div className="flex flex-col lg:grid lg:h-[calc(100svh-4.75rem)] lg:grid-cols-[26rem_1fr] xl:grid-cols-[30rem_1fr]">
+      {/* ══ List panel ══════════════════════════════════════════════════
+          Below the map on phones: on a narrow screen the list came first and
+          the map started almost four screens down, so "Map search" showed
+          no map at all. */}
+      <div className="order-2 flex flex-col border-r border-rule bg-bone lg:order-none lg:overflow-hidden">
         {/* Filters — one row, above the content. */}
         <div className="shrink-0 border-b border-rule px-5 py-4">
           <p className="flex items-center gap-2 font-semibold text-[0.8125rem] text-ink-muted">
@@ -157,7 +166,7 @@ export function MapExplorer({ properties }: { properties: PropertyCard[] }) {
                           {p.price_on_request ? "On request" : formatPrice(p.price)}
                         </p>
 
-                        <p className="mt-0.5 font-mono text-[0.5625rem] tracking-[0.06em] text-ink-faint">
+                        <p className="mt-0.5 text-[0.8125rem] text-ink-muted" data-numeric>
                           {[
                             p.bhk ? formatBhk(p.bhk) : null,
                             area ? formatArea(area) : null,
@@ -177,7 +186,7 @@ export function MapExplorer({ properties }: { properties: PropertyCard[] }) {
       </div>
 
       {/* ══ Map panel ═══════════════════════════════════════════════════ */}
-      <div className="relative h-[70svh] lg:h-full">
+      <div className="relative order-1 h-[56svh] lg:order-none lg:h-full">
         <SearchMap properties={filtered} onSelect={onSelect} height="100%" />
       </div>
     </div>
@@ -203,7 +212,7 @@ function FilterSelect({
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full min-w-0 cursor-pointer truncate rounded-lg border border-rule-strong bg-paper px-2 py-2 text-[0.75rem] text-ink focus:border-brass focus:outline-none sm:text-[0.8125rem]"
+        className="select-chevron w-full min-w-0 cursor-pointer truncate rounded-lg border border-rule-strong bg-paper px-2 py-2 text-[0.75rem] text-ink focus:border-brass focus:outline-none sm:text-[0.8125rem]"
       >
         {children}
       </select>

@@ -44,6 +44,11 @@ export function PropertyMap({
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const layerRef = useRef<L.LayerGroup | null>(null);
+  // Latest callback in a ref, so a parent re-render (e.g. highlighting the
+  // tapped home) never re-runs the marker effect. It used to: the markers
+  // were cleared and the map re-fitted, so a pin's popup flashed and vanished.
+  const onSelectRef = useRef(onSelect);
+  onSelectRef.current = onSelect;
 
   // ── Create once ────────────────────────────────────────────────────────
   useEffect(() => {
@@ -59,12 +64,14 @@ export function PropertyMap({
       attributionControl: true,
     });
 
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+    // OpenStreetMap's own tiles: free, no account, attribution required.
+    // CARTO's basemaps (used before) started demanding an API key and
+    // served "API KEY REQUIRED" watermark tiles on every map.
+    // The tiles are softened with a CSS filter below for the light look.
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: "abcd",
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: 19,
-      detectRetina: true,
     }).addTo(map);
 
     // Ctrl/⌘ + wheel zooms, which keeps the page scrollable over the map.
@@ -125,7 +132,7 @@ export function PropertyMap({
         className: "sbp-popup",
       });
 
-      if (onSelect) marker.on("click", () => onSelect(p.slug));
+      marker.on("click", () => onSelectRef.current?.(p.slug));
 
       marker.addTo(layer);
     }
@@ -136,14 +143,14 @@ export function PropertyMap({
     } else if (points.length === 1) {
       map.setView(points[0]!, 15);
     }
-  }, [properties, onSelect]);
+  }, [properties]);
 
   return (
     <>
       <div
         ref={containerRef}
         style={{ height }}
-        className="w-full overflow-hidden rounded-lg border border-rule bg-sand"
+        className="sbp-map w-full overflow-hidden rounded-2xl border border-rule bg-sand"
         role="application"
         aria-label={`Map showing ${properties.length} properties`}
       />
@@ -161,12 +168,12 @@ export function PropertyMap({
           white-space: nowrap;
           background: var(--color-ink);
           color: var(--color-bone);
-          font-family: var(--font-mono), monospace;
-          font-size: 0.6875rem;
-          letter-spacing: 0.04em;
+          font-family: var(--font-sans), sans-serif;
+          font-size: 0.75rem;
+          font-weight: 700;
           font-variant-numeric: tabular-nums;
-          padding: 0.3rem 0.55rem;
-          border-radius: 2px;
+          padding: 0.3rem 0.6rem;
+          border-radius: 999px;
           box-shadow: 0 2px 10px rgba(22,21,15,0.3);
           cursor: pointer;
           transition: background-color 0.25s, transform 0.25s;
@@ -186,8 +193,9 @@ export function PropertyMap({
           transform: translate(-50%, -100%) scale(1.06);
           z-index: 500;
         }
+        .sbp-map .leaflet-tile-pane { filter: grayscale(0.55) brightness(1.04) contrast(0.92); }
         .sbp-popup .leaflet-popup-content-wrapper {
-          border-radius: 2px;
+          border-radius: 14px;
           box-shadow: 0 8px 32px rgba(22,21,15,0.18);
           background: var(--color-paper);
         }

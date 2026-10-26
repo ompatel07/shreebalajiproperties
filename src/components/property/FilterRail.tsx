@@ -7,6 +7,7 @@ import { SlidersHorizontal, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { amenities, budgetBands, localities, possessionStatuses, propertyTypes } from "@/config/site";
 import { formatPrice } from "@/lib/format";
+import { useScrollLock } from "@/lib/use-scroll-lock";
 import { cn } from "@/lib/utils";
 
 /**
@@ -49,6 +50,7 @@ export function FilterRail({
   const searchParams = useSearchParams();
   const [pending, startTransition] = useTransition();
   const [mobileOpen, setMobileOpen] = useState(false);
+  useScrollLock(mobileOpen);
 
   const setParam = useCallback(
     (key: string, value: string | null) => {
@@ -460,7 +462,7 @@ export function SortBar({ total }: { total: number }) {
         id="sort"
         value={current}
         onChange={(e) => onChange(e.target.value)}
-        className="cursor-pointer rounded-full border border-rule-strong bg-paper px-4 py-2.5 text-[0.8125rem] font-medium text-ink focus:border-brass focus:outline-none"
+        className="select-chevron cursor-pointer rounded-full border border-rule-strong bg-paper px-4 py-2.5 text-[0.8125rem] font-medium text-ink focus:border-brass focus:outline-none"
       >
         <option value="relevance">Our pick</option>
         <option value="newest">Newest first</option>

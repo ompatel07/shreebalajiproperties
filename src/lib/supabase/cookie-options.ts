@@ -25,10 +25,20 @@ export const SESSION_COOKIE_OPTIONS = {
  * @supabase/ssr re-applies its own 400-day maxAge after spreading
  * `cookieOptions`, so the cap has to be enforced where cookies are written.
  * A maxAge of 0 (sign-out / deletion) passes through untouched.
+ *
+ * `secure` is false only for plain-http localhost: Safari/WebKit refuses to
+ * send a Secure cookie over http://localhost (Chrome and Firefox allow it),
+ * so local development in Safari signed straight back out. Every real host
+ * is HTTPS and always gets Secure.
  */
-export function capSessionCookie(options: CookieOptions | undefined): CookieOptions {
+export function capSessionCookie(options: CookieOptions | undefined, secure = true): CookieOptions {
   const o = options ?? {};
   const maxAge =
     o.maxAge === 0 ? 0 : Math.min(o.maxAge ?? SESSION_COOKIE_OPTIONS.maxAge, SESSION_COOKIE_OPTIONS.maxAge);
-  return { ...SESSION_COOKIE_OPTIONS, ...o, secure: true, maxAge };
+  return { ...SESSION_COOKIE_OPTIONS, ...o, secure, maxAge };
+}
+
+/** True only for http://localhost-style hosts — never for a deployed site. */
+export function isLocalHttp(host: string | null | undefined, proto: string | null | undefined): boolean {
+  return (proto ?? "http").replace(":", "") === "http" && /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(host ?? "");
 }

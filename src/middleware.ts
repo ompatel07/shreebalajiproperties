@@ -19,6 +19,9 @@ async function handle(request: NextRequest) {
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
   const isDev = process.env.NODE_ENV === "development";
+  const isLocalHttp =
+    request.nextUrl.protocol === "http:" &&
+    ["localhost", "127.0.0.1", "[::1]"].includes(request.nextUrl.hostname);
   const isAdminSurface = request.nextUrl.pathname.startsWith("/studio");
 
   /**
@@ -77,8 +80,8 @@ async function handle(request: NextRequest) {
       `https://images.unsplash.com`,
       `https://*.supabase.co`,
       // OpenStreetMap raster tiles (our free alternative to Google Maps).
+      `https://tile.openstreetmap.org`,
       `https://*.tile.openstreetmap.org`,
-      `https://*.basemaps.cartocdn.com`,
     ].join(" "),
     // Only widen connect-src when a Supabase origin actually exists —
     // interpolating an empty string leaves a malformed directive.
@@ -94,7 +97,11 @@ async function handle(request: NextRequest) {
     `form-action 'self'`,
     `frame-ancestors 'none'`,
     `manifest-src 'self'`,
-    ...(isDev ? [] : [`upgrade-insecure-requests`]),
+    // Not on plain-http localhost: WebKit (iPhone Safari's engine) honours it
+    // there too and rewrites every asset to https://localhost, which does not
+    // exist — the page renders unstyled and cannot be tested. Production is
+    // always HTTPS, so it keeps the directive.
+    ...(isDev || isLocalHttp ? [] : [`upgrade-insecure-requests`]),
   ].join("; ");
 
   const requestHeaders = new Headers(request.headers);
@@ -137,7 +144,7 @@ async function handle(request: NextRequest) {
             }
             response = NextResponse.next({ request: { headers: requestHeaders } });
             for (const { name, value, options } of cookiesToSet) {
-              response.cookies.set(name, value, capSessionCookie(options));
+              response.cookies.set(name, value, capSessionCookie(options, !isLocalHttp));
             }
           },
         },

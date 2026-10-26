@@ -586,20 +586,36 @@
     pointer-events: auto;
   }
 
+  /* Closed sheets are also visibility:hidden (after the slide-out), so an
+     off-screen panel can never be panned to, tapped or painted on iOS. */
   .sheet-right {
     transform: translate3d(100%, 0, 0);
-    transition: transform 0.45s var(--ease-editorial);
+    visibility: hidden;
+    transition:
+      transform 0.4s var(--ease-editorial),
+      visibility 0s linear 0.4s;
   }
   .sheet-right[data-open="1"] {
     transform: none;
+    visibility: visible;
+    transition:
+      transform 0.4s var(--ease-editorial),
+      visibility 0s;
   }
 
   .sheet-bottom {
     transform: translate3d(0, 100%, 0);
-    transition: transform 0.45s var(--ease-editorial);
+    visibility: hidden;
+    transition:
+      transform 0.4s var(--ease-editorial),
+      visibility 0s linear 0.4s;
   }
   .sheet-bottom[data-open="1"] {
     transform: none;
+    visibility: visible;
+    transition:
+      transform 0.4s var(--ease-editorial),
+      visibility 0s;
   }
 
   .panel-drop {
@@ -617,15 +633,15 @@
   }
 
   /* Accordion without measuring: grid-template-rows 0fr → 1fr animates. */
-  .collapse {
+  .accordion-panel {
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.36s var(--ease-editorial);
   }
-  .collapse[data-open="1"] {
+  .accordion-panel[data-open="1"] {
     grid-template-rows: 1fr;
   }
-  .collapse > * {
+  .accordion-panel > * {
     overflow: hidden;
     min-height: 0;
   }
@@ -692,4 +708,31 @@
 @keyframes hero-caption {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TOUCH-SCREEN FORM FIELDS — deliberately outside @layer
+   ═══════════════════════════════════════════════════════════════════════════
+   iOS Safari zooms the whole page in when a field under 16px is focused, and
+   often leaves it zoomed after — the "page jumps and goes big" glitch on
+   iPhone. Every field on a touch screen is therefore at least 16px. Unlayered
+   CSS outranks Tailwind's layered utilities, so this wins over text-[15px]. */
+@media (pointer: coarse) {
+  input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* Native <select> without the platform chrome: iOS paints a grey bevelled
+   button otherwise. One chevron, drawn here so every select matches. */
+.select-chevron {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23625e56' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+  background-size: 1rem;
+  padding-right: 2rem;
 }

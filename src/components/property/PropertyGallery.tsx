@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
 
 import { blurPlaceholder } from "@/lib/imagery";
+import { useScrollLock } from "@/lib/use-scroll-lock";
 import { cn } from "@/lib/utils";
 
 /**
@@ -26,6 +27,7 @@ export function PropertyGallery({
   title: string;
 }) {
   const [lightbox, setLightbox] = useState<number | null>(null);
+  useScrollLock(lightbox !== null);
   const count = images.length;
 
   const close = useCallback(() => setLightbox(null), []);
@@ -47,13 +49,8 @@ export function PropertyGallery({
       if (e.key === "ArrowLeft") prev();
     };
 
-    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
-
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKey);
-    };
+    return () => window.removeEventListener("keydown", onKey);
   }, [lightbox, close, next, prev]);
 
   if (count === 0) {

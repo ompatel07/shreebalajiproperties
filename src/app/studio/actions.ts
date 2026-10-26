@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { z } from "zod";
@@ -9,6 +9,7 @@ import { isAdminEmail, safeNext } from "@/lib/admin-access";
 import { isDemoMode as isUnconfigured } from "@/lib/demo-data";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
+import { LISTINGS_TAG } from "@/lib/queries";
 import { LIMITS, clientIp, tokenBucket } from "@/lib/rate-limit";
 import { fieldErrors, leadUpdateSchema, propertyUpsertSchema } from "@/lib/validation";
 import { slugify } from "@/lib/format";
@@ -343,6 +344,7 @@ export async function upsertProperty(formData: FormData): Promise<AdminResult> {
   revalidatePath(`/${v.city}`);
   revalidatePath("/map");
   revalidatePath("/studio/listings");
+  revalidateTag(LISTINGS_TAG); // cached search / area results
 
   return { ok: true, message: v.id ? "Listing updated." : "Listing created.", id: saved.id };
 }
@@ -382,6 +384,7 @@ export async function setPropertyStatus(
   revalidatePath(`/property/${row.slug}`);
   revalidatePath(`/${row.city}/${row.locality_slug}`);
   revalidatePath("/studio/listings");
+  revalidateTag(LISTINGS_TAG); // cached search / area results
 
   return { ok: true, message: `Moved to ${status.replace("_", " ")}.` };
 }
@@ -473,6 +476,7 @@ export async function deleteProperty(
   revalidatePath(`/property/${row.slug}`);
   revalidatePath(`/${row.city}/${row.locality_slug}`);
   revalidatePath("/studio/listings");
+  revalidateTag(LISTINGS_TAG); // cached search / area results
 
   return { ok: true, message: `Deleted "${row.title}". Recoverable from the audit log.` };
 }
@@ -556,6 +560,7 @@ export async function duplicateProperty(id: string): Promise<AdminResult> {
   await audit(profile, "property.duplicate", "properties", created.id, { from: row.slug });
 
   revalidatePath("/studio/listings");
+  revalidateTag(LISTINGS_TAG); // cached search / area results
 
   return { ok: true, message: "Duplicated as a draft.", id: created.id };
 }
@@ -605,6 +610,7 @@ export async function updatePropertyPrice(
   revalidatePath(`/property/${r.slug}`);
   revalidatePath(`/${r.city}/${r.locality_slug}`);
   revalidatePath("/studio/listings");
+  revalidateTag(LISTINGS_TAG); // cached search / area results
 
   return { ok: true, message: "Price updated." };
 }

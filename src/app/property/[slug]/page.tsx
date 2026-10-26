@@ -39,7 +39,7 @@ import {
   priceInWords,
 } from "@/lib/format";
 import { galleryFor, heroImageFor } from "@/lib/imagery";
-import { getPropertyBySlug, getSimilarListings } from "@/lib/queries";
+import { getAllPropertySlugs, getPropertyBySlug, getSimilarListings } from "@/lib/queries";
 import { breadcrumbSchema, listingSchema, pageMeta } from "@/lib/seo";
 import { areaConversions } from "@/lib/finance";
 import type { NearbyPlace } from "@/types/db";
@@ -54,6 +54,18 @@ import type { NearbyPlace } from "@/types/db";
  */
 export const revalidate = 300;
 export const dynamicParams = true;
+
+/**
+ * Pre-build every live listing; new ones render on first visit and are then
+ * cached. Without this, Next.js 15 treated the route as fully dynamic —
+ * `revalidate` was ignored and every view queried the database (~1.9 s to
+ * first byte). Admin edits refresh a listing's page immediately via
+ * revalidatePath, so caching never shows stale details after a change.
+ */
+export async function generateStaticParams() {
+  const rows = await getAllPropertySlugs();
+  return rows.map((r) => ({ slug: r.slug }));
+}
 
 interface Props {
   params: Promise<{ slug: string }>;

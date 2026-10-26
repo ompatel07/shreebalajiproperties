@@ -96,6 +96,7 @@ export function LeadRow({
         disabled={pending}
         aria-label="Lead status"
         className={cn(
+          "select-chevron",
           "cursor-pointer rounded-lg border px-3 py-2 font-semibold text-[0.8125rem] focus:border-brass focus:outline-none",
           tone,
           pending && "opacity-60",

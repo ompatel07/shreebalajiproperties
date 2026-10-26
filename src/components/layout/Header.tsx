@@ -15,6 +15,7 @@ import {
   zoneLabels,
   type Zone,
 } from "@/config/site";
+import { useScrollLock } from "@/lib/use-scroll-lock";
 import { cn, telLink } from "@/lib/utils";
 
 /**
@@ -38,12 +39,44 @@ import { cn, telLink } from "@/lib/utils";
 
 type PanelKey = "buy" | "localities" | "tools" | null;
 
+/**
+ * The menu must work before the JavaScript bundle has loaded.
+ *
+ * On a budget phone over mobile data the page is visible for several seconds
+ * before React takes over, and a tap on ☰ in that window used to be lost —
+ * measured: button visible at 0.7s, tap at 3.8s, menu never opened. This
+ * inline script runs with the HTML itself: it opens and closes the drawer by
+ * flipping the same `data-open` attributes the CSS animates, and the Header
+ * adopts the state once hydrated. Links inside are plain <a> elements, so
+ * they navigate normally even at this stage.
+ */
+const EARLY_MENU_SCRIPT = `(function(){
+  if (window.__sbpMenuHydrated) return;
+  function set(open){
+    var d=document.querySelector('[role=dialog][aria-label="Menu"]');
+    var o=document.querySelector('[data-menu-overlay]');
+    if(!d||!o) return;
+    d.setAttribute('data-open',open?'1':'0');
+    o.setAttribute('data-open',open?'1':'0');
+    if(open){d.removeAttribute('inert');d.removeAttribute('aria-hidden');}
+    else{d.setAttribute('inert','');d.setAttribute('aria-hidden','true');}
+    window.__sbpMenuEarly=open;
+  }
+  document.addEventListener('click',function h(e){
+    if(window.__sbpMenuHydrated){document.removeEventListener('click',h,true);return;}
+    var t=e.target&&e.target.closest?e.target:null; if(!t) return;
+    if(t.closest('button[aria-label="Open menu"]')) set(true);
+    else if(t.closest('button[aria-label="Close menu"]')||t.closest('[data-menu-overlay]')) set(false);
+  },true);
+})();`;
+
 export function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [panel, setPanel] = useState<PanelKey>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
 
   const isHome = pathname === "/";
   /* Transparent only. The homepage hero is ivory from its first pixel, so the
@@ -74,13 +107,16 @@ export function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Lock the page behind the mobile drawer.
+  // Lock the page behind the mobile drawer (iOS-safe; see useScrollLock).
+  useScrollLock(mobileOpen);
+
+  // Hand-over from EARLY_MENU_SCRIPT: if the menu was opened before React
+  // took over, adopt that state instead of snapping it shut.
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [mobileOpen]);
+    const w = window as typeof window & { __sbpMenuHydrated?: boolean; __sbpMenuEarly?: boolean };
+    w.__sbpMenuHydrated = true;
+    if (w.__sbpMenuEarly) setMobileOpen(true);
+  }, []);
 
   if (hidden) return null;
 
@@ -96,6 +132,7 @@ export function Header() {
 
   return (
     <>
+      <script dangerouslySetInnerHTML={{ __html: EARLY_MENU_SCRIPT }} />
       <header
         className={cn(
           "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500",
@@ -179,6 +216,7 @@ export function Header() {
             </a>
 
             <button
+              ref={menuButton}
               type="button"
               onClick={() => setMobileOpen(true)}
               aria-label="Open menu"
@@ -210,7 +248,11 @@ export function Header() {
         </div>
       </header>
 
-      <MobileDrawer open={mobileOpen} onClose={() => setMobileOpen(false)} />
+      <MobileDrawer
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        returnFocusTo={menuButton}
+      />
     </>
   );
 }
@@ -414,12 +456,41 @@ function ToolsPanel() {
    MOBILE DRAWER
    ═══════════════════════════════════════════════════════════════════════════ */
 
-function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
+function MobileDrawer({
+  open,
+  onClose,
+  returnFocusTo,
+}: {
+  open: boolean;
+  onClose: () => void;
+  returnFocusTo: React.RefObject<HTMLButtonElement | null>;
+}) {
   const [section, setSection] = useState<string | null>("buy");
+  const closeButton = useRef<HTMLButtonElement>(null);
+  const wasOpen = useRef(false);
+
+  // Focus moves into the drawer when it opens and back to the menu button
+  // when it closes, so keyboard and screen-reader users are not stranded.
+  useEffect(() => {
+    if (open) closeButton.current?.focus({ preventScroll: true });
+    else if (wasOpen.current) returnFocusTo.current?.focus({ preventScroll: true });
+    wasOpen.current = open;
+  }, [open, returnFocusTo]);
+
+  /**
+   * Close the moment any link is tapped. Waiting for the route to change
+   * left the drawer sitting open for the whole page load on mobile data —
+   * it looked frozen — and a link to the page you are already on never
+   * changes the route, so the drawer did not close at all.
+   */
+  const closeOnLink = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest("a")) onClose();
+  };
 
   return (
     <>
       <div
+        data-menu-overlay
         className="overlay fixed inset-0 z-[60] bg-ink/45 backdrop-blur-sm lg:hidden"
         data-open={open ? "1" : "0"}
         onClick={onClose}
@@ -435,9 +506,10 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
         data-open={open ? "1" : "0"}
         className="sheet-right fixed inset-y-0 right-0 z-[61] flex w-full max-w-sm flex-col bg-bone lg:hidden"
       >
-        <div className="flex h-16 shrink-0 items-center justify-between border-b border-rule px-5">
+        <div className="flex h-16 shrink-0 items-center justify-between border-b border-rule px-5" onClick={closeOnLink}>
           <Logo />
           <button
+            ref={closeButton}
             type="button"
             onClick={onClose}
             aria-label="Close menu"
@@ -447,7 +519,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto overscroll-contain px-5 py-6">
+        <nav className="flex-1 overflow-y-auto overscroll-contain px-5 py-6" onClick={closeOnLink}>
           <Accordion
             id="buy"
             label="Buy"
@@ -508,17 +580,17 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
               { href: "/contact", label: "Contact" },
               { href: "/for-builders", label: "For Builders" },
             ].map((l) => (
-              <Link key={l.href} href={l.href} className="block py-3 font-display text-h4 text-ink">
+              <Link key={l.href} href={l.href} prefetch={false} className="block py-3 font-display text-h4 text-ink">
                 {l.label}
               </Link>
             ))}
           </div>
         </nav>
 
-        <div className="shrink-0 border-t border-rule p-5">
+        <div className="shrink-0 border-t border-rule p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
           <a
             href={telLink(site.contact.phoneE164)}
-            className="flex w-full items-center justify-center gap-2.5 rounded-lg bg-ink py-4 font-semibold text-[0.8125rem] text-bone"
+            className="flex w-full items-center justify-center gap-2.5 rounded-full bg-ink py-4 text-[0.9375rem] font-bold text-white"
           >
             <Phone className="size-3.5" strokeWidth={1.8} aria-hidden />
             {site.contact.phoneDisplay}
@@ -559,19 +631,25 @@ function Accordion({
         </span>
       </button>
 
-      {/* grid-template-rows 0fr → 1fr. No measuring, no library. */}
-      <div className="collapse" data-open={open ? "1" : "0"}>
-        <ul>
-          <div className="pb-4">
+      {/* grid-template-rows 0fr → 1fr. No measuring, no library.
+          Class is `accordion-panel`, not `collapse`: Tailwind also generates
+          a `collapse` utility (visibility: collapse) that won the cascade and
+          hid the open section's links. Closed sections are `inert` so their
+          links cannot be tapped or tabbed to while invisible. */}
+      <div className="accordion-panel" data-open={open ? "1" : "0"} inert={!open}>
+        <div>
+          <ul className="pb-4">
             {links.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="block py-2 pl-1 text-[0.9375rem] text-ink-muted">
+                {/* No prefetch: opening the drawer would otherwise fetch ~35
+                    pages at once while it animates in on a phone. */}
+                <Link href={l.href} prefetch={false} className="block py-2.5 pl-1 text-[0.9375rem] text-ink-soft">
                   {l.label}
                 </Link>
               </li>
             ))}
-          </div>
-        </ul>
+          </ul>
+        </div>
       </div>
     </div>
   );

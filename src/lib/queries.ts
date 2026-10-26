@@ -1,3 +1,5 @@
+import { unstable_cache } from "next/cache";
+
 import { budgetBands, localityBySlug } from "@/config/site";
 import {
   demoBuilders,
@@ -62,7 +64,28 @@ export interface ListingResult {
  * from the query string; path facets win on conflict, because the path is
  * what is canonical and indexed.
  */
-export async function getListings(
+/**
+ * Cached for two minutes, per facet + filter combination.
+ *
+ * The search and area pages must render per request (they read the query
+ * string for filters and sort), and every one of those renders used to hit
+ * the database — 0.5–1.9 s before the first byte. The result is now shared
+ * across visitors; any admin change to a listing clears it at once via
+ * `revalidateTag(LISTINGS_TAG)`, so edits still appear immediately.
+ */
+export const LISTINGS_TAG = "listings";
+
+export function getListings(
+  facets: Partial<ResolvedFacets> & { city?: { slug: string } },
+  params: Partial<SearchParams> = {},
+): Promise<ListingResult> {
+  return unstable_cache(() => getListingsUncached(facets, params), ["listings", JSON.stringify([facets, params])], {
+    revalidate: 120,
+    tags: [LISTINGS_TAG],
+  })();
+}
+
+async function getListingsUncached(
   facets: Partial<ResolvedFacets> & { city?: { slug: string } },
   params: Partial<SearchParams> = {},
 ): Promise<ListingResult> {

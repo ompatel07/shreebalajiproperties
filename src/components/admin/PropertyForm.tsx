@@ -341,7 +341,7 @@ export function PropertyForm({
                   value={d.propertyType}
                   onChange={(e) => onTypeChange(e.target.value)}
                   required
-                  className={input}
+                  className={`${input} select-chevron`}
                 >
                   <optgroup label="Residential">
                     {propertyTypes.filter((t) => t.category === "residential").map((t) => (
@@ -372,7 +372,7 @@ export function PropertyForm({
                   value={d.localitySlug}
                   onChange={(e) => set("localitySlug", e.target.value)}
                   required
-                  className={input}
+                  className={`${input} select-chevron`}
                 >
                   <option value="">Select a locality…</option>
                   {site.cities.map((city) => (
@@ -464,7 +464,7 @@ export function PropertyForm({
                   name="possession"
                   value={d.possession}
                   onChange={(e) => set("possession", e.target.value)}
-                  className={input}
+                  className={`${input} select-chevron`}
                 >
                   {possessionStatuses.map((s) => (
                     <option key={s.slug} value={s.slug}>{s.label}</option>
@@ -534,7 +534,7 @@ export function PropertyForm({
                   defaultValue={property?.plot_sqft ?? ""} className={cn(input, "tabular-nums")} />
               </Field>
               <Field label="Facing" error={errors.facing}>
-                <select name="facing" defaultValue={property?.facing ?? ""} className={input}>
+                <select name="facing" defaultValue={property?.facing ?? ""} className={`${input} select-chevron`}>
                   <option value="">—</option>
                   {["East","West","North","South","North-East","North-West","South-East","South-West"].map((f) => (
                     <option key={f} value={f}>{f}</option>
@@ -550,7 +550,7 @@ export function PropertyForm({
                   defaultValue={property?.total_floors ?? ""} className={cn(input, "tabular-nums")} />
               </Field>
               <Field label="Furnishing" error={errors.furnishing}>
-                <select name="furnishing" defaultValue={property?.furnishing ?? ""} className={input}>
+                <select name="furnishing" defaultValue={property?.furnishing ?? ""} className={`${input} select-chevron`}>
                   <option value="">—</option>
                   <option value="unfurnished">Unfurnished</option>
                   <option value="semi-furnished">Semi-furnished</option>
@@ -714,20 +714,20 @@ export function PropertyForm({
               </Field>
 
               <Field label="Developer" error={errors.builderId}>
-                <select name="builderId" defaultValue={property?.builder_id ?? ""} className={input}>
+                <select name="builderId" defaultValue={property?.builder_id ?? ""} className={`${input} select-chevron`}>
                   <option value="">—</option>
                   {builders.map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
                 </select>
               </Field>
               <Field label="Project" error={errors.projectId}>
-                <select name="projectId" defaultValue={property?.project_id ?? ""} className={input}>
+                <select name="projectId" defaultValue={property?.project_id ?? ""} className={`${input} select-chevron`}>
                   <option value="">—</option>
                   {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
                 </select>
               </Field>
 
               <Field label="Transaction" error={errors.transaction}>
-                <select name="transaction" defaultValue={property?.transaction ?? "sale"} className={input}>
+                <select name="transaction" defaultValue={property?.transaction ?? "sale"} className={`${input} select-chevron`}>
                   <option value="sale">For sale</option>
                   <option value="rent">For rent</option>
                   <option value="lease">For lease</option>
@@ -770,7 +770,7 @@ export function PropertyForm({
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as typeof status)}
-                className="border border-rule-strong bg-paper px-2.5 py-1.5 font-bold text-[0.875rem] focus:border-brass focus:outline-none rounded-full"
+                className="select-chevron rounded-full border border-rule-strong bg-paper py-1.5 pl-3 font-bold text-[0.875rem] focus:border-brass focus:outline-none"
               >
                 <option value="draft">Draft</option>
                 <option value="published" disabled={blockers > 0}>
@@ -986,7 +986,7 @@ function SeverityDot({ severity }: { severity: ReadinessItem["severity"] }) {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 const input =
-  "w-full border border-rule-strong bg-paper px-3.5 py-3 text-[0.9375rem] text-ink " +
+  "w-full rounded-lg border border-rule-strong bg-paper px-3.5 py-3 text-[0.9375rem] text-ink " +
   "transition-colors placeholder:text-ink-faint focus:border-brass focus:outline-none " +
   "disabled:bg-sand disabled:opacity-60";
 

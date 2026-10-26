@@ -14,11 +14,17 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { localityBySlug, site } from "@/config/site";
 import { formatArea, formatPossession, formatPriceRange } from "@/lib/format";
 import { galleryFor, heroImageFor } from "@/lib/imagery";
-import { getProjectBySlug, getProjectUnits } from "@/lib/queries";
+import { getAllProjectSlugs, getProjectBySlug, getProjectUnits } from "@/lib/queries";
 import { breadcrumbSchema, pageMeta } from "@/lib/seo";
 
 export const revalidate = 600;
 export const dynamicParams = true;
+
+/** Pre-build every project page; without this the route rendered per visit. */
+export async function generateStaticParams() {
+  const slugs = await getAllProjectSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
 
 interface Props {
   params: Promise<{ slug: string }>;

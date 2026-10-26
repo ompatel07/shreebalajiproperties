@@ -204,7 +204,7 @@ export default async function LocalitiesPage() {
                               return (
                                 <tr key={l.slug} className="group hover:bg-sand/60">
                                   <th scope="row" className="py-4 pr-4 text-left font-normal">
-                                    <Link href={`/${l.city}/${l.slug}`} className="block">
+                                    <Link prefetch={false} href={`/${l.city}/${l.slug}`} className="block">
                                       <span className="text-[1.0625rem] font-semibold text-ink group-hover:text-brass">
                                         {l.name}
                                       </span>
@@ -232,7 +232,7 @@ export default async function LocalitiesPage() {
                                   </td>
 
                                   <td className="py-4 text-right align-top">
-                                    <Link
+                                    <Link prefetch={false}
                                       href={`/${l.city}/${l.slug}`}
                                       aria-label={`Property in ${l.name}`}
                                       className="inline-grid size-8 place-items-center rounded-full border border-rule-strong text-ink-muted transition-all duration-300 group-hover:border-brass group-hover:bg-brass group-hover:text-paper"
@@ -261,7 +261,7 @@ export default async function LocalitiesPage() {
 
                             return (
                               <li key={l.slug}>
-                                <Link
+                                <Link prefetch={false}
                                   href={`/${l.city}/${l.slug}`}
                                   className="group inline-flex items-center gap-2 border border-rule px-3 py-1.5 text-[0.8125rem] text-ink-soft transition-colors duration-250 hover:border-ink hover:bg-ink hover:text-bone"
                                 >

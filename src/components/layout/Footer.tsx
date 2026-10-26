@@ -31,7 +31,7 @@ export function Footer() {
   const zones = Object.keys(zoneLabels) as Zone[];
 
   return (
-    <footer className="border-t border-rule bg-paper">
+    <footer className="border-t border-rule bg-paper pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0">
       {/* ── Brand + contact ───────────────────────────────────────────────────── */}
       <div className="shell grid gap-12 py-16 lg:grid-cols-[1.1fr_2fr] lg:gap-20 lg:py-20">
         <div>
@@ -214,13 +214,13 @@ export function Footer() {
           </p>
 
           <nav aria-label="Legal" className="flex shrink-0 gap-6 text-[0.8125rem] font-semibold">
-            <Link href="/privacy" className="text-ink-muted transition-colors hover:text-ink">
+            <Link prefetch={false} href="/privacy" className="text-ink-muted transition-colors hover:text-ink">
               Privacy
             </Link>
-            <Link href="/terms" className="text-ink-muted transition-colors hover:text-ink">
+            <Link prefetch={false} href="/terms" className="text-ink-muted transition-colors hover:text-ink">
               Terms
             </Link>
-            <Link href="/sitemap.xml" className="text-ink-muted transition-colors hover:text-ink">
+            <Link prefetch={false} href="/sitemap.xml" className="text-ink-muted transition-colors hover:text-ink">
               Sitemap
             </Link>
           </nav>
@@ -245,10 +245,16 @@ function FooterColumn({
   );
 }
 
+/**
+ * No prefetch: ~45 footer links all scroll into view together, and Next
+ * prefetched every one — about 1 MB of background traffic on a phone before
+ * the visitor tapped anything. They still navigate instantly enough.
+ */
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <li>
       <Link
+        prefetch={false}
         href={href}
         className="text-[0.875rem] text-ink-muted transition-colors duration-200 hover:text-brass"
       >
